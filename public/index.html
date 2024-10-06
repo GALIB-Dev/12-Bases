@@ -11,37 +11,129 @@
     <meta name="keywords" content="React, Web Development, App, Tech,12BASES,12bases,12 BASES, 12 bases, 12bases website" />
     <meta name="author" content="12 Bases" />
 
-    <!-- Open Graph (OG) meta tags for better social media sharing -->
+    <!-- Open Graph Meta Tags (for Messenger, WhatsApp, Telegram, Facebook, LinkedIn) -->
     <meta property="og:title" content="12 [Bases]" />
     <meta property="og:description" content="Discover fresh ideas and services to bring your projects to life at 12bases.xyz! Join us for innovative solutions and expert insights." />
     <meta property="og:image" content="https://12bases.xyz/og-image.png" />
     <meta property="og:url" content="https://12bases.xyz" />
     <meta property="og:type" content="website" />
 
-    <!-- Twitter Card tags for Twitter sharing -->
+    <!-- Twitter Card tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="12 [Bases]" />
     <meta name="twitter:description" content="Discover fresh ideas and services to bring your projects to life at 12bases.xyz! Join us for innovative solutions and expert insights." />
     <meta name="twitter:image" content="https://12bases.xyz/og-image.png" />
 
     <!-- Favicon Links -->
-<link rel="icon" type="image/png" sizes="32x32" href="https://12bases.xyz/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="https://12bases.xyz/favicon-16x16.png" />
-<link rel="icon" href="https://12bases.xyz/favicon.ico" />
-
+    <link rel="icon" type="image/png" sizes="32x32" href="https://12bases.xyz/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://12bases.xyz/favicon-16x16.png" />
+    <link rel="icon" href="https://12bases.xyz/favicon.ico" />
 
     <!-- Android Icons -->
     <link rel="icon" sizes="192x192" href="https://12bases.xyz/android-chrome-192x192.png" />
     <link rel="icon" sizes="512x512" href="https://12bases.xyz/android-chrome-512x512.png" />
 
-    <!-- Preloading Fonts or other important assets for better performance -->
+    <!-- Preload Fonts for better performance -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" as="style" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <!-- Custom CSS for advanced styling -->
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .share-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin: 40px 0;
+      }
+
+      .share-buttons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Social platform colors */
+      .facebook {
+        background-color: #3b5998;
+      }
+
+      .whatsapp {
+        background-color: #25D366;
+      }
+
+      .telegram {
+        background-color: #0088cc;
+      }
+
+      .gmail {
+        background-color: #D44638;
+      }
+
+      .linkedin {
+        background-color: #0077b5;
+      }
+
+      .share-buttons a:hover {
+        opacity: 0.9;
+      }
+
+      .share-buttons i {
+        margin-right: 10px;
+      }
+
+      /* Responsive design for small screens */
+      @media (max-width: 600px) {
+        .share-buttons {
+          flex-direction: column;
+        }
+
+        .share-buttons a {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
 
     <title>12 [Bases]</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <!-- Share buttons with FontAwesome icons for Messenger, WhatsApp, Telegram, Facebook, Gmail, LinkedIn -->
+    <div class="share-buttons">
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://12bases.xyz" target="_blank" class="facebook" aria-label="Share on Facebook">
+        <i class="fab fa-facebook-f"></i>Share on Facebook
+      </a>
+      <a href="https://api.whatsapp.com/send?text=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!%20https://12bases.xyz" target="_blank" class="whatsapp" aria-label="Share on WhatsApp">
+        <i class="fab fa-whatsapp"></i>Share on WhatsApp
+      </a>
+      <a href="https://t.me/share/url?url=https://12bases.xyz&text=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!" target="_blank" class="telegram" aria-label="Share on Telegram">
+        <i class="fab fa-telegram-plane"></i>Share on Telegram
+      </a>
+      <a href="mailto:?subject=Check%20out%2012bases.xyz&body=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!%20https://12bases.xyz" target="_blank" class="gmail" aria-label="Share via Gmail">
+        <i class="fas fa-envelope"></i>Share via Gmail
+      </a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://12bases.xyz" target="_blank" class="linkedin" aria-label="Share on LinkedIn">
+        <i class="fab fa-linkedin-in"></i>Share on LinkedIn
+      </a>
+    </div>
   </body>
 </html>
