@@ -1,0 +1,123 @@
+/* Nav bar container */
+nav {
+  display: flex;
+  justify-content: space-between; /* Logo on the left, menu on the right */
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 10px;
+  border-radius: 10%;
+  position: relative;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Transparent dark background */
+}
+
+/* Logo container */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align logo to the left */
+  position: relative; /* Enable absolute positioning for child elements */
+}
+
+/* Back logo (Logo.png) styling */
+.back-logo {
+  width: 70px; /* Increased size */
+  position: relative; /* Keep the back logo positioned normally */
+  z-index: 1; /* Ensure the back logo is behind */
+}
+
+/* Front logo (Spin.png) styling */
+.logo {
+  position: absolute; /* Position the spinning logo absolutely */
+  top: 0; /* Adjust as needed to align */
+  left: 0; /* Adjust as needed to align */
+  width: 70px; /* Increased size */
+  animation: spin 10s linear infinite; /* Spinning effect */
+  z-index: 2; /* Ensure the spinning logo is on top */
+}
+
+/* Keyframes for spinning effect */
+@keyframes spin {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+/* Menu button (hamburger) */
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  z-index: 1001;
+  position: absolute;
+  right: 20px; /* Move the button to the right */
+}
+
+/* Dropdown menu container */
+.menu-items {
+  display: flex;
+  gap: 25px;
+  transition: max-height 0.5s ease-out;
+}
+
+/* Hide menu on smaller screens */
+.menu-items.open {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: 80%;
+  right: 25px; /* Align to the right */
+  padding: 30px;
+  border-radius: 5px;
+}
+
+/* Menu link styling */
+.menu-items a {
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  transition: color 0.3s;
+}
+
+/* Hover effect for menu links */
+.menu-items a:hover {
+  color: #ffcc00;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  /* Hide the normal menu items */
+  .menu-items {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 50px;
+      right: 20px;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 10px;
+      border-radius: 8px;
+      z-index: 1000;
+  }
+
+  /* When open, display the dropdown */
+  .menu-items.open {
+      display: flex;
+  }
+
+  /* Show the menu button (hamburger icon) */
+  .menu-button {
+      display: block; /* Only show on smaller screens */
+  }
+}
+.red-text {
+  color: rgb(255, 23, 23);
+
+}

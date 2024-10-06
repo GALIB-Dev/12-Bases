@@ -1,0 +1,141 @@
+/* Updates Container */
+.updates-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #1e1e1e7a; /* Dark background */
+    color: #f4f4f4; /* Light text color */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    font-family: 'Arial', sans-serif; /* Font family */
+  }
+  
+  /* Title Styling */
+  .updates-title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffcc00; /* Highlight color */
+  }
+  
+  /* Description Styling */
+  .updates-description {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #ccc; /* Slightly lighter text */
+  }
+  
+  /* Team Section */
+  .team-section {
+    text-align: center;
+  }
+  
+  /* Team Slider */
+  .team-slider {
+    display: flex;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    scroll-snap-type: x mandatory; /* Enable snapping */
+    padding: 20px 0; /* Padding for slider */
+    gap: 30px; /* Space between team members */
+  }
+  
+  /* Team Member Card */
+  .team-member {
+    flex: 0 0 auto; /* Prevent flex items from shrinking */
+    width: 250px; /* Fixed width for cards */
+    background-color: #333333ab; /* Card background color */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    transition: transform 0.2s ease; /* Smooth transform on hover */
+    scroll-snap-align: start; /* Snap alignment */
+  }
+  
+  .team-member:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+  }
+  
+  /* Team Image */
+  .team-image {
+    width: 100%; /* Full width of card */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Circular images */
+    border: 3px solid #ffcc00; /* Border for images */
+    margin-bottom: 15px; /* Space below image */
+  }
+  
+  /* Member Name */
+  .team-member h3 {
+    font-size: 20px;
+    color: #ffcc00; /* Highlight color for names */
+    margin: 10px 0; /* Vertical spacing */
+  }
+
+  /* Member Name */
+  .team-member h4 {
+    font-size: 16px;
+    color: #ffeca1; /* Highlight color for names */
+    margin: 10px 0; /* Vertical spacing */
+  }
+  
+  /* Member Role */
+  .team-member p {
+    font-size: 16px;
+    color: #ffffff; /* Lighter text for roles */
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (max-width: 768px) {
+    .updates-container {
+      padding: 20px; /* Less padding on smaller screens */
+    }
+  
+    .updates-title {
+      font-size: 28px; /* Smaller title font */
+    }
+  
+    .updates-description {
+      font-size: 16px; /* Smaller description font */
+    }
+  
+    .team-slider {
+      flex-wrap: nowrap; /* Prevent wrapping */
+    }
+  
+    .team-member {
+      width: 180px; /* Smaller width for cards on mobile */
+    }
+  
+    .team-member h3 {
+      font-size: 18px; /* Smaller name font */
+    }
+  
+    .team-member p {
+      font-size: 14px; /* Smaller role font */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .updates-title {
+      font-size: 24px; /* Even smaller title font for very small screens */
+    }
+  
+    .updates-description {
+      font-size: 14px; /* Even smaller description font */
+    }
+  
+    .team-member {
+      width: 150px; /* Smaller width for cards on very small screens */
+    }
+  
+    .team-member h3 {
+      font-size: 16px; /* Smaller name font */
+    }
+  
+    .team-member p {
+      font-size: 12px; /* Smaller role font */
+    }
+  }
+  

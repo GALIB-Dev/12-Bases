@@ -1,0 +1,43 @@
+.not-found-container {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    display: flex;
+    background: fixed;
+    align-items: center;
+    position: relative;
+    text-align: center;
+
+}
+
+.overlay {
+    background-color: rgba(32, 31, 31, 0.6); /* Adding an overlay to darken the background image */
+    padding: 20px;
+    border-radius: 5%;
+  }
+  
+  .animated-text {
+    font-size: 5rem;
+    color: #c02b11e1;
+    font-weight: bold;
+    animation: fadeIn 2s ease-in-out, bounce 3s infinite alternate;
+  }
+  
+  .animated-subtext {
+    font-size: 1.5rem;
+    color: #ffffff;
+    animation: fadeIn 3s ease-in-out;
+  }
+  
+  .home-link {
+    font-size: 1.5rem;
+    color: #00bfff;
+    margin-top: 20px;
+    text-decoration: none;
+    animation: fadeInUp 4s ease-in-out;
+  }
+  
+  .home-link:hover {
+    text-decoration: underline;
+    color: #ff6347;
+  }

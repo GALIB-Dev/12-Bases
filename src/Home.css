@@ -1,0 +1,128 @@
+/* Home.css */
+
+/* Global Styles for the Home Component */
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Hero Section */
+  .hero {
+    position: relative;
+    height: 100vh; /* Full viewport height */
+    background-image: url('./Background.jpg'); /* Ensure the path is correct */
+    background-size: cover; /* Cover the entire section */
+    background-position: center; /* Center the image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: white; /* Text color for the hero section */
+  }
+  
+  .hero-content {
+    z-index: 2; /* Ensure content is above the background */
+    padding: 20px;
+  }
+  
+  .hero-title {
+    font-size: 3rem; /* Large title */
+    margin: 0;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem; /* Subtitle size */
+    margin: 10px 0;
+  }
+  
+  .hero-btn {
+    margin-top: 20px; /* Space above the button */
+  }
+  
+  
+  /* Call to Action Section */
+  .cta {
+    width: 100%;
+    padding: 50px 20px;
+    text-align: center;
+    background-color: #000000bb; /* Dark green background */
+    color: rgb(221, 200, 11); /* Text color */
+  }
+  
+  .cta h2 {
+    font-size: 2.5rem; /* Call to Action title size */
+    margin-bottom: 20px;
+  }
+  
+  .cta p {
+    font-size: 1.2rem; /* Paragraph size */
+    color: #ffffff;
+  }
+  
+  .cta-btn {
+    margin-top: 20px; /* Space above the button */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .feature-cards {
+      flex-direction: column; /* Stack cards on smaller screens */
+      align-items: center;
+    }
+  
+    .card {
+      width: 90%; /* Full width on small screens */
+    }
+  
+    .hero-title {
+      font-size: 2.5rem; /* Smaller title */
+    }
+  
+    .hero-subtitle {
+      font-size: 1.2rem; /* Smaller subtitle */
+    }
+  
+    .cta h2 {
+      font-size: 2rem; /* Smaller Call to Action title */
+    }
+  }
+  
+  /* Mobile Styles */
+  @media (max-width: 480px) {
+    .hero {
+      height: 70vh; /* Reduce height for mobile */
+    }
+  
+    .hero-title {
+      font-size: 2rem; /* Adjust title size */
+    }
+  
+    .hero-subtitle {
+      font-size: 1rem; /* Adjust subtitle size */
+    }
+  
+    .features h2 {
+      font-size: 2rem; /* Smaller features title */
+    }
+  
+    .testimonials h2 {
+      font-size: 2rem; /* Smaller testimonials title */
+    }
+  
+    .cta h2 {
+      font-size: 1.8rem; /* Smaller Call to Action title */
+    }
+  
+    .btn {
+      padding: 10px 15px; /* Adjust button padding */
+      font-size: 0.9rem; /* Smaller button font */
+    }
+  
+    .card {
+      padding: 15px; /* Reduce padding */
+      font-size: 0.9rem; /* Smaller card font */
+    }
+  }
+  

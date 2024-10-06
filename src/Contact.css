@@ -1,0 +1,93 @@
+/* Contact Form Container */
+form {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #333; /* Dark background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 92%;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #444; /* Darker background for inputs */
+    border: 1px solid #555;
+    border-radius: 5px; /* Rounded inputs */
+    color: white;
+    font-size: 16px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    background-color: #555; /* Lighter on focus */
+    border-color: #ffcc00; /* Highlight border on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Textarea Specific Styles */
+textarea {
+    height: 150px;
+    resize: vertical; /* Allow vertical resizing */
+}
+
+/* Submit Button */
+button {
+    padding: 15px 20px;
+    background-color: #ffcc00; /* Bright yellow */
+    color: #000000; /* Dark text */
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #c97800; /* Darker on hover */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+button:active {
+    transform: translateY(0); /* Button returns to original position on click */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    form {
+        padding: 20px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}
+
+@keyframes colorChange {
+    0% { color: #ffffff; }
+    33% { color: #158611; } /* Change to another color */
+    66% { color: #f83838; } /* Change to another color */
+    100% { color: #eef1ee; } /* Back to the original color */
+  }
+  
+  .title {
+    text-align: center;
+    animation: colorChange 10s infinite; /* Total duration is 9s (3 colors x 3 seconds each) */
+  }
+  

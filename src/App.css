@@ -1,0 +1,90 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-image: url('./Background.jpg'); /* Background image */
+  background-size: cover; /* Cover the entire page */
+  background-position: center; /* Center the image */
+  color: #1c7406; /* Text color */
+  height: 100vh; /* Full viewport height */
+  overflow: scroll; /* Prevent scrolling */
+}
+
+/* Header styles: Fixed at the top */
+header {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 15px 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+}
+
+/* Content section */
+.content {
+  max-width: 2000px; /* Max width for larger screens */
+  max-height: 150px;
+  padding: 20px; /* Padding inside content */
+  background: rgba(19, 59, 9, 0.589); /* Semi-transparent background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgb(15, 22, 13); /* Soft shadow */
+  margin-top: 90px; /* Space for fixed header */
+  width: 100%;
+  
+  /* Flexbox for centering content */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  text-align: center; /* Center text */
+  height: calc(100vh - 100px); /* Fill remaining height minus header */
+}
+
+/* Headings and paragraph styles */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #da7575;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.6; /* Improved readability */
+}
+
+/* Media Queries */
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .content {
+    margin-top: 50px; /* Adjust content margin */
+
+  }
+}
+
+/* For screens smaller than 480px */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem; /* Smaller heading on small screens */
+  }
+
+  p {
+    font-size: 0.9rem; /* Smaller paragraph */
+  }
+
+  .content {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+}
+
+
