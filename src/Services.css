@@ -1,78 +1,90 @@
-/* Overall container styling */
 .services-container {
-  padding: 50px 20px;
-  background-color: #15240b62;
+  padding: 40px;
+  background: linear-gradient(to bottom right, #061106d0, #93cc5e77, #ff5145);
   text-align: center;
-  animation: fadeIn 1.5s ease-in-out;
+  border-radius: 2%;
+  border-radius: .5%;
+
 }
 
 .services-title {
-  font-size: 2.5rem;
-  color: #ffffff;
-  margin-bottom: 50px;
+  font-size: 2em;
+  font-weight: bold;
+  color: rgb(209, 196, 196);
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
-/* Grid layout for the services */
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
   gap: 30px;
 }
 
-/* Card style for individual services */
 .service-card {
-  background-color: #000000;
-  border-radius: 15px;
+  background-color: #000000bd;
+  margin-left: -30px;
   padding: 30px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  width: 300px;
+  border-radius: 20px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .service-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Icons for each service */
 .service-icon {
-  font-size: 4rem;
-  color: #007bff;
+  font-size: 3em;
+  color: #279e37c9;
   margin-bottom: 20px;
   transition: color 0.3s ease;
 }
 
 .service-card:hover .service-icon {
-  color: #ff5733;
+  color: #ff6347;
 }
 
 .service-card h2 {
-  font-size: 1.8rem;
-  color: #ffeeee;
-  margin-bottom: 15px;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #e9e2e2;
+  font-weight: bold;
 }
 
 .service-card p {
-  font-size: 1rem;
-  color: #aab1a3e8;
+  font-size: 1em;
+  color: #a19c9c;
+  margin-bottom: 20px;
 }
 
-/* Keyframe for fade-in animation */
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+.learn-more-btn {
+  padding: 10px 20px;
+  background-color: #279e37c9;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-/* Responsive design */
+.learn-more-btn:hover {
+  background-color: #ff6347;
+}
+
 @media (max-width: 768px) {
-  .services-title {
-    font-size: 2rem;
-  }
-  .service-card {
+  .services-grid {
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
   }
-  .service-card h2 {
-    font-size: 1.5rem;
+
+  .service-card {
+    width: 100%;
+    margin-bottom: 20px;
   }
 }
