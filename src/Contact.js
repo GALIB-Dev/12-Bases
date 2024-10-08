@@ -4,7 +4,7 @@ import './Contact.css';
 const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
-        contact: '', // Change 'email' to 'contact' to represent either email or phone
+        contact: '',
         message: ''
     });
 
@@ -24,41 +24,49 @@ const Contact = () => {
         });
         if (response.ok) {
             alert('Message sent successfully!');
+            window.location.reload(); // Reload the page after successful form submission
         } else {
             alert('Error sending message.');
         }
     };
 
     return (
-        <><div className='title'>
-            <h3>Please don't hesitate to contact our team for any assistance or inquiries. </h3>
-        </div>
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                required />
-            <input
-                type="text"
-                name="contact"
-                placeholder="Your Email or Phone Number"
-                value={formData.contact}
-                onChange={handleChange}
-                pattern="^(\+?\d{1,4}[\s-])?(?!0+\s+,?$)\d{10,14}\s*,?$|^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$"
-                title="Please enter a valid email address or phone number"
-                required />
-            <textarea
-                name="message"
-                placeholder="Your Message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-            ></textarea>
-            <button type="submit">Send</button>
-        </form></>
+        <>
+            <div className='title'>
+                <h3>Please don't hesitate to contact our team for any assistance or inquiries.</h3>
+            </div>
+            <form onSubmit={handleSubmit}>
+                <div className='form_title'>
+                    <h1>Contact Us</h1>
+                </div>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="text"
+                    name="contact"
+                    placeholder="Your Email or Phone Number"
+                    value={formData.contact}
+                    onChange={handleChange}
+                    pattern="^(?:\+8801[3-9]\d{8}|01[3-9]\d{8})$|^[a-zA-Z0-9._%+-]+@gmail\.com$"
+                    title="Please enter a valid Bangladeshi phone number (e.g., +8801XXXXXXXXX or 01XXXXXXXXX) or a Gmail address"
+                    required
+                />
+                <textarea
+                    name="message"
+                    placeholder="Your Message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                ></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </>
     );
 };
 

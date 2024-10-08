@@ -1,6 +1,6 @@
 /* Contact Form Container */
 form {
-    max-width: 600px;
+    max-width: 300px;
     margin: 50px auto;
     padding: 30px;
     background-color: #333; /* Dark background */
@@ -8,6 +8,8 @@ form {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Soft shadow */
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
 /* Input Fields */
