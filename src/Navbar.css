@@ -8,8 +8,8 @@ nav {
   padding: 0 10px;
   border-radius: 10%;
   position: relative;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Transparent dark background */
+  width: 95%;
+  background-color: rgb(0, 0, 0); /* Transparent dark background */
 }
 
 /* Logo container */
@@ -53,17 +53,18 @@ nav {
   background: none;
   border: none;
   color: white;
+  padding: 5px;
   font-size: 32px;
   cursor: pointer;
   z-index: 1001;
   position: absolute;
-  right: 20px; /* Move the button to the right */
+  right: 10px; /* Move the button to the right */
 }
 
 /* Dropdown menu container */
 .menu-items {
   display: flex;
-  gap: 25px;
+  gap: 20px;
   transition: max-height 0.5s ease-out;
 }
 
@@ -74,9 +75,9 @@ nav {
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 80%;
-  right: 25px; /* Align to the right */
+  right: 2px; /* Align to the right */
   padding: 30px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 /* Menu link styling */
@@ -84,7 +85,7 @@ nav {
   color: white;
   text-decoration: none;
   padding: 10px;
-  transition: color 0.3s;
+  transition: color .1s;
 }
 
 /* Hover effect for menu links */
