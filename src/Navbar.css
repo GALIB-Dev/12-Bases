@@ -33,7 +33,7 @@ nav {
   top: 0; /* Adjust as needed to align */
   left: 0; /* Adjust as needed to align */
   width: 70px; /* Increased size */
-  animation: spin 5s linear infinite; /* Spinning effect */
+  animation: spin 15s linear infinite; /* Spinning effect */
   z-index: 2; /* Ensure the spinning logo is on top */
 }
 
