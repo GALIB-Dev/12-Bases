@@ -2,127 +2,322 @@
 
 /* Global Styles for the Home Component */
 .home {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* Hero Section */
-  .hero {
-    position: relative;
-    height: 100vh; /* Full viewport height */
-    background-image: url('./Background.jpg'); /* Ensure the path is correct */
-    background-size: cover; /* Cover the entire section */
-    background-position: center; /* Center the image */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-    color: white; /* Text color for the hero section */
-  }
-  
-  .hero-content {
-    z-index: 2; /* Ensure content is above the background */
-    padding: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh; /* Full viewport height */
+  background-image: url('./Background.jpg'); /* Ensure the path is correct */
+  background-size: cover; /* Cover the entire section */
+  background-position: center; /* Center the image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: white; /* Text color for the hero section */
+}
+
+.hero-content {
+  z-index: 2; /* Ensure content is above the background */
+  padding: 20px;
+}
+
+.hero-title {
+  font-size: 3rem; /* Large title */
+  margin: 0;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem; /* Subtitle size */
+  margin: 10px 0;
+}
+
+/* Call to Action Section */
+.cta {
+  width: 100%;
+  padding: 50px 20px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.73); /* Dark background */
+  color: rgb(221, 200, 11); /* Text color */
+}
+
+.cta h2 {
+  font-size: 2.5rem; /* Call to Action title size */
+  margin-bottom: 20px;
+}
+
+.cta p {
+  font-size: 1.2rem; /* Paragraph size */
+  color: #ffffff;
+}
+
+.cta-btn {
+  margin-top: 20px; /* Space above the button */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
   .hero-title {
-    font-size: 3rem; /* Large title */
-    margin: 0;
+    font-size: 2.5rem; /* Smaller title */
   }
-  
+
   .hero-subtitle {
-    font-size: 1.5rem; /* Subtitle size */
-    margin: 10px 0;
+    font-size: 1.2rem; /* Smaller subtitle */
   }
-  
-  .hero-btn {
-    margin-top: 20px; /* Space above the button */
-  }
-  
-  
-  /* Call to Action Section */
-  .cta {
-    width: 100%;
-    padding: 50px 20px;
-    text-align: center;
-    background-color: #000000bb; /* Dark green background */
-    color: rgb(221, 200, 11); /* Text color */
-  }
-  
+
   .cta h2 {
-    font-size: 2.5rem; /* Call to Action title size */
-    margin-bottom: 20px;
+    font-size: 2rem; /* Smaller Call to Action title */
   }
-  
-  .cta p {
-    font-size: 1.2rem; /* Paragraph size */
-    color: #ffffff;
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+  .hero {
+    height: 70vh; /* Reduce height for mobile */
   }
-  
-  .cta-btn {
-    margin-top: 20px; /* Space above the button */
+
+  .hero-title {
+    font-size: 2rem; /* Adjust title size */
   }
-  
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    .feature-cards {
-      flex-direction: column; /* Stack cards on smaller screens */
-      align-items: center;
-    }
-  
-    .card {
-      width: 90%; /* Full width on small screens */
-    }
-  
-    .hero-title {
-      font-size: 2.5rem; /* Smaller title */
-    }
-  
-    .hero-subtitle {
-      font-size: 1.2rem; /* Smaller subtitle */
-    }
-  
-    .cta h2 {
-      font-size: 2rem; /* Smaller Call to Action title */
-    }
+
+  .hero-subtitle {
+    font-size: 1rem; /* Adjust subtitle size */
   }
-  
-  /* Mobile Styles */
-  @media (max-width: 480px) {
-    .hero {
-      height: 70vh; /* Reduce height for mobile */
-    }
-  
-    .hero-title {
-      font-size: 2rem; /* Adjust title size */
-    }
-  
-    .hero-subtitle {
-      font-size: 1rem; /* Adjust subtitle size */
-    }
-  
-    .features h2 {
-      font-size: 2rem; /* Smaller features title */
-    }
-  
-    .testimonials h2 {
-      font-size: 2rem; /* Smaller testimonials title */
-    }
-  
-    .cta h2 {
-      font-size: 1.8rem; /* Smaller Call to Action title */
-    }
-  
-    .btn {
-      padding: 10px 15px; /* Adjust button padding */
-      font-size: 0.9rem; /* Smaller button font */
-    }
-  
-    .card {
-      padding: 15px; /* Reduce padding */
-      font-size: 0.9rem; /* Smaller card font */
-    }
+
+  .cta h2 {
+    font-size: 1.8rem; /* Smaller Call to Action title */
   }
+}
+
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  --gradient-color: linear-gradient(90deg,
+                    hsl(48, 100%, 50%) 0%,
+                    hsl(28, 100%, 54%, 100%));
+  --black-color: hsl(0, 0%, 0%);
+  --reflection-color: hsla(48, 30%, 95%, .3);
+  --body-color: hsl(0, 0%, 100%);
+
+  /*========== Font and typography ==========*/
+  --body-font: "Montserrat", sans-serif;
+  --normal-font-size: 1rem;
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: #151F28;
+}
+
+a {
+  text-decoration: none;
+}
+
+/*=============== BUTTON ===============*/
+.container {
+  height: 100vh;
+  margin-inline: 1.5rem;
+  display: grid;
+  place-items: center;
+}
+
+.button {
+  background: none;
+  position: relative;
+  transition: transform .3s;
+  padding: 0px;
+  background: transparent; /* Set background to transparent */
+}
+
+.button__content {
+  position: relative;
+  background: none; /* No background to remove yellow rectangle */
+  padding: 1.25rem 3rem;
+  border-radius: 4rem;
+  border: 3px solid var(--black-color);
+  color: var(--black-color);
+  display: flex;
+  align-items: center;
+  column-gap: .1rem;
+  overflow: hidden;
+}
+
+/* Background added on hover */
+.button:hover .button__content {
+  background: var(--gradient-color); /* Gradient background for the button on hover */
   
+}
+.button:hover {
+  background-color: transparent;
+  
+}
+
+/* Reflection shapes */
+.button__reflection-1, 
+.button__reflection-2 {
+  width: 8px;
+  height: 120px;
+  background-color: var(--reflection-color);
+  rotate: 30deg;
+  position: absolute;
+  inset: 0;
+  top: -25px;
+  left: -200%;
+  margin: auto;
+  transition: left .4s cubic-bezier(.2, .5, .2, 1.2);
+}
+
+.button__reflection-1::after {
+  content: "";
+  width: 26px;
+  height: 100%;
+  background-color: var(--reflection-color);
+  position: absolute;
+  top: -1rem;
+  left: 1.25rem;
+}
+
+.button__reflection-2::after {
+  content: "";
+  width: 60px;
+  height: 100%;
+  background-color: var(--reflection-color);
+  position: absolute;
+  top: -1rem;
+  left: .8rem;
+}
+
+/* Moving geometric shapes */
+.button img {
+  position: absolute;
+  opacity:0;
+  transition: transform .5s, opacity .3s;
+
+}
+
+.button__star-1 {
+  width: 20px;
+  top: -14px;
+  left: -16px;
+  transform: rotate(48deg) scale(.1);
+}
+
+.button__star-2 {
+  width: 40px;
+  right: -10px;
+  top: -4px;
+  transform: rotate(-48deg) scale(.1);
+}
+
+.button__circle-1, 
+.button__circle-2 {
+  width: 8px;
+}
+
+.button__circle-1 {
+  top: -8px;
+  left: 58px;
+  transform: scale(.1);
+}
+
+.button__circle-2 {
+  right: 34px;
+  bottom: -8px;
+  transform: scale(.1);
+}
+
+.button__diamond {
+  width: 18px;
+  top: -20px;
+  right: 62px;
+  transform: scale(.1);
+}
+
+.button__triangle {
+  width: 30px;
+  left: 15px;
+  bottom: -16px;
+  transform: rotate(-48deg) scale(.1);
+}
+
+/* Gradient shadow */
+.button__shadow {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--gradient-color);
+  padding: 1.25rem 3rem;
+  border-radius: 4rem;
+  border: 3px solid var(--black-color);
+  z-index: -1;
+  transition: transform .3s;
+}
+
+/* View shadow gradient */
+.button:hover .button__shadow {
+  transform: translate(-.5rem, .9rem);
+}
+
+/* Move reflection */
+.button:hover .button__reflection-1 {
+  left: 90%;
+}
+
+.button:hover .button__reflection-2 {
+  left: -70%;
+}
+
+/* View geometric shapes */
+.button:hover {
+  transform: rotate(-4deg) scale(1.1);
+}
+
+.button:hover img {
+  opacity: .9;
+  background-color: transparent;
+  
+}
+
+.button:hover .button__star-1 {
+  transform: scale(1.1);
+  transition-delay: .1s;
+}
+
+.button:hover .button__star-2 {
+  transform: scale(1.1);
+}
+
+.button:hover .button__circle-1 {
+  transform: translateY(-8px) scale(1.1);
+  transition-delay: .1s;
+}
+
+.button:hover .button__circle-2 {
+  transform: translate(-20px, 20px) scale(1.1);
+}
+
+.button:hover .button__diamond {
+  transform: translateY(7px) rotate(-24deg) scale(1.1);
+}
+
+.button:hover .button__triangle {
+  transform: translateY(2px) rotate(20deg) scale(1.1);
+}
