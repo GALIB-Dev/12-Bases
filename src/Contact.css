@@ -16,7 +16,7 @@ form {
 input[type="text"],
 input[type="email"],
 textarea {
-    width: 92%;
+    width: 100%;
     padding: 15px;
     margin-bottom: 20px;
     background-color: #444; /* Darker background for inputs */
