@@ -6,9 +6,9 @@ nav {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 10px;
-  border-radius: 10%;
+  border-radius: 0%;
   position: relative;
-  width: 95%;
+  width: 100%;
   background-color: rgb(0, 0, 0); /* Transparent dark background */
 }
 
