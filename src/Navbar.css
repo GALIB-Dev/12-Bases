@@ -64,8 +64,9 @@ nav {
 /* Dropdown menu container */
 .menu-items {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   transition: max-height 0.5s ease-out;
+  
 }
 
 /* Hide menu on smaller screens */
@@ -75,9 +76,10 @@ nav {
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 80%;
-  right: 2px; /* Align to the right */
-  padding: 30px;
-  border-radius: 10px;
+  right: 0px; /* Align to the right */
+  padding: 20px;
+  border-radius: 5px;
+  
 }
 
 /* Menu link styling */
@@ -91,6 +93,7 @@ nav {
 /* Hover effect for menu links */
 .menu-items a:hover {
   color: #ffcc00;
+  
 }
 
 /* Media query for smaller screens */
@@ -116,6 +119,8 @@ nav {
   /* Show the menu button (hamburger icon) */
   .menu-button {
       display: block; /* Only show on smaller screens */
+      padding: 5px;
+
   }
 }
 .red-text {

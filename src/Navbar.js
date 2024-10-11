@@ -33,7 +33,8 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li> {/* Use Link for client-side routing */}
         <li><Link to="/updates">Updates</Link></li>
         <li><Link to="/contact">Contact</Link></li> {/* Consistent casing */}
-        <li><Link to="/services">Services</Link></li> {/* Consistent casing */}
+        <li><Link to="/service">Resources</Link></li> {/* Consistent casing */}
+        <li><Link to="/services">Services</Link></li>
       </ul>
     </nav>
   );

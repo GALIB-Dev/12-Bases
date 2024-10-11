@@ -8,7 +8,7 @@ const NotFound = () => {
     <div className="not-found-container">
       <div className="overlay">
         <h1 className="animated-text">404</h1>
-        <p className="animated-subtext">কাজ ⚒️ চলতিছে !<br></br> আপনি কি খুঁজছেন, ভাই?</p>
+        <p className="animated-subtext">কাজ ⚒️ চলতিছে !</p>
         <Link to="/" className="home-link">
           Go back to Home
         </Link>
