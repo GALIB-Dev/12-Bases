@@ -93,12 +93,14 @@ nav {
 .menu-items {
   list-style: none;
   display: none;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  gap: 15px;
+  transition-behavior: smooth ;
 }
 
 .menu-items.open {
   display: flex;
+  align-content: space-between;
 }
 
 .menu-items li {
@@ -116,3 +118,22 @@ nav {
   color: #f09d51;
 }
 
+@media (max-width: 768px) {
+  .menu-items {
+    list-style: none;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    transition-behavior: smooth;
+  }
+  .menu-items.open {
+    display: flex;
+    position: relative;
+    align-items: center;
+  }
+
+
+
+
+  
+}

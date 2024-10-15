@@ -18,7 +18,8 @@ const Navbar = () => {
         <img src={SpinLogo} alt="Spinning Logo" className="logo" /> {/* Front logo */}
         <p>
           <span style={{ color: 'red' }}> <b>Ⅻ</b></span> 𝘽𝘼𝙎𝙀𝙎
-        </p>
+       </p>
+
       </div>
       <button 
         className={`menu-button ${isOpen ? 'open' : ''}`} 
@@ -34,7 +35,7 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/updates">Updates</Link></li>
         <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/service">Resources</Link></li>
+        <li><Link to="/Resources">Resources</Link></li>
         <li><Link to="/services">Services</Link></li>
       </ul>
     </nav>
