@@ -10,12 +10,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleExploreMore = () => {
-    // Navigate to Services page
-    navigate('/services');
+    navigate('/explore'); // Navigate to Explore page
   };
 
   const handleContactUs = () => {
-    // Navigate to Contact page
     navigate('/contact');
   };
 
@@ -28,7 +26,7 @@ const Home = () => {
           <p className="hero-subtitle">"Serving humanity in pursuit of something greater."</p>
           
           {/* Magic Animation Explore More Button */}
-          <div className="explore-more-section">
+          <div className="Explore-more-section">
             <button className="button" onClick={handleExploreMore}>
               <div className="button__content">
                 <span className="button__text">Explore More</span>

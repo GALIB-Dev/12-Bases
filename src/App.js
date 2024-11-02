@@ -7,9 +7,8 @@ import Services from './Services';
 import Home from './Home';
 import Loading from './Loading';
 import NotFound from './NotFound'; // Import the NotFound component
-import Resources from './Resources'; // Ensure the correct path to Resources.js
 import './App.css';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // FontAwesome CSS
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   const [loading, setLoading] = useState(true); // Loading state
@@ -35,7 +34,6 @@ function App() {
               <Route path="/updates" element={<Updates />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/services" element={<Services />} />
-              <Route path="/resources" element={<Resources />} /> {/* Updated to lowercase */}
               
               {/* Catch-all route for undefined paths */}
               <Route path="*" element={<NotFound />} />
@@ -47,4 +45,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;  
