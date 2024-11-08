@@ -1,0 +1,162 @@
+/* ChatFrame.css */
+
+/* Overall Chat Frame Style */
+.chat-frame {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  height: 700px;
+  margin: 20px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Style */
+.chat-header {
+  background-color: #4F73FF;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.chat-subheader {
+  font-size: 1em;
+  color: #ffffff;
+  margin-top: 5px;
+}
+
+/* Main Content Section */
+.chat-body {
+  display: flex;
+  flex-grow: 1;
+  background-color: #fafafa;
+  padding: 15px;
+}
+
+/* Sidebar (Chat List) */
+.chat-sidebar {
+  width: 250px;
+  padding: 10px;
+  background-color: #f0f4f8;
+  border-radius: 8px;
+  margin-right: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Chat Window */
+.chat-main {
+  flex-grow: 1;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer (Chat Controls) */
+.chat-footer {
+  padding: 15px;
+  border-top: 2px solid #e2e8f0;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+}
+
+/* Text Input Styling */
+.chat-footer input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  font-size: 1em;
+  background-color: #ffffff;
+}
+
+/* Send Button Styling */
+.chat-footer button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #4F73FF;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.chat-footer button:hover {
+  background-color: #3b63d2;
+}
+
+.chat-footer button:focus {
+  outline: none;
+}
+
+/* Chat Messages Area */
+.chat-main .chat-messages {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-top: 10px;
+}
+
+/* Message Bubble Styling */
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  background-color: #f1f5f9;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.chat-message.self {
+  align-self: flex-end;
+  background-color: #4F73FF;
+  color: white;
+}
+
+.chat-message.other {
+  align-self: flex-start;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.chat-message strong {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.chat-message small {
+  font-size: 0.8em;
+  color: #888;
+  align-self: flex-end;
+}
+
+/* Sidebar Styles for Active Chat List */
+.chat-list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chat-list-item:hover {
+  background-color: #f3f4f6;
+  cursor: pointer;
+}
+
+.chat-list-item.active {
+  background-color: #e0e7ff;
+}

@@ -15,17 +15,17 @@ const Contact = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const response = await fetch('https://formspree.io/f/xovqaewd', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-        if (response.ok) {
-            alert('Message sent successfully!');
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            if (response.ok) {
+                alert('Message sent successfully!');
             window.location.reload(); // Reload the page after successful form submission
-        } else {
+            } else {
             alert('Error sending message.');
         }
     };

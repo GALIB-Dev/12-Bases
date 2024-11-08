@@ -1,0 +1,44 @@
+/* ChatControls.css */
+
+.chat-controls {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #f7fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.chat-controls input[type="text"] {
+  flex: 1;
+  padding: 8px 12px;
+  margin-right: 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1em;
+  background-color: #fff;
+  color: #333;
+}
+
+.chat-controls input[type="text"]:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.chat-controls button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #3b82f6;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chat-controls button:hover {
+  background-color: #2563eb;
+}
+
+.chat-controls button:focus {
+  outline: none;
+}
