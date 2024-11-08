@@ -35,10 +35,7 @@ const Navbar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/updates">Updates</Link></li>
         <li><Link to="/contact">Contact</Link></li>
-<<<<<<< HEAD
         <li><Link to="/ChatLogin">Forum</Link></li>
-=======
->>>>>>> 8780ca9766b85417dc7d565f198efc4306d2e1a4
         <li><Link to="/services">Services</Link></li>
       </ul>
     </nav>
