@@ -9,7 +9,6 @@ const ChatMessages = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Query messages ordered by timestamp in descending order to show new chats at the top
     const messagesRef = collection(db, 'messages');
     const q = query(messagesRef, orderBy('timestamp', 'desc'));
 
@@ -30,6 +29,27 @@ const ChatMessages = () => {
     return <p className="loading">Loading messages...</p>;
   }
 
+  // Function to format the message text and make URLs clickable
+  const formatMessage = (message) => {
+    const messageText = message.text || ""; // Ensure we have a string, even if undefined
+    
+    // Regular expression to detect URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    // Replace URLs with anchor tags
+    return messageText.split(urlRegex).map((part, index) => {
+      if (urlRegex.test(part)) {
+        return (
+          <a key={index} href={part} target="_blank" rel="noopener noreferrer">
+            {part}
+          </a>
+        );
+      } else {
+        return part;
+      }
+    });
+  };
+
   return (
     <div className="chat-messages">
       {messages.length === 0 ? (
@@ -39,9 +59,10 @@ const ChatMessages = () => {
           {messages.map((message, index) => (
             <div key={index} className="message-item">
               <p>
-                <strong>{message.user}:</strong> {message.text} {/* Display username */}
+                <strong>{message.user || "Unknown User"}:</strong>{" "}
+                {formatMessage(message)}
               </p>
-              <small>{message.timestamp.toLocaleString()}</small>
+              <small>{message.timestamp?.toLocaleString() || "No timestamp available"}</small>
             </div>
           ))}
         </div>

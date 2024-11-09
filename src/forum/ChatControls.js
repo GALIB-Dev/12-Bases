@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { db } from './firebase'; // Import Firebase configuration
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import './ChatControls.css';  // Ensure the CSS file is imported
 
 const ChatControls = ({ username }) => {
@@ -26,9 +27,8 @@ const ChatControls = ({ username }) => {
   return (
     <form className="chat-controls" onSubmit={sendMessage}>
       <div className="chat-controls-container">
-        <a className='rules-text'href='*'> ~~Respect the rules!~~
-        </a>
-
+        <Link to="/rules" className="rules-text"> ~~Respect the rules!~~ </Link> {/* Use React Router Link */}
+        
         <input
           type="text"
           value={message}

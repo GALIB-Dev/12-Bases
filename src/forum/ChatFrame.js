@@ -3,7 +3,7 @@ import ChatMessages from './ChatMessages';
 import ChatControls from './ChatControls';
 import './ChatFrame.css';
 
-const ChatFrame = ({ username }) => {
+const ChatFrame = ({ username = "Guest" }) => { // Default username as "Guest"
   return (
     <div className="chat-frame">
       <ChatControls username={username} /> {/* Pass username to ChatControls */}
@@ -12,7 +12,6 @@ const ChatFrame = ({ username }) => {
           <ChatMessages /> {/* Display messages for selected user */}
         </div>
       </div>
-
     </div>
   );
 };

@@ -8,10 +8,10 @@ import Home from './Home';
 import Loading from './Loading';
 import NotFound from './NotFound';
 import ChatLogin from './ChatLogin';
+import Rule from './forum/Rule';  // Correct path to Rule.js
 import ChatFrame from './forum/ChatFrame'; // Main forum chat component
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
 // Import Firebase configuration
 import './forum/firebase';
 
@@ -46,6 +46,8 @@ function App() {
               <Route path="/updates" element={<Updates />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/services" element={<Services />} />
+              <Route path="/Rule" component={Rule} /> 
+              
               <Route
                 path="/chatlogin"
                 element={<ChatLogin setUsername={setUsername} />} // Pass setUsername to ChatLogin
