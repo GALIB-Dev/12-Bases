@@ -1,76 +1,63 @@
-/* ChatMessages.css */
-
-/* Main Chat Messages Container */
 .chat-messages {
+  position: relative;
+  display: flex;
   width: 100%;
-  max-width: 800px;
-  padding: 20px;
-  overflow-y: auto;
-  background-color: #f7f7f7;
+  flex-direction: column; /* Newest messages at the top */
+  height: calc(100vh - 200px); /* Adjust height relative to viewport minus header/footer */
+  max-height: 100%;
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: -1rem;
+  background-color: #f9f9f9;
+  border: -1px solid #ddd;
+  border-radius: 1px;
+}
+
+/* Loading and no messages styles */
+.loading, .no-messages {
+  text-align: center;
+  color: #999;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+
+.message-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Individual Message */
-.chat-messages p {
-  background-color: #ffffff;
-  padding: 12px;
-  border-radius: 12px;
-  color: #333;
-  max-width: 75%;
-  word-wrap: break-word;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  font-size: 1em;
-  line-height: 1.4;
+/* Message item styling */
+.message-item {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  background-color: #e1f5fe;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Sent Message Style (Blue) */
-.chat-messages p.sent {
-  background-color: #4F73FF;
-  color: white;
-  align-self: flex-end;
-  border-radius: 20px 20px 0 20px;
-  max-width: 80%;
-  text-align: right;
+.message-item p {
+  margin: 0;
 }
 
-/* Received Message Style (Light Gray) */
-.chat-messages p.received {
-  background-color: #f0f4f8;
-  color: #333;
-  align-self: flex-start;
-  border-radius: 20px 20px 20px 0;
-  max-width: 80%;
+.message-item small {
+  color: #555;
+  font-size: 0.8rem;
 }
 
-/* Message Sender Name */
-.chat-messages p strong {
-  color: #3b82f6;
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-  font-size: 1.1em;
+/* Additional styling for smooth scrolling and footer interaction */
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Timestamp Styling */
-.chat-messages p small {
-  font-size: 0.8em;
-  color: #888;
-  display: block;
-  margin-top: 5px;
-  text-align: right;
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
 }
 
-/* New message notification (if you want to add a notification feature) */
-.chat-messages .new-message {
-  background-color: #4F73FF;
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 10px;
+/* Footer or control adjustments */
+.chat-controls {
+  position: sticky;
+  bottom: 0;
+  padding: 0.5rem;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
 }

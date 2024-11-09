@@ -1,56 +1,44 @@
-/* Chat List Container */
 .chat-list {
-  width: 100%;
-  max-width: 350px;
-  background-color: #f9fafb;
-  padding: 15px;
-  border-right: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow-y: auto;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Users row at the top */
-.chat-users {
-  display: flex;  /* Align users horizontally */
-  flex-wrap: wrap; /* Allow wrap if too many users */
-  margin-bottom: 15px;
-  gap: 10px;  /* Space between avatars */
+.loading-text, .error-text, .no-users-text {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #888;
 }
 
-/* User avatar styling */
-.chat-users .user-avatar {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: #3b82f6;
-  color: white;
-  font-size: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+.loading-text {
+  color: #666;
 }
 
-/* Usernames styling */
-.chat-list ul {
-  list-style: none;
+.error-text {
+  color: red;
+  font-weight: bold;
+}
+
+.no-users-text {
+  color: #555;
+}
+
+ul {
+  list-style-type: none;
   padding: 0;
-  margin: 0;
 }
 
-.chat-list li {
-  padding: 8px 12px;
-  margin-bottom: 10px;
-  background-color: #e2e8f0;
+.user-item {
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  background-color: #e1f5fe;
   border-radius: 4px;
-  font-weight: 500;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s;
 }
 
-/* Hover effect for chat list items */
-.chat-list li:hover {
-  background-color: #d1dce6;
+.user-item:hover {
+  background-color: #b3e5fc;
 }

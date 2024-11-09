@@ -1,15 +1,18 @@
 import React from 'react';
-import ChatList from './ChatList';
 import ChatMessages from './ChatMessages';
 import ChatControls from './ChatControls';
-import './ChatFrame.css';  // Import CSS for styling
+import './ChatFrame.css';
 
-const ChatFrame = () => {
+const ChatFrame = ({ username }) => {
   return (
     <div className="chat-frame">
-      <ChatList />
-      <ChatMessages />
-      <ChatControls />
+      <ChatControls username={username} /> {/* Pass username to ChatControls */}
+      <div className="chat-content">
+        <div className="chat-right">
+          <ChatMessages /> {/* Display messages for selected user */}
+        </div>
+      </div>
+
     </div>
   );
 };

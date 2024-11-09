@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route,} from 'react-router-dom';  // Added Outlet for nested routes
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './Navbar';
 import Updates from './Updates';
 import Contact from './Contact';
@@ -7,21 +7,17 @@ import Services from './Services';
 import Home from './Home';
 import Loading from './Loading';
 import NotFound from './NotFound';
-import ChatLogin from './ChatLogin'; 
+import ChatLogin from './ChatLogin';
+import ChatFrame from './forum/ChatFrame'; // Main forum chat component
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-// Firebase import (ensure firebase is correctly configured)
-import './forum/firebase'; 
-
-// Forum Components
-import ChatFrame from './forum/ChatFrame';
-import ChatControls from './forum/ChatControls';
-import ChatMessages from './forum/ChatMessages';
-import ChatList from './forum/ChatList';
+// Import Firebase configuration
+import './forum/firebase';
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState(localStorage.getItem('username') || ''); // Retrieve username from localStorage
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -30,6 +26,12 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (username) {
+      localStorage.setItem('username', username);  // Store username in localStorage
+    }
+  }, [username]);  // Save to localStorage whenever the username changes
 
   return (
     <div className="App">
@@ -44,17 +46,15 @@ function App() {
               <Route path="/updates" element={<Updates />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/services" element={<Services />} />
-              <Route path="/chatlogin" element={<ChatLogin />} />
-
-              {/* Forum Page Routes */}
-              <Route path="/forum" element={<ChatFrame />}>
-                <Route path="controls" element={<ChatControls />} />
-                <Route path="messages" element={<ChatMessages />} />
-                <Route path="chatlist" element={<ChatList />} />
-              </Route>
-
-              {/* Catch-all route */}
-              <Route path="*" element={<NotFound />} />
+              <Route
+                path="/chatlogin"
+                element={<ChatLogin setUsername={setUsername} />} // Pass setUsername to ChatLogin
+              />
+              <Route
+                path="/forum"
+                element={<ChatFrame username={username} />} // Pass username to ChatFrame
+              />
+              <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
             </Routes>
           </>
         )}
