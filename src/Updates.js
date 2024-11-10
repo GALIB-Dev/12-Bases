@@ -25,6 +25,18 @@ function Updates() {
       <p className="updates-description">
         <h4>Stay tuned, something exciting is coming soon!</h4>
       </p>
+
+      {/* New Feature Section */}
+      <div className="new-feature">
+        <h2>Update 1 <br></br>Introducing Our Real-Time Forum Chatting System</h2>
+        <p>
+          We're thrilled to announce the launch of a real-time chatting feature in our forum, allowing users to 
+          connect and interact instantly. This system supports live conversations, topic discussions, and helps 
+          build a stronger community. Join us and be part of the conversation!
+        </p>
+      </div>
+
+      {/* Meet the Team Section */}
       <div className="team-section">
         <h2>Meet the Team</h2>
         <div className="team-slider">
