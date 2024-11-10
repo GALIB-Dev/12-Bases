@@ -5,6 +5,15 @@
   box-sizing: border-box;
 }
 
+/* Centering the chat login container */
+.chat-login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  background-color: #f2f4f7; /* Optional background */
+}
+
 /* Chat Login Container */
 .chat-login-container {
   background-color: #ffffff;
