@@ -1,140 +1,114 @@
-/* General Styles */
+/* Reset and General Styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
 /* Chat Login Container */
 .chat-login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  padding: 20px;
-}
-
-/* Welcome Text */
-.welcome-text {
-  font-size: 20px;
-  color: #ffffff;
-  margin-bottom: 30px;
-  font-weight: bold;
-  opacity: 0.8;
-}
-
-/* Login Box */
-.login-box {
-  position: relative;
   background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+  padding: 40px 30px;
   width: 100%;
   max-width: 400px;
-  padding: 20px;
   text-align: center;
-  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Background Image */
-.background-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.1;
-  z-index: -1;
-  border-radius: 20px;
+.chat-login-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Card (Nickname and Enter Button) */
-.card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 40px;
-}
-
-.card input {
-  padding: 10px;
+/* Heading */
+.chat-login-container h2 {
+  font-size: 24px;
+  color: #333333;
   margin-bottom: 20px;
-  border: 2px solid #ccc;
-  border-radius: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.chat-login-container h2::after {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 3px;
+  background-color: #4ea82a;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Input Field */
+.chat-login-container input[type="text"] {
   width: 100%;
-  max-width: 300px;
+  padding: 12px;
   font-size: 16px;
-  text-align: center;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  margin-bottom: 20px;
   outline: none;
   transition: border-color 0.3s;
 }
 
-.card input:focus {
-  border-color: #6c63ff;
+.chat-login-container input[type="text"]:focus {
+  border-color: #4ea82a;
 }
 
-.card button {
-  padding: 12px 30px;
-  border: none;
-  border-radius: 30px;
-  background-color: #6c63ff;
-  color: white;
+/* Enter Button */
+.chat-login-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #000000;
+  color: #ffffff;
   font-size: 16px;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
+  font-weight: bold;
   transition: background-color 0.3s;
 }
 
-.card button:hover {
-  background-color: #5a54e0;
+.chat-login-container button:hover {
+  background-color: #4ea82a;
 }
 
-/* User Count */
-.user-count {
-  font-size: 14px;
-  margin-top: 20px;
-  color: #777;
-}
-
-/* Rules Section */
-.rules {
+/* Room Rules Section */
+.room-rules {
   margin-top: 30px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
+  color: #333333;
   font-size: 14px;
-  color: #555;
-  font-weight: bold;
+  text-align: left;
 }
 
-.rules ul {
-  list-style: none;
-  padding-left: 0;
+.room-rules h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #4ea82a;
 }
 
-.rules li {
-  margin-bottom: 5px;
+.room-rules ul {
+  list-style-type: disc;
+  margin-left: 20px;
 }
 
-/* Notes Section */
-.note {
-  margin-top: 20px;
-  font-size: 16px;
-  color: #333;
+.room-rules li {
+  margin-bottom: 8px;
+}
+
+.room-rules p {
+  margin-top: 10px;
+  color: #555555;
   font-style: italic;
-  opacity: 0.8;
-}
-
-/* Link to Report Issues */
-.link a {
-  display: inline-block;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #6c63ff;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s;
-}
-
-.link a:hover {
-  border-bottom: 2px solid #6c63ff;
+  font-size: 13px;
+  text-align: center;
 }

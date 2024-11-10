@@ -1,63 +1,98 @@
+/* Chat Messages Container */
 .chat-messages {
-  position: relative;
   display: flex;
+  flex-direction: column;
+  margin-left: 0%;
   width: 100%;
-  flex-direction: column; /* Newest messages at the top */
-  height: calc(100vh - 200px); /* Adjust height relative to viewport minus header/footer */
-  max-height: 100%;
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding: -1rem;
-  background-color: #f9f9f9;
-  border: -1px solid #ddd;
-  border-radius: 1px;
+  height: calc(100vh - 220px); /* Adjust height for header/footer */
+  overflow-y: auto;
+  padding: .6rem;
+  background: linear-gradient(to bottom, #f2f4f7, #ffffff);
+  border: 1px solid #000000;
+  border-radius: 2px;
+  box-shadow: inset 0 0 10px rgba(112, 224, 7, 0.425);
+  scroll-behavior: smooth; /* Smooth scrolling */
 }
 
-/* Loading and no messages styles */
+/* Loading and No Messages Text */
 .loading, .no-messages {
   text-align: center;
-  color: #999;
-  font-size: 0.9rem;
-  padding: 1rem;
+  color: #888;
+  font-size: 1rem;
+  padding: 2rem 0;
+  font-style: italic;
 }
 
+/* Message List */
 .message-list {
   display: flex;
   flex-direction: column;
+  gap: 1rem; /* Space between messages */
 }
 
-/* Message item styling */
+/* Message Item Styling */
 .message-item {
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 0;
-  background-color: #e1f5fe;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 1.2rem;
+  background: #e3f2fd;
+  color: #333;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.1s ease;
+  max-width: 98%;
+  align-self: flex-start;
+  word-wrap: break-word;  /* Break long words like URLs */
+  overflow-wrap: break-word; /* Ensures that long words break correctly */
+  white-space: normal;  /* Ensures text wraps properly */
 }
 
+/* Message Item Hover & Active State */
+.message-item:hover {
+  background: #bbdefb;
+  transform: scale(1.02);
+}
+
+/* Message Text and Timestamp */
 .message-item p {
   margin: 0;
+  line-height: 1.4;
 }
 
-.message-item small {
-  color: #555;
-  font-size: 0.8rem;
+/* Outgoing Message Style */
+.message-item.outgoing {
+  background: #dcedc8;
+  align-self: flex-end;
+  color: #333;
 }
 
-/* Additional styling for smooth scrolling and footer interaction */
+.message-item.outgoing:hover {
+  background: #c5e1a5;
+}
+
+/* Scrollbar Styling */
 .chat-messages::-webkit-scrollbar {
-  width: 8px;
+  width: 1px;
+  color: #000000;
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+  background: #b0bec5;
   border-radius: 4px;
 }
 
-/* Footer or control adjustments */
-.chat-controls {
-  position: sticky;
-  bottom: 0;
-  padding: 0.5rem;
-  background-color: #f9f9f9;
-  border-top: 1px solid #ddd;
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #78909c;
+}
+
+/* Links inside the messages */
+.message-item a {
+  color: #34b7f1;
+  text-decoration: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  text-overflow: ellipsis; /* Adds ellipsis for very long URLs */
+}
+
+.message-item a:hover {
+  text-decoration: underline;
 }
