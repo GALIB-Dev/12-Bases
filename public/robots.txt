@@ -6,9 +6,13 @@ Disallow: /login/
 Disallow: /checkout/
 Disallow: /search
 
-# Allow Facebook's external scraper
+# Allow Facebook's external scraper to access everything
 User-agent: facebookexternalhit
 Allow: /
+
+# Allow all bots to crawl the sitemap
+User-agent: *
+Allow: /sitemap.xml
 
 # Sitemap location
 Sitemap: https://12bases.xyz/sitemap.xml
