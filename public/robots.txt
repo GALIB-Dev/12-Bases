@@ -1,32 +1,14 @@
-# General settings for all bots
+# General rules for all user agents (bots)
 User-agent: *
-Disallow: /private/      # Disallow bots from accessing sensitive directories
-Disallow: /admin/        # Block admin sections
-Disallow: /login/        # Block login pages
-Disallow: /checkout/     # Block checkout pages if you have an e-commerce section
+Disallow: /private/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /checkout/
+Disallow: /search
 
-# Allow all bots to access the rest of the site
-Allow: /
-
-# Specific rules for Facebook's scraper
+# Allow Facebook's external scraper
 User-agent: facebookexternalhit
 Allow: /
 
-# Specific rules for Googlebot
-User-agent: Googlebot
-Disallow: /private/      # Googlebot can’t access the private section
-Allow: /
-
-# Block specific bots you don’t want crawling your site
-User-agent: Baidu
-Disallow: /
-
-User-agent: Yandex
-Disallow: /
-
-# Prevent bots from following search result pages
-User-agent: *
-Disallow: /search
-
-# Sitemap reference (ensure you have a sitemap.xml in your root directory)
+# Sitemap location
 Sitemap: https://12bases.xyz/sitemap.xml
