@@ -1,0 +1,70 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f6f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container styling */
+  .container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Heading styles */
+  h1, h2, h3 {
+    color: #222;
+    margin-bottom: 15px;
+  }
+  
+  /* Paragraph and list styling */
+  p, ul, ol {
+    margin: 15px 0;
+    font-size: 1rem;
+  }
+  
+  ul, ol {
+    padding-left: 20px;
+  }
+  
+  /* Link styling */
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Strong elements for definitions */
+  strong {
+    color: #444;
+  }
+  
+  /* List item styling */
+  li {
+    margin: 10px 0;
+  }
+  
+  /* Divider styling for sections */
+  h2 {
+    border-bottom: 2px solid #ececec;
+    padding-bottom: 5px;
+  }
+  
+  /* Footer note */
+  .footer-note {
+    font-size: 0.9rem;
+    color: #777;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
