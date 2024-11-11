@@ -1,7 +1,7 @@
 import React from 'react';
 import './Updates.css';
 import ddImage from './dd.png'; // Update this path
-import mdImage from './md.png'; // Update this path
+import mdImage from './x.png'; // Update this path
 
 function Updates() {
   const teamMembers = [
