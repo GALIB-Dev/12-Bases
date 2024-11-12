@@ -62,14 +62,14 @@
   
   /* Submit Button */
   button[type="submit"] {
-    width: 100%;
+    width: 30%;
     padding: 0.9rem;
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
     background-color: #0070c9; /* Apple-like blue */
     border: none;
-    border-radius: 8px;
+    border-radius: 100px;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
     margin-top: 1rem;
