@@ -1,0 +1,110 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background: linear-gradient(135deg, #2b2b4d, #1f1f40);
+    border-radius: 12px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    color: #f5f6fa;
+    position: relative;
+    text-align: center;
+  }
+  
+  /* Close Button */
+  .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #ff5252;
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .close-btn:hover {
+    background-color: #ff3333;
+  }
+  
+  /* Modal Header */
+  .modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.8rem;
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-icon {
+    font-size: 3rem;
+    color: #4dd0e1;
+  }
+  
+  /* Modal Body */
+  .modal-body p {
+    font-size: 1rem;
+    color: #b0bec5;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .modal-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  
+  .modal-body ul li {
+    font-size: 1rem;
+    color: #d4d4dc;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Contact Button */
+  .contact-btn {
+    background-color: #4dd0e1;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 5px;
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .contact-btn:hover {
+    background-color: #009688;
+    box-shadow: 0 4px 10px rgba(0, 150, 136, 0.4);
+  }
+
+  

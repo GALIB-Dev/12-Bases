@@ -1,0 +1,206 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #f0f4f8, #d1e3e8);
+  color: #333;
+  padding: 30px;
+}
+
+/* Container to center content */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+}
+
+/* Heading 1 (Main title) */
+h1 {
+  font-size: 42px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+/* Add cool underline effect on headings */
+h1::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background-color: #2980b9;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Paragraph styles */
+p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 15px;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* Links */
+a {
+  color: #2980b9;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+}
+
+a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #2980b9;
+  bottom: -2px;
+  left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+  transform-origin: bottom right;
+}
+
+a:hover {
+  color: #1abc9c;
+}
+
+a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Heading 2 (Subsection titles) */
+h2 {
+  font-size: 30px;
+  color: #2c3e50;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Heading 3 (Subsection subheadings) */
+h3 {
+  font-size: 24px;
+  color: #34495e;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+/* Unordered list for definitions and other lists */
+ul {
+  list-style-type: none;
+  margin-left: 20px;
+}
+
+/* List item styles */
+ul li {
+  margin-bottom: 15px;
+}
+
+ul li p {
+  font-size: 16px;
+  color: #555;
+  padding-left: 15px;
+  position: relative;
+}
+
+ul li p::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #2980b9;
+}
+
+/* Styling for the cookies information */
+ul li p {
+  padding-left: 20px;
+  position: relative;
+}
+
+ul li p::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #2980b9;
+}
+
+/* Small font for the last updated date */
+p:last-of-type {
+  font-size: 14px;
+  color: #888;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Section styles */
+section {
+  margin-bottom: 40px;
+}
+
+/* Box for the sections */
+section {
+  padding: 25px;
+  margin-bottom: 30px;
+  background-color: #f9fafb;
+  border-left: 5px solid #2980b9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+}
+
+section:hover {
+  background-color: #e7f2f7;
+}
+
+/* Responsive Design for smaller screens */
+@media screen and (max-width: 768px) {
+  body {
+      padding: 20px;
+  }
+
+  .container {
+      padding: 15px;
+      max-width: 100%;
+  }
+
+  h1 {
+      font-size: 34px;
+  }
+
+  h2 {
+      font-size: 26px;
+  }
+
+  h3 {
+      font-size: 22px;
+  }
+
+  p {
+      font-size: 16px;
+  }
+}
