@@ -40,75 +40,46 @@
 /* Call to Action Section */
 .cta {
   width: 100%;
-  padding: 50px 20px;
+  padding: 40px 20px;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.73); /* Dark background */
-  color: rgb(221, 200, 11); /* Text color */
+  background-color: rgba(0, 0, 0, 0.8); /* Dark background */
+  color: #ddc80b; /* Highlight text color */
 }
 
 .cta h2 {
-  font-size: 2.5rem; /* Call to Action title size */
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 15px;
 }
 
 .cta p {
-  font-size: 1.2rem; /* Paragraph size */
-  color: #ffffff;
+  font-size: 1rem;
+  color: #fff;
 }
 
 .cta-btn {
-  margin-top: 20px; /* Space above the button */
-  background: linear-gradient(135deg, #ff6a00, #ffcc00); /* Gradient background */
-  padding: 15px 40px; /* Adjust padding for better shape */
-  border-radius: 50px; /* Rounded edges */
-  font-size: 1.2rem; /* Slightly larger font size */
-  font-weight: bold; /* Bold text for emphasis */
-  color: white; /* White text color */
-  text-transform: uppercase; /* Uppercase text */
-  letter-spacing: 2px; /* Spacing between letters */
-  border: 2px solid transparent; /* Transparent border */
-  background-clip: padding-box; /* Clip the background within the padding */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: all 0.3s ease; /* Smooth transition for hover effects */
-  text-decoration: none; /* Remove underline */
+  margin-top: 20px;
+  background: linear-gradient(135deg, #ff6a00, #ffcc00); /* Gradient */
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .cta-btn:hover {
-  transform: translateY(-4px); /* Lift the button on hover */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Increase shadow for depth */
-  background: linear-gradient(135deg, #ffcc00, #ff6a00); /* Reversed gradient on hover */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .cta-btn:active {
-  transform: translateY(2px); /* Button "click" effect */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow when clicked */
+  transform: translateY(2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
-.cta-btn::before {
-  content: ''; /* Adding a pseudo-element for a glowing effect */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  z-index: -1;
-  animation: glowing 1.5s infinite ease-in-out; /* Glowing animation */
-}
-
-@keyframes glowing {
-  0% {
-    box-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 15px #ffcc00;
-  }
-  50% {
-    box-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 30px #ffcc00;
-  }
-  100% {
-    box-shadow: 0 0 5px #ffcc00, 0 0 10px #ffcc00, 0 0 15px #ffcc00;
-  }
-}
 
 
 /* Responsive Styles */
