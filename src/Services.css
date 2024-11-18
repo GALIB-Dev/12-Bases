@@ -1,151 +1,213 @@
-/* Basic Reset */
+/*=============== GLOBAL STYLES ===============*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
 }
 
-/* Container Styling */
+/* Ensure the logo is not affected */
+#logo {
+  font-size: 3rem;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/*=============== SERVICES CONTAINER ===============*/
 .services-container {
-  background-color: #1a1a2e;
-  color: #fff;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   text-align: center;
-  padding: 4rem 2rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding: 2rem;
 }
 
 .services-title {
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: #f8f9fa;
-  margin-bottom: 2.5rem;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  color: #f3e3e3;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Services Grid */
+/*=============== SERVICE CARD STYLES ===============*/
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  width: 100%;
-  max-width: 1200px;
-  padding: 0 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  justify-items: center;
 }
 
-/* Service Card Styling */
 .service-card {
-  background: linear-gradient(135deg, #2b2b4d, #1f1f40);
+  background-color: rgba(255, 255, 255, 0.616);
+  padding: 2.5rem;
   border-radius: 12px;
-  padding: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: #f5f6fa;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 280px;
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.3s ease;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .service-card:hover {
-  transform: translateY(-7px);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-15px);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 1);
 }
 
-/* Icon Styling */
 .icon-container {
-  font-size: 2.5rem;
-  color: #4dd0e1;
-  margin-bottom: 1.2rem;
+  color: #007bff;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s ease;
 }
 
-/* Service Title */
+.icon-container:hover {
+  color: #0056b3;
+}
+
 .service-card h2 {
-  font-size: 1.6rem;
-  margin-bottom: 0.5rem;
-  color: #e0e0e0;
-}
-
-/* Service Description */
-.service-card p {
-  font-size: 1rem;
-  color: #b0bec5;
-  text-align: center;
-  line-height: 1.4;
-}
-
-/* Button Styling */
-.learn-more-btn {
-  background-color: #4dd0e1;
-  color: #1a1a2e;
-  border: none;
-  border-radius: 5px;
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-top: 1.2rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.learn-more-btn:hover {
-  background-color: #009688;
-  box-shadow: 0 4px 10px rgba(0, 150, 136, 0.3);
-}
-
-/* Unavailable Services */
-.unavailable {
-  opacity: 0.6;
-  cursor: not-allowed;
-  position: relative;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
 }
 
 .unavailable-tag {
-  font-size: 0.9rem;
-  color: #ff5252;
-  margin-top: 0.3rem;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-/* Particle Background Effect */
-body {
-  background: radial-gradient(circle, #151f28, #1a1a2e);
-  overflow: hidden;
-}
-
-/* Modal Overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(5px);
-  z-index: 1000;
-}
-
-/* Contact Button Glow Effect */
-.contact-btn {
-  background-color: #4dd0e1;
-  color: #1a1a2e;
-  border: none;
-  border-radius: 5px;
-  padding: 0.6rem 1.2rem;
   font-size: 1rem;
-  font-weight: bold;
-  transition: box-shadow 0.3s ease;
-  cursor: pointer;
+  color: #ff4747;
 }
 
-.contact-btn:hover {
-  box-shadow: 0 0 15px rgba(77, 208, 225, 0.7);
+.service-card p {
+  font-size: 1.1rem;
+  margin-bottom: 1.8rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.learn-more-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 35px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-weight: 600;
+}
+
+.learn-more-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+/*=============== MEDIA QUERIES ===============*/
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+  .services-title {
+    font-size: 2.2rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .icon-container {
+    font-size: 2.5rem;
+  }
+
+  .service-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+  }
+
+  .learn-more-btn {
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Tablet Layout */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .services-title {
+    font-size: 2.5rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .service-card {
+    width: 220px;
+  }
+
+  .icon-container {
+    font-size: 2.8rem;
+  }
+
+  .service-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .service-card p {
+    font-size: 1rem;
+  }
+}
+
+/* PC Layout */
+@media (min-width: 1025px) {
+  .services-title {
+    font-size: 3.2rem;
+    margin-bottom: 4rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .service-card {
+    width: 300px;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .icon-container {
+    font-size: 4rem;
+  }
+
+  .service-card h2 {
+    font-size: 2rem;
+    color: #444;
+  }
+
+  .service-card p {
+    font-size: 1.1rem;
+  }
+
+  .learn-more-btn {
+    padding: 0.8rem 1.6rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  /* Add subtle animation to buttons */
+  .learn-more-btn:hover {
+    transform: translateY(-5px);
+    transition: transform 0.4s ease, background-color 0.4s ease;
+  }
 }
