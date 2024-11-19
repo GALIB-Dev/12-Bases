@@ -17,7 +17,7 @@ const Navbar = () => {
         <img src={FrontLogo} alt="Back Logo" className="back-logo" /> {/* Back logo */}
         <img src={SpinLogo} alt="Spinning Logo" className="logo" /> {/* Front logo */}
         <p>
-          <span style={{ color: 'red' }}> <b>Ⅻ</b></span> 𝘽𝘼𝙎𝙀𝙎
+          <span className="Galib" style={{ color: 'red' }}> <b>Ⅻ</b></span> 𝘽𝘼𝙎𝙀𝙎
        </p>
 
       </div>
