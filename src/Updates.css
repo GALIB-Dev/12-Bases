@@ -1,141 +1,179 @@
 /* Updates Container */
 .updates-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px;
-    background-color: #1e1e1e7a; /* Dark background */
-    color: #f4f4f4; /* Light text color */
-    border-radius: 20px; /* Rounded corners */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Shadow for depth */
-    font-family: 'Arial', sans-serif; /* Font family */
+    max-width: 1400px;
+    margin: 80px auto 0;
+    padding: 2rem;
+    min-height: 100vh;
+    background: #111111;
+    color: #ffffff;
   }
   
-  /* Title Styling */
-  .updates-title {
-    font-size: 36px;
+  .updates-header {
     text-align: center;
-    margin-bottom: 20px;
-    color: #ffcc00; /* Highlight color */
+    margin-bottom: 4rem;
   }
   
-  /* Description Styling */
-  .updates-description {
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 40px;
-    color: #ccc; /* Slightly lighter text */
+  .updates-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #72da37 0%, #4ca819 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .updates-header p {
+    color: #999;
+    font-size: 1.2rem;
+  }
+  
+  /* Updates Grid */
+  .updates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+  
+  .update-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #333;
+    display: flex;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .update-card:hover {
+    border-color: #72da37;
+    transform: translateY(-5px);
+  }
+  
+  .update-icon {
+    font-size: 2rem;
+    color: #72da37;
+  }
+  
+  .update-content h3 {
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  
+  .update-content p {
+    color: #999;
+    margin-bottom: 1rem;
+  }
+  
+  .update-date {
+    color: #72da37;
+    font-size: 0.9rem;
   }
   
   /* Team Section */
   .team-section {
-    text-align: center;
+    margin-bottom: 4rem;
   }
   
-  /* Team Slider */
-  .team-slider {
+  .team-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+  
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  .team-card {
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+  }
+  
+  .team-image-container {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+  }
+  
+  .team-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .team-info {
+    padding: 1.5rem;
+  }
+  
+  .team-info h3 {
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  
+  .team-info h4 {
+    color: #72da37;
+    margin-bottom: 1rem;
+  }
+  
+  .team-info p {
+    color: #999;
+    margin-bottom: 1rem;
+  }
+  
+  .team-skills {
     display: flex;
-    overflow-x: auto; /* Allow horizontal scrolling */
-    scroll-snap-type: x mandatory; /* Enable snapping */
-    padding: 20px 0; /* Padding for slider */
-    gap: 30px; /* Space between team members */
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
   
-  /* Team Member Card */
-  .team-member {
-    flex: 0 0 auto; /* Prevent flex items from shrinking */
-    width: 250px; /* Fixed width for cards */
-    background-color: #333333ab; /* Card background color */
-    border-radius: 15px; /* Rounded corners */
-    padding: 20px;
+  .skill-tag {
+    background: rgba(114, 218, 55, 0.1);
+    color: #72da37;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  .team-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #72da37;
+    font-size: 1.5rem;
+  }
+  
+  /* Coming Soon Section */
+  .coming-soon {
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
-    transition: transform 0.2s ease; /* Smooth transform on hover */
-    scroll-snap-align: start; /* Snap alignment */
+    padding: 4rem 0;
   }
   
-  .team-member:hover {
-    transform: translateY(-10px); /* Lift effect on hover */
+  .coming-soon h2 {
+    color: #fff;
+    margin-bottom: 1rem;
   }
   
-  /* Team Image */
-  .team-image {
-    width: 100%; /* Full width of card */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 50%; /* Circular images */
-    border: 3px solid #ffcc00; /* Border for images */
-    margin-bottom: 15px; /* Space below image */
+  .coming-soon p {
+    color: #999;
   }
   
-  /* Member Name */
-  .team-member h3 {
-    font-size: 20px;
-    color: #ffcc00; /* Highlight color for names */
-    margin: 10px 0; /* Vertical spacing */
-  }
-
-  /* Member Name */
-  .team-member h4 {
-    font-size: 16px;
-    color: #ffeca1; /* Highlight color for names */
-    margin: 10px 0; /* Vertical spacing */
-  }
-  
-  /* Member Role */
-  .team-member p {
-    font-size: 16px;
-    color: #ffffff; /* Lighter text for roles */
-  }
-  
-  /* Media Queries for Responsiveness */
+  /* Responsive Design */
   @media (max-width: 768px) {
-    .updates-container {
-      padding: 20px; /* Less padding on smaller screens */
+    .updates-header h1 {
+      font-size: 2rem;
     }
   
-    .updates-title {
-      font-size: 28px; /* Smaller title font */
+    .team-grid {
+      grid-template-columns: 1fr;
     }
   
-    .updates-description {
-      font-size: 16px; /* Smaller description font */
-    }
-  
-    .team-slider {
-      flex-wrap: nowrap; /* Prevent wrapping */
-    }
-  
-    .team-member {
-      width: 180px; /* Smaller width for cards on mobile */
-    }
-  
-    .team-member h3 {
-      font-size: 18px; /* Smaller name font */
-    }
-  
-    .team-member p {
-      font-size: 14px; /* Smaller role font */
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .updates-title {
-      font-size: 24px; /* Even smaller title font for very small screens */
-    }
-  
-    .updates-description {
-      font-size: 14px; /* Even smaller description font */
-    }
-  
-    .team-member {
-      width: 150px; /* Smaller width for cards on very small screens */
-    }
-  
-    .team-member h3 {
-      font-size: 16px; /* Smaller name font */
-    }
-  
-    .team-member p {
-      font-size: 12px; /* Smaller role font */
+    .updates-grid {
+      grid-template-columns: 1fr;
     }
   }
   

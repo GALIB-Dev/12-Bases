@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <!-- Essential Meta Tags -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#013220" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#013220" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#001a10" media="(prefers-color-scheme: dark)" />
     <meta name="description" content="12 Bases offers innovative web solutions to bring your projects to life. Explore cutting-edge React development, web design, app creation, and expert insights to elevate your business!" />
+    <meta name="color-scheme" content="light dark" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:; media-src 'self' https:; object-src 'none';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
     
     <!-- SEO Meta Tags -->
-    <meta name="robots" content="index, follow" />
-    <meta name="keywords" content="React development, Web development, app development, website design, innovative web solutions, 12bases, project development, expert web solutions, 12BASES.xyz" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="keywords" content="React development, Web development, app development, website design, innovative web solutions, 12bases, project development, expert web solutions, 12BASES.xyz, Progressive Web Apps, AI Integration" />
     <meta name="author" content="12 Bases" />
+    <meta name="geo.region" content="BD" />
+    <meta name="geo.position" content="23.8103;90.4125" />
+    <meta name="ICBM" content="23.8103, 90.4125" />
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://12bases.xyz" />
@@ -36,10 +47,36 @@
     <link rel="icon" type="image/png" sizes="16x16" href="https://12bases.xyz/favicon-16x16.png" />
     <link rel="manifest" href="https://12bases.xyz/site.webmanifest" />
 
-    <!-- Google Fonts Preload -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" as="style" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- Preconnect to Critical Origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://12bases.xyz" crossorigin />
+
+    <!-- PWA Support -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-startup-image" href="/splash.png" />
+
+    <!-- Modern Font Loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Inter:wght@400;600&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Inter:wght@400;600&display=swap" />
     
+    <!-- Critical CSS Inline -->
+    <style>
+      :root {
+        --primary-color: #013220;
+        --secondary-color: #026440;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --primary-color: #001a10;
+          --secondary-color: #013220;
+        }
+      }
+      /* Add critical CSS here */
+    </style>
+
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
     
@@ -53,66 +90,146 @@
 
     <title>12 Bases | Innovative Web Solutions</title>
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Analytics (GDPR Compliant) -->
+    <script type="text/javascript">
+      if (localStorage.getItem('cookieConsent') === 'true') {
+        // Add your analytics code here
+      }
+    </script>
+
+    <!-- Enhanced Structured Data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "12 Bases",
-        "url": "https://12bases.xyz",
-        "logo": "https://12bases.xyz/logo.png",
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "telephone": "+880-178-590-4899",
-          "contactType": "Customer Service",
-          "areaServed": "Bangladesh",
-          "availableLanguage": "English"
-        },
-        "sameAs": [
-          "https://www.facebook.com/12bases",
-          "https://www.twitter.com/12bases",
-          "https://www.linkedin.com/company/12bases"
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://12bases.xyz/#organization",
+            "name": "12 Bases",
+            "url": "https://12bases.xyz",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://12bases.xyz/logo.png",
+              "width": "180",
+              "height": "180"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+880-178-590-4899",
+              "contactType": "Customer Service",
+              "areaServed": ["BD", "Global"],
+              "availableLanguage": ["en", "bn"],
+              "hoursAvailable": "Mo-Fr 09:00-18:00"
+            },
+            "sameAs": [
+              "https://www.facebook.com/12bases",
+              "https://www.twitter.com/12bases",
+              "https://www.linkedin.com/company/12bases",
+              "https://github.com/12bases"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://12bases.xyz/#website",
+            "url": "https://12bases.xyz",
+            "name": "12 Bases",
+            "publisher": {"@id": "https://12bases.xyz/#organization"},
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://12bases.xyz/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
         ]
       }
     </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <div style="padding: 20px; text-align: center; background: #f8d7da; color: #721c24;">
+        You need to enable JavaScript to run this app. Visit <a href="/nojs">our no-JS version</a> for basic functionality.
+      </div>
+    </noscript>
+    
+    <!-- Skip to main content for accessibility -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
     <div id="root"></div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" style="display: none;">
+      <!-- Add your cookie consent HTML here -->
+    </div>
 
     <!-- Social Share Buttons -->
     <div class="share-buttons">
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://12bases.xyz" target="_blank" class="facebook" aria-label="Share on Facebook" rel="noopener noreferrer">
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://12bases.xyz" 
+         target="_blank" 
+         class="facebook" 
+         aria-label="Share on Facebook" 
+         rel="noopener noreferrer"
+         style="--order: 1">
         <i class="fab fa-facebook-f"></i>
       </a>
-      <a href="https://api.whatsapp.com/send?text=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!%20https://12bases.xyz" target="_blank" class="whatsapp" aria-label="Share on WhatsApp" rel="noopener noreferrer">
+      <a href="https://api.whatsapp.com/send?text=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!%20https://12bases.xyz" 
+         target="_blank" 
+         class="whatsapp" 
+         aria-label="Share on WhatsApp" 
+         rel="noopener noreferrer"
+         style="--order: 2">
         <i class="fab fa-whatsapp"></i>
       </a>
-      <a href="https://t.me/share/url?url=https://12bases.xyz&text=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!" target="_blank" class="telegram" aria-label="Share on Telegram" rel="noopener noreferrer">
+      <a href="https://t.me/share/url?url=https://12bases.xyz&text=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!" 
+         target="_blank" 
+         class="telegram" 
+         aria-label="Share on Telegram" 
+         rel="noopener noreferrer"
+         style="--order: 3">
         <i class="fab fa-telegram-plane"></i>
       </a>
-      <a href="mailto:?subject=Check%20out%2012bases.xyz&body=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!%20https://12bases.xyz" target="_blank" class="gmail" aria-label="Share via Gmail" rel="noopener noreferrer">
+      <a href="mailto:?subject=Check%20out%2012bases.xyz&body=Discover%20fresh%20ideas%20and%20services%20at%2012bases.xyz!%20https://12bases.xyz" 
+         target="_blank" 
+         class="gmail" 
+         aria-label="Share via Gmail" 
+         rel="noopener noreferrer"
+         style="--order: 4">
         <i class="fas fa-envelope"></i>
       </a>
-      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://12bases.xyz" target="_blank" class="linkedin" aria-label="Share on LinkedIn" rel="noopener noreferrer">
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://12bases.xyz" 
+         target="_blank" 
+         class="linkedin" 
+         aria-label="Share on LinkedIn" 
+         rel="noopener noreferrer"
+         style="--order: 5">
         <i class="fab fa-linkedin-in"></i>
       </a>
     </div>
 
-    <!-- Footer with Privacy Links -->
+    <!-- Enhanced Footer -->
     <footer>
       <div class="footer-container">
         <div class="footer-left">
-          <p>&copy; 2024 12 Bases. All Rights Reserved.</p>
+          <p>&copy; 2024 12 Bases | All Rights Reserved</p>
         </div>
         <div class="footer-right">
-          <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a> | 
-          <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+          <a href="/privacy-policy.html" rel="noopener noreferrer">Privacy</a> | 
+          <a href="/terms-of-service.html" rel="noopener noreferrer">Terms</a>
         </div>
       </div>
     </footer>
 
-    <!-- Optional JavaScript for FontAwesome Icons -->
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    </script>
+
+    <!-- Deferred Scripts -->
+    <script src="/js/cookie-consent.js" defer></script>
+    <script src="/js/performance-metrics.js" defer></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
   </body>
 </html>

@@ -1,57 +1,148 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { FaUsers, FaRocket, FaCode, FaBullhorn } from 'react-icons/fa';
 import './Updates.css';
-import ddImage from './dd.png'; // Update this path
-import mdImage from './x.png'; // Update this path
+import ddImage from './dd.png';
+import mdImage from './x.png';
 
-function Updates() {
+const Updates = () => {
+  const updates = [
+    {
+      title: "Real-Time Forum System",
+      description: "Introducing our new real-time chatting feature enabling instant community interactions and live discussions.",
+      icon: <FaUsers />,
+      date: "March 2024"
+    },
+    {
+      title: "AI Integration",
+      description: "Implementing advanced AI features to enhance user experience and provide smarter solutions.",
+      icon: <FaRocket />,
+      date: "Coming Soon"
+    }
+  ];
+
   const teamMembers = [
     {
       name: 'Developer & Designer',
-      name1: 'Mohammad Al Galib',
-      role: 'Responsible for development and coding. Creates the visual design for the projects.',
-      image: ddImage, // Use imported image
+      fullName: 'Mohammad Al Galib',
+      role: 'Full-stack development and UI/UX design',
+      image: ddImage,
+      skills: ['React', 'Node.js', 'UI/UX', 'MongoDB'],
+      icon: <FaCode />
     },
     {
-      name: 'Managing Director & Marketing Head',
-      name1: 'Yusuf Anam',
-      role: 'Oversees company direction and strategy. Responsible for marketing and outreach.',
-      image: mdImage, // Use imported image
-    },
+      name: 'Head Advisor',
+      fullName: 'Yusuf Anam',
+      role: 'Strategy and Marketing',
+      image: mdImage,
+      skills: ['Marketing', 'Strategy', 'Business Development'],
+      icon: <FaBullhorn />
+    }
   ];
 
-  return (
-    <div className="updates-container">
-      <h1 className="updates-title">Latest Updates</h1>
-      <p className="updates-description">
-        <h4>Stay tuned, something exciting is coming soon!</h4>
-      </p>
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3
+      }
+    }
+  };
 
-      {/* New Feature Section */}
-      <div className="new-feature">
-        <h2>Update 1 <br></br>Introducing Our Real-Time Forum Chatting System</h2>
-        <p>
-          We're thrilled to announce the launch of a real-time chatting feature in our forum, allowing users to 
-          connect and interact instantly. This system supports live conversations, topic discussions, and helps 
-          build a stronger community. Join us and be part of the conversation!
-        </p>
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
+  return (
+    <motion.div 
+      className="updates-container"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+    >
+      {/* Header Section */}
+      <motion.div 
+        className="updates-header"
+        variants={itemVariants}
+      >
+        <h1>Latest Updates</h1>
+        <p>Innovating for tomorrow, delivering today</p>
+      </motion.div>
+
+      {/* Updates Grid */}
+      <div className="updates-grid">
+        {updates.map((update, index) => (
+          <motion.div 
+            key={index}
+            className="update-card"
+            variants={itemVariants}
+          >
+            <div className="update-icon">
+              {update.icon}
+            </div>
+            <div className="update-content">
+              <h3>{update.title}</h3>
+              <p>{update.description}</p>
+              <span className="update-date">{update.date}</span>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
-      {/* Meet the Team Section */}
-      <div className="team-section">
-        <h2>Meet the Team</h2>
-        <div className="team-slider">
+      {/* Team Section */}
+      <motion.div 
+        className="team-section"
+        variants={itemVariants}
+      >
+        <h2>Our Team</h2>
+        <div className="team-grid">
           {teamMembers.map((member, index) => (
-            <div className="team-member" key={index}>
-              <img src={member.image} alt={member.name} className="team-image" />
-              <h3>{member.name}</h3>
-              <h4>{member.name1}</h4>
-              <p>{member.role}</p>
-            </div>
+            <motion.div 
+              key={index}
+              className="team-card"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="team-image-container">
+                <img src={member.image} alt={member.fullName} />
+              </div>
+              <div className="team-info">
+                <h3>{member.fullName}</h3>
+                <h4>{member.name}</h4>
+                <p>{member.role}</p>
+                <div className="team-skills">
+                  {member.skills.map((skill, idx) => (
+                    <span key={idx} className="skill-tag">{skill}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="team-icon">
+                {member.icon}
+              </div>
+            </motion.div>
           ))}
         </div>
-      </div>
-    </div>
+      </motion.div>
+
+      {/* Coming Soon Section */}
+      <motion.div 
+        className="coming-soon"
+        variants={itemVariants}
+      >
+        <h2>Stay Tuned</h2>
+        <p>More exciting features and updates coming soon!</p>
+      </motion.div>
+    </motion.div>
   );
-}
+};
 
 export default Updates;

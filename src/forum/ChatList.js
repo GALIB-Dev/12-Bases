@@ -1,59 +1,119 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
-import { collection, query, onSnapshot } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy, limit } from 'firebase/firestore';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaCircle } from 'react-icons/fa';
 import './ChatList.css';
 
-const ChatList = () => {
+const ChatList = ({ onUserSelect, selectedUser }) => {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null);     // Error state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Set up a query to get all messages
-    const q = query(collection(db, 'messages'));
+    const q = query(
+      collection(db, 'messages'),
+      orderBy('timestamp', 'desc'),
+      limit(100)
+    );
 
-    // Listen for real-time updates
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
-        // Extract unique usernames from messages
-        const uniqueUsers = [
-          ...new Set(snapshot.docs.map((doc) => doc.data().user)),
-        ];
-        setUsers(uniqueUsers);
-        setLoading(false); // Set loading to false when data is loaded
+        const userMap = new Map();
+        
+        snapshot.docs.forEach((doc) => {
+          const data = doc.data();
+          if (data.user && !userMap.has(data.user)) {
+            userMap.set(data.user, {
+              name: data.user,
+              lastMessage: data.text,
+              timestamp: data.timestamp,
+              isOnline: true // You can implement real online status logic
+            });
+          }
+        });
+
+        setUsers(Array.from(userMap.values()));
+        setLoading(false);
       },
       (err) => {
         console.error('Error fetching user list:', err);
-        setError('Could not load users'); // Set error message
+        setError('Could not load users');
         setLoading(false);
       }
     );
 
-    // Clean up the listener on component unmount
     return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return <p className="loading-text">Loading users...</p>;
-  }
-
-  if (error) {
-    return <p className="error-text">{error}</p>; // Display error message
-  }
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="chat-list">
-      {users.length === 0 ? (
-        <p className="no-users-text">No users available</p>
+    <motion.div 
+      className="chat-list-container"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+    >
+      <div className="chat-list-header">
+        <h3>Active Users</h3>
+        <input
+          type="text"
+          placeholder="Search users..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+        />
+      </div>
+
+      {loading ? (
+        <div className="chat-list-loading">
+          <div className="loading-spinner"></div>
+          <p>Loading users...</p>
+        </div>
+      ) : error ? (
+        <div className="chat-list-error">
+          <p>{error}</p>
+        </div>
       ) : (
-        <ul>
-          {users.map((user, index) => (
-            <li key={index} className="user-item">{user}</li>
-          ))}
-        </ul>
+        <AnimatePresence>
+          <div className="chat-list">
+            {filteredUsers.length === 0 ? (
+              <p className="no-users-text">No users found</p>
+            ) : (
+              <motion.ul className="user-list">
+                {filteredUsers.map((user) => (
+                  <motion.li
+                    key={user.name}
+                    className={`user-item ${selectedUser === user.name ? 'selected' : ''}`}
+                    onClick={() => onUserSelect(user.name)}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ scale: 1.02 }}
+                  >
+                    <div className="user-avatar">
+                      {user.name[0].toUpperCase()}
+                    </div>
+                    <div className="user-info">
+                      <div className="user-name">
+                        {user.name}
+                        <span className={`status-dot ${user.isOnline ? 'online' : 'offline'}`}>
+                          <FaCircle />
+                        </span>
+                      </div>
+                      <div className="last-message">{user.lastMessage}</div>
+                    </div>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            )}
+          </div>
+        </AnimatePresence>
       )}
-    </div>
+    </motion.div>
   );
 };
 

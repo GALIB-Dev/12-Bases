@@ -1,51 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaUser, 
   FaEnvelope, 
-  FaPhone, 
-  FaComment, 
   FaPaperPlane,
   FaCheckCircle,
   FaMapMarkerAlt,
   FaClock,
-  FaGlobe
+  FaGlobe,
+  FaWhatsapp,
+  FaTelegram,
+  FaFacebookMessenger
 } from 'react-icons/fa';
 import './Contact.css';
 
 const Contact = () => {
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
-        phone: '',
+        contact: '',
         subject: '',
         message: ''
     });
 
     const [status, setStatus] = useState({
-        submitted: false,
         submitting: false,
-        info: { error: false, msg: null }
+        submitted: false,
+        error: null
     });
 
-    const [selectedMethod, setSelectedMethod] = useState('email');
-    const [isVisible, setIsVisible] = useState(false);
+    const contactInfo = [
+        {
+            icon: <FaMapMarkerAlt />,
+            title: 'Location',
+            details: 'Joypurhat-5900, Bangladesh',
+            color: '#72da37'
+        },
+        {
+            icon: <FaClock />,
+            title: 'Business Hours',
+            details: '9:00 AM - 6:00 PM',
+            color: '#4ca819'
+        },
+        {
+            icon: <FaGlobe />,
+            title: 'Online Support',
+            details: '24/7 Available',
+            color: '#72da37'
+        }
+    ];
 
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleMethodChange = (method) => {
-        setSelectedMethod(method);
-    };
+    const socialContacts = [
+        {
+            icon: <FaWhatsapp />,
+            platform: 'WhatsApp',
+            link: 'https://wa.me/+8801785904899',
+            color: '#25D366'
+        },
+        {
+            icon: <FaTelegram />,
+            platform: 'Telegram',
+            link: 'https://t.me/twelvebases',
+            color: '#0088cc'
+        },
+        {
+            icon: <FaFacebookMessenger />,
+            platform: 'Messenger',
+            link: 'https://m.me/12bases',
+            color: '#006AFF'
+        }
+    ];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatus(prevStatus => ({ ...prevStatus, submitting: true }));
+        setStatus({ ...status, submitting: true });
 
         try {
             const response = await fetch('https://formspree.io/f/xovqaewd', {
@@ -58,203 +85,168 @@ const Contact = () => {
             });
 
             if (response.ok) {
-                setStatus({
-                    submitted: true,
-                    submitting: false,
-                    info: { error: false, msg: 'Message sent successfully!' }
-                });
-                setFormData({
-                    name: '',
-                    email: '',
-                    phone: '',
-                    subject: '',
-                    message: ''
-                });
-                setTimeout(() => {
-                    setStatus(prevStatus => ({ ...prevStatus, submitted: false }));
-                }, 3000);
+                setStatus({ submitting: false, submitted: true, error: null });
+                setFormData({ name: '', contact: '', subject: '', message: '' });
+                setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
             } else {
                 throw new Error('Failed to send message');
             }
         } catch (error) {
-            setStatus({
-                submitted: false,
-                submitting: false,
-                info: { error: true, msg: 'An error occurred. Please try again later.' }
-            });
-        }
-    };
-
-    const containerVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: { 
-            opacity: 1, 
-            y: 0,
-            transition: { duration: 0.6 }
-        },
-        exit: { 
-            opacity: 0, 
-            y: -20,
-            transition: { duration: 0.6 }
+            setStatus({ submitting: false, submitted: false, error: 'Failed to send message' });
         }
     };
 
     return (
         <motion.div 
             className="contact-container"
-            initial="hidden"
-            animate={isVisible ? "visible" : "hidden"}
-            variants={containerVariants}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
         >
             <div className="contact-header">
-                <h1>Get in Touch</h1>
-                <p>We'd love to hear from you. Please fill out this form.</p>
+                <motion.h1
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                >
+                    Get in Touch
+                </motion.h1>
+                <motion.p
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                >
+                    We're here to help and answer any question you might have
+                </motion.p>
             </div>
 
             <div className="contact-content">
-                <div className="contact-info">
-                    <div className="info-card">
-                        <FaMapMarkerAlt />
-                        <h3>Our Location</h3>
-                        <p>Dhaka, Bangladesh</p>
+                <div className="contact-left">
+                    {/* Contact Information Cards */}
+                    <div className="info-cards">
+                        {contactInfo.map((info, index) => (
+                            <motion.div 
+                                key={index}
+                                className="info-card"
+                                initial={{ x: -50, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.2 * index }}
+                            >
+                                <div className="info-icon" style={{ color: info.color }}>
+                                    {info.icon}
+                                </div>
+                                <h3>{info.title}</h3>
+                                <p>{info.details}</p>
+                            </motion.div>
+                        ))}
                     </div>
-                    <div className="info-card">
-                        <FaClock />
-                        <h3>Business Hours</h3>
-                        <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
-                    </div>
-                    <div className="info-card">
-                        <FaGlobe />
-                        <h3>Online Support</h3>
-                        <p>24/7 Available</p>
+
+                    {/* Social Contact Options */}
+                    <div className="social-contacts">
+                        {socialContacts.map((social, index) => (
+                            <motion.a
+                                key={index}
+                                href={social.link}
+                                className="social-contact-btn"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ '--hover-color': social.color }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                {social.icon}
+                                <span>{social.platform}</span>
+                            </motion.a>
+                        ))}
                     </div>
                 </div>
 
-                <motion.form 
-                    onSubmit={handleSubmit}
-                    className="contact-form"
-                >
-                    <div className="form-group">
-                        <div className="input-icon">
-                            <FaUser />
+                <div className="contact-right">
+                    <motion.form 
+                        className="contact-form"
+                        onSubmit={handleSubmit}
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                    >
+                        <div className="form-group">
+                            <div className="input-icon">
+                                <FaUser />
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="Your Name"
+                                value={formData.name}
+                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                required
+                            />
                         </div>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="Your Name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
 
-                    <div className="contact-method-toggle">
-                        <button
-                            type="button"
-                            className={`method-btn ${selectedMethod === 'email' ? 'active' : ''}`}
-                            onClick={() => handleMethodChange('email')}
-                        >
-                            <FaEnvelope /> Email
-                        </button>
-                        <button
-                            type="button"
-                            className={`method-btn ${selectedMethod === 'phone' ? 'active' : ''}`}
-                            onClick={() => handleMethodChange('phone')}
-                        >
-                            <FaPhone /> Phone
-                        </button>
-                    </div>
-
-                    {selectedMethod === 'email' ? (
                         <div className="form-group">
                             <div className="input-icon">
                                 <FaEnvelope />
                             </div>
                             <input
-                                type="email"
-                                name="email"
-                                placeholder="Your Email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
-                                title="Please enter a valid Gmail address"
+                                type="text"
+                                placeholder="Email or Phone"
+                                value={formData.contact}
+                                onChange={(e) => setFormData({...formData, contact: e.target.value})}
                                 required
                             />
                         </div>
-                    ) : (
+
                         <div className="form-group">
                             <div className="input-icon">
-                                <FaPhone />
+                                <FaPaperPlane />
                             </div>
                             <input
-                                type="tel"
-                                name="phone"
-                                placeholder="Your Phone Number"
-                                value={formData.phone}
-                                onChange={handleChange}
-                                pattern="^(?:\+8801[3-9]\d{8}|01[3-9]\d{8})$"
-                                title="Please enter a valid Bangladeshi phone number"
+                                type="text"
+                                placeholder="Subject"
+                                value={formData.subject}
+                                onChange={(e) => setFormData({...formData, subject: e.target.value})}
                                 required
                             />
                         </div>
-                    )}
 
-                    <div className="form-group">
-                        <div className="input-icon">
-                            <FaComment />
+                        <div className="form-group">
+                            <textarea
+                                placeholder="Your Message"
+                                value={formData.message}
+                                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                                required
+                            ></textarea>
                         </div>
-                        <input
-                            type="text"
-                            name="subject"
-                            placeholder="Subject"
-                            value={formData.subject}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
 
-                    <div className="form-group">
-                        <textarea
-                            name="message"
-                            placeholder="Your Message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            required
-                        ></textarea>
-                    </div>
-
-                    <motion.button
-                        type="submit"
-                        className="submit-btn"
-                        disabled={status.submitting}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        {status.submitting ? (
-                            'Sending...'
-                        ) : (
-                            <>
-                                <FaPaperPlane /> Send Message
-                            </>
-                        )}
-                    </motion.button>
-                </motion.form>
+                        <motion.button
+                            type="submit"
+                            className="submit-btn"
+                            disabled={status.submitting}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            {status.submitting ? 'Sending...' : (
+                                <>
+                                    <FaPaperPlane /> Send Message
+                                </>
+                            )}
+                        </motion.button>
+                    </motion.form>
+                </div>
             </div>
 
             <AnimatePresence>
-                {status.info.msg && (
+                {(status.submitted || status.error) && (
                     <motion.div
-                        className={`alert ${status.info.error ? 'error' : 'success'}`}
+                        className={`alert ${status.error ? 'error' : 'success'}`}
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -50 }}
                     >
-                        {status.info.error ? (
-                            <span className="alert-icon">❌</span>
+                        {status.error ? (
+                            <>❌ {status.error}</>
                         ) : (
-                            <FaCheckCircle className="alert-icon" />
+                            <><FaCheckCircle /> Message sent successfully!</>
                         )}
-                        {status.info.msg}
                     </motion.div>
                 )}
             </AnimatePresence>

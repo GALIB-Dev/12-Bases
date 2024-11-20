@@ -1,95 +1,205 @@
-/* Overall chat controls styling */
+.chat-controls-container {
+  position: relative;
+  padding: 1rem;
+  background: var(--bg-primary-light);
+  border-top: 1px solid var(--border-light);
+  z-index: 100;
+}
+
 .chat-controls {
   display: flex;
-  justify-content: center;
+  gap: 0.75rem;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border-top: 1px solid #ddd;
-  box-shadow: 0 -4px 8px rgba(161, 129, 129, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--bg-secondary-light);
+  padding: 0.75rem;
+  border-radius: 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.input-container {
+  flex: 1;
   position: relative;
-  height: 90px; /* Shortened height like a navbar */
-  transition: background-color 0.3s ease-in-out;
 }
 
-
-
-
-/* Input field styling */
-.chat-controls input {
-  width: 100%; /* Takes up most of the space */
-  padding: 12px 16px;
-  border: 5px solid #ddd;
-  border-radius: 25px;
-  font-size: 16px;
-  outline: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: border 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Input focus state */
-.chat-controls input:focus {
-  border-color: #4CAF50;
-  box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
-}
-
-/* Send button styling */
-.chat-controls button {
-  background-color: #02af08;
-  color: white;
+.chat-input {
+  width: 100%;
+  padding: 0.75rem;
   border: none;
-  padding: 12px 16px;
+  border-radius: 20px;
+  font-size: 1rem;
+  background: transparent;
+  color: var(--text-primary-light);
+  outline: none;
+}
+
+.chat-input::placeholder {
+  color: var(--text-secondary-light);
+}
+
+.action-button {
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary-light);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-size: 30px; /* Larger icon size */
+  border-radius: 50%;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0px;
-  margin-left: 180px; /* Space between input and button */
 }
 
-/* Send button hover effect */
-.chat-controls button:hover {
-  background-color: #6dd872;
-  transform: scale(1.05); /* Slight zoom effect on hover */
+.action-button:hover {
+  background: var(--bg-hover-light);
+  color: var(--primary-color);
 }
 
-/* Send button active effect */
-.chat-controls button:active {
-  transform: scale(0.95); /* Pressed button effect */
+.send-button {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 20px;
+  background: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* FontAwesome icon inside the button */
-.chat-controls button i {
-  font-size: 35px;
-  transition: color 0.3s ease;
+.send-button:hover:not(:disabled) {
+  transform: scale(1.05);
+  background: var(--primary-color-dark);
 }
 
-/* Send button focus state */
-.chat-controls button:focus {
-  outline: none;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+.send-button:disabled {
+  background: var(--text-secondary-light);
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 600px) {
-  .chat-controls {
-    padding: 10px;
+.emoji-picker {
+  position: absolute;
+  bottom: 100%;
+  left: 1rem;
+  background: var(--bg-primary-light);
+  border-radius: 12px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1rem;
+  width: 320px;
+  overflow: hidden;
+  animation: slideUp 0.2s ease;
+}
+
+.emoji-picker-header {
+  padding: 1rem;
+  font-weight: 500;
+  color: var(--text-primary-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+  padding: 1rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.emoji-button {
+  padding: 0.75rem;
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji-button:hover {
+  background: var(--bg-hover-light);
+  transform: scale(1.1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
   .chat-controls-container {
-    width: 100%;
-    justify-content: center;
+    background: var(--bg-primary-dark);
+    border-color: var(--border-dark);
   }
 
-  .chat-controls input {
-    width: 100%; /* Reduce input field size on small screens */
+  .chat-controls {
+    background: var(--bg-secondary-dark);
   }
 
-  .chat-controls button {
-    padding: 5px 7px;
-    font-size: 10px; /* Slightly smaller button size on smaller screens */
+  .chat-input {
+    color: var(--text-primary-dark);
+  }
+
+  .chat-input::placeholder {
+    color: var(--text-secondary-dark);
+  }
+
+  .emoji-picker {
+    background: var(--bg-primary-dark);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .emoji-picker-header {
+    color: var(--text-primary-dark);
+    border-color: var(--border-dark);
+  }
+
+  .emoji-button:hover {
+    background: var(--bg-hover-dark);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .chat-controls-container {
+    padding: 0.75rem;
+  }
+
+  .chat-controls {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .action-button,
+  .send-button {
+    padding: 0.6rem;
+  }
+
+  .chat-input {
+    padding: 0.6rem;
+    font-size: 16px;
+  }
+
+  .emoji-picker {
+    width: calc(100vw - 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(6, 1fr);
   }
 }

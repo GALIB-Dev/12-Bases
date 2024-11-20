@@ -1,88 +1,248 @@
-/* Global styles */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-image: url('./Background.jpg'); /* Background image */
-  background-size: cover; /* Cover the entire page */
-  background-position: center; /* Center the image */
-  color: #1c7406; /* Text color */
-  height: 100vh; /* Full viewport height */
-  overflow: scroll; /* Prevent scrolling */
+/* CSS Reset and Base Styles */
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #3b82f6;
+  --accent-color: #60a5fa;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-light: #9ca3af;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-dark: #111827;
+  --nav-height-desktop: 80px;
+  --nav-height-mobile: 60px;
+  --content-max-width: 1440px;
+  --transition-speed: 0.3s;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
-/* Header styles: Fixed at the top */
-header {
+/* Modern CSS Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* Layout Structure */
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  position: relative;
+}
+
+.app-content {
+  padding-top: var(--nav-height-desktop);
+  max-width: var(--content-max-width);
+  margin: 0 auto;
   width: 100%;
-  background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+  position: relative;
+}
+
+/* Navigation Styles */
+.navbar {
   position: fixed;
   top: 0;
   left: 0;
-  padding: 15px 0;
+  right: 0;
+  height: var(--nav-height-desktop);
+  background: var(--bg-primary);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+  transition: all var(--transition-speed) ease;
 }
 
-/* Content section */
-.content {
-  max-width: 2000px; /* Max width for larger screens */
-  max-height: 150px;
-  padding: 20px; /* Padding inside content */
-  background: rgba(19, 59, 9, 0.589); /* Semi-transparent background */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 20px rgb(15, 22, 13); /* Soft shadow */
-  margin-top: 90px; /* Space for fixed header */
-  width: 100%;
-  
-  /* Flexbox for centering content */
+.navbar-content {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  text-align: center; /* Center text */
-  height: calc(100vh - 100px); /* Fill remaining height minus header */
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Headings and paragraph styles */
+.navbar-menu {
+  position: fixed;
+  top: var(--nav-height-desktop);
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all var(--transition-speed) ease;
+}
+
+.navbar-menu.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Page Containers */
+.page-container {
+  padding: 2rem 1.5rem;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.chat-page {
+  height: calc(100vh - var(--nav-height-desktop));
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+  margin: 1rem;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #da7575;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 1.5rem;
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-p {
-  font-size: 1.2rem;
-  line-height: 1.6; /* Improved readability */
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Media Queries */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
 
-/* For screens smaller than 768px */
+/* Glass Morphism Effects */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Utility Classes */
+.shadow-hover {
+  transition: box-shadow var(--transition-speed) ease;
+}
+
+.shadow-hover:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+  }
+
+  .navbar, .navbar-menu {
+    background: rgba(31, 41, 55, 0.8);
+  }
+
+  .chat-page {
+    background: var(--bg-dark);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .app-content {
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
+  :root {
+    --nav-height-desktop: var(--nav-height-mobile);
+  }
+
+  .navbar-content {
+    padding: 0 1rem;
+  }
+
+  .chat-page {
+    margin: 0.5rem;
+    height: calc(100vh - var(--nav-height-mobile) - 1rem);
+  }
+
   h1 {
-    font-size: 2rem;
-  }
-
-  p {
-    font-size: 1rem;
-  }
-
-  .content {
-    margin-top: 50px; /* Adjust content margin */
-
+    font-size: clamp(1.5rem, 4vw, 2rem);
   }
 }
 
-/* For screens smaller than 480px */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.5rem; /* Smaller heading on small screens */
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Print Styles */
+@media print {
+  .navbar, .navbar-menu {
+    display: none;
   }
 
-  p {
-    font-size: 0.9rem; /* Smaller paragraph */
+  .app-content {
+    padding: 0;
   }
 
-  .content {
-    padding: 10px; /* Adjust padding for smaller screens */
+  .page-container {
+    margin: 0;
+    padding: 0;
   }
 }
