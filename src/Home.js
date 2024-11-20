@@ -226,7 +226,7 @@ const Home = () => {
               className="cta-btn primary"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/ChatLogin')}
+              onClick={() => navigate('/Contact')}
             >
               Join Community
             </motion.button>
