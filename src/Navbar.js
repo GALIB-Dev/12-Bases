@@ -1,27 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  FaHome, 
+  FaBullhorn, 
+  FaComments, 
+  FaEnvelope, 
+  FaBolt
+} from 'react-icons/fa';
 import './Navbar.css';
 import SpinLogo from './Spin.png';
 import FrontLogo from './Logo.png';
-import { FaHome, FaBullhorn, FaComments, FaEnvelope, FaBolt } from 'react-icons/fa';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const location = useLocation();
 
-  // Handle window resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth > 768) {
-        setIsOpen(false);
-      }
+      if (window.innerWidth > 768) setIsOpen(false);
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Close menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   const navItems = [
     { path: '/', label: 'Home', icon: <FaHome /> },
@@ -32,62 +41,138 @@ const Navbar = () => {
   ];
 
   return (
-    <nav>
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}
+    >
       <Link to="/" className="logo-container">
-        <div className="logo-wrapper">
-          <img 
+        <motion.div 
+          className="logo-wrapper"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <motion.img 
             src={FrontLogo} 
             alt="Back Logo" 
-            className="back-logo" 
+            className="back-logo"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
           />
-          <img 
+          <motion.img 
             src={SpinLogo} 
             alt="Spinning Logo" 
-            className="logo" 
+            className="logo"
+            initial={{ rotate: 0, opacity: 0 }}
+            animate={{ 
+              rotate: 360, 
+              opacity: 1,
+              transition: {
+                opacity: { duration: 0.5 },
+                rotate: {
+                  duration: 3,
+                  ease: "linear",
+                  repeat: Infinity
+                }
+              }
+            }}
+            whileHover={{ 
+              rotate: 0,
+              transition: { duration: 0.3 }
+            }}
+            whileTap={{ 
+              rotate: 0,
+              transition: { duration: 0.3 }
+            }}
           />
-        </div>
+        </motion.div>
         <div className="brand-text">
-          <span className="brand-number">XII</span>
-          <span className="brand-name">BASES</span>
+          <motion.span 
+            className="brand-number"
+            whileHover={{ scale: 1.1 }}
+          >
+            XII
+          </motion.span>
+          <motion.span className="brand-divider">|</motion.span>
+          <motion.span 
+            className="brand-name"
+            whileHover={{ scale: 1.1 }}
+          >
+            BASES
+          </motion.span>
         </div>
       </Link>
 
-      {/* Only show menu button on mobile */}
       {isMobile && (
-        <button 
+        <motion.button 
           className={`menu-button ${isOpen ? 'open' : ''}`}
           onClick={() => setIsOpen(!isOpen)}
+          whileTap={{ scale: 0.9 }}
           aria-label="Toggle menu"
         >
-          <span className="bar bar1"></span>
-          <span className="bar bar2"></span>
-          <span className="bar bar3"></span>
-        </button>
+          <motion.span 
+            className="bar bar1"
+            animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 8 : 0 }}
+          />
+          <motion.span 
+            className="bar bar2"
+            animate={{ opacity: isOpen ? 0 : 1 }}
+          />
+          <motion.span 
+            className="bar bar3"
+            animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -8 : 0 }}
+          />
+        </motion.button>
       )}
 
-      <ul className={`menu-items ${isOpen ? 'open' : ''}`}>
-        {navItems.map(({ path, label, icon }) => (
-          <li key={path}>
-            <Link
-              to={path}
-              className={location.pathname === path ? 'active' : ''}
-              onClick={() => isMobile && setIsOpen(false)}
-            >
-              <span className="nav-icon">{icon}</span>
-              <span>{label}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <AnimatePresence>
+        {(isOpen || !isMobile) && (
+          <motion.ul
+            className={`menu-items ${isOpen ? 'open' : ''}`}
+            initial={isMobile ? { x: "100%" } : false}
+            animate={isMobile ? { x: 0 } : false}
+            exit={isMobile ? { x: "100%" } : false}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          >
+            {navItems.map(({ path, label, icon }, index) => (
+              <motion.li
+                key={path}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Link
+                  to={path}
+                  className={location.pathname === path ? 'active' : ''}
+                >
+                  <motion.span 
+                    className="nav-icon"
+                    whileHover={{ scale: 1.2, rotate: 360 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {icon}
+                  </motion.span>
+                  <span>{label}</span>
+                </Link>
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
 
-      {/* Mobile menu overlay */}
-      {isMobile && isOpen && (
-        <div 
-          className="menu-overlay"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-    </nav>
+      <AnimatePresence>
+        {isMobile && isOpen && (
+          <motion.div 
+            className="menu-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+    </motion.nav>
   );
 };
 

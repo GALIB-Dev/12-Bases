@@ -20,7 +20,7 @@ const services = [
     description: 'Custom AI & ML solutions for enterprise applications',
     features: ['Machine Learning', 'Neural Networks', 'Deep Learning'],
     techStack: ['TensorFlow', 'PyTorch', 'OpenAI'],
-    link: '/services/ai'
+    link: '/aipage'
   },
   { 
     title: 'Blockchain',
@@ -67,7 +67,6 @@ const Home = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* Hero Section */}
         <section className="hero-section">
           <motion.div 
             className="hero-content"
@@ -76,11 +75,57 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="hero-title">
-              Building the Future with Technology
+              <motion.span 
+                className="hero-text-building"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                Building
+              </motion.span>{' '}
+              <motion.span 
+                className="hero-text-the"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                the
+              </motion.span>{' '}
+              <motion.span 
+                className="hero-text-future"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                Future
+              </motion.span>{' '}
+              <motion.span 
+                className="hero-text-with"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                with
+              </motion.span>{' '}
+              <motion.span 
+                className="hero-text-technology"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+              >
+                Technology
+              </motion.span>
             </h1>
-            <p className="hero-subtitle">
-              Cutting-edge solutions for tomorrow's challenges
-            </p>
+
+            <motion.p 
+              className="hero-subtitle"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1 }}
+            >
+              <span className="subtitle-highlight">Innovating</span> Today for{' '}
+              <span className="subtitle-highlight">Tomorrow's</span> World
+            </motion.p>
             <div className="hero-cta">
               <motion.button
                 className="primary-btn"

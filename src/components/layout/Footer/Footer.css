@@ -1,0 +1,212 @@
+.footer {
+  background: linear-gradient(135deg, #013220, #026440, #013220);
+  background-size: 200% 200%;
+  animation: gradientBG 15s ease infinite;
+  color: #fff;
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 -10px 30px rgba(1, 50, 32, 0.3);
+}
+
+/* Animated gradient background */
+@keyframes gradientBG {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+/* Glowing effect */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: glow 2s linear infinite;
+}
+
+@keyframes glow {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.3; }
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.footer-section {
+  flex: 1;
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.footer-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+.footer-section:hover h3::after {
+  width: 100%;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.footer-links a:hover {
+  background: #4CAF50;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-links a {
+  color: #fff;
+  font-size: 1.3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-links a::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #4CAF50;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.social-links a:hover::before {
+  transform: translateY(0);
+}
+
+.social-links a:hover {
+  transform: translateY(-5px) rotate(360deg);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-section h3::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+
+  .footer-section:hover {
+    transform: translateY(-3px);
+  }
+}
+
+/* Glass morphism effect for dark mode */
+@media (prefers-color-scheme: dark) {
+  .footer {
+    background: linear-gradient(135deg, #001a10, #013220, #001a10);
+  }
+
+  .footer-section {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.footer {
+  animation: fadeIn 1s ease-out;
+} 

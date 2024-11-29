@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 import NavBar from './Navbar';
+import Footer from './components/layout/Footer/Footer';
 import Updates from './Updates';
 import Contact from './Contact';
 import Services from './Services';
@@ -8,16 +10,18 @@ import Home from './Home';
 import Loading from './Loading';
 import NotFound from './NotFound';
 import ChatLogin from './ChatLogin';
-import Rule from './forum/Rule';  // Correct path to Rule.js
-import ChatFrame from './forum/ChatFrame'; // Main forum chat component
+import Rule from './forum/Rule';
+import ChatFrame from './forum/ChatFrame';
+import AIPage from './pages/AIPage';
+import BlockchainPage from './pages/BlockchainPage';
+import CloudPage from './pages/CloudPage';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-// Import Firebase configuration
 import './forum/firebase';
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState(localStorage.getItem('username') || ''); // Retrieve username from localStorage
+  const [username, setUsername] = useState(localStorage.getItem('username') || '');
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,35 +33,41 @@ function App() {
 
   useEffect(() => {
     if (username) {
-      localStorage.setItem('username', username);  // Store username in localStorage
+      localStorage.setItem('username', username);
     }
-  }, [username]);  // Save to localStorage whenever the username changes
+  }, [username]);
 
   return (
     <div className="App">
       <Router>
+        <ScrollToTop />
         {loading ? (
-          <Loading />  // Show loading screen
+          <Loading />
         ) : (
           <>
             <NavBar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/updates" element={<Updates />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/Rule" component={Rule} /> 
-              
-              <Route
-                path="/chatlogin"
-                element={<ChatLogin setUsername={setUsername} />} // Pass setUsername to ChatLogin
-              />
-              <Route
-                path="/forum"
-                element={<ChatFrame username={username} />} // Pass username to ChatFrame
-              />
-              <Route path="*" element={<NotFound />} /> {/* Catch-all route */}
-            </Routes>
+            <main className="main-content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/updates" element={<Updates />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/services/blockchain" element={<BlockchainPage />} />
+                <Route path="/aipage" element={<AIPage />} />
+                <Route path="/rule" element={<Rule />} />
+                <Route
+                  path="/chatlogin"
+                  element={<ChatLogin setUsername={setUsername} />}
+                />
+                <Route
+                  path="/forum"
+                  element={<ChatFrame username={username} />}
+                />
+                <Route path="/services/cloud" element={<CloudPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+            <Footer />
           </>
         )}
       </Router>
