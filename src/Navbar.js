@@ -44,7 +44,7 @@ const Navbar = () => {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 100 }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
     >
       <Link to="/" className="logo-container">
         <motion.div 
@@ -58,32 +58,21 @@ const Navbar = () => {
             className="back-logo"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
           />
           <motion.img 
             src={SpinLogo} 
             alt="Spinning Logo" 
             className="logo"
-            initial={{ rotate: 0, opacity: 0 }}
             animate={{ 
-              rotate: 360, 
-              opacity: 1,
+              rotate: 360,
               transition: {
-                opacity: { duration: 0.5 },
                 rotate: {
-                  duration: 3,
+                  duration: 8,
                   ease: "linear",
                   repeat: Infinity
                 }
               }
-            }}
-            whileHover={{ 
-              rotate: 0,
-              transition: { duration: 0.3 }
-            }}
-            whileTap={{ 
-              rotate: 0,
-              transition: { duration: 0.3 }
             }}
           />
         </motion.div>
@@ -108,20 +97,23 @@ const Navbar = () => {
         <motion.button 
           className={`menu-button ${isOpen ? 'open' : ''}`}
           onClick={() => setIsOpen(!isOpen)}
-          whileTap={{ scale: 0.9 }}
+          whileTap={{ scale: 0.95 }}
           aria-label="Toggle menu"
         >
           <motion.span 
             className="bar bar1"
             animate={{ rotate: isOpen ? 45 : 0, y: isOpen ? 8 : 0 }}
+            transition={{ duration: 0.2 }}
           />
           <motion.span 
             className="bar bar2"
             animate={{ opacity: isOpen ? 0 : 1 }}
+            transition={{ duration: 0.2 }}
           />
           <motion.span 
             className="bar bar3"
             animate={{ rotate: isOpen ? -45 : 0, y: isOpen ? -8 : 0 }}
+            transition={{ duration: 0.2 }}
           />
         </motion.button>
       )}
@@ -133,26 +125,22 @@ const Navbar = () => {
             initial={isMobile ? { x: "100%" } : false}
             animate={isMobile ? { x: 0 } : false}
             exit={isMobile ? { x: "100%" } : false}
-            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            transition={{ type: "spring", stiffness: 200, damping: 25 }}
           >
             {navItems.map(({ path, label, icon }, index) => (
               <motion.li
                 key={path}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05 }}
               >
                 <Link
                   to={path}
                   className={location.pathname === path ? 'active' : ''}
                 >
-                  <motion.span 
-                    className="nav-icon"
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <span className="nav-icon">
                     {icon}
-                  </motion.span>
+                  </span>
                   <span>{label}</span>
                 </Link>
               </motion.li>
@@ -168,6 +156,7 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setIsOpen(false)}
           />
         )}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { db } from './firebase';
 import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
-import { Timestamp } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUsers, FaCog, FaBell, FaCheckDouble, FaArrowDown } from 'react-icons/fa';
 import ChatControls from './ChatControls';
@@ -47,32 +46,48 @@ const ChatFrame = ({ username = "Guest" }) => {
   }, []);
 
   useEffect(() => {
+    let unsubscribe;
+
     try {
       const messagesRef = collection(db, 'messages');
-      const q = query(messagesRef, orderBy('timestamp', 'desc'), limit(50));
+      const q = query(
+        messagesRef, 
+        orderBy('timestamp', 'desc'), 
+        limit(50)
+      );
 
-      const unsubscribe = onSnapshot(q, (snapshot) => {
-        const messageList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-          timestamp: doc.data().timestamp instanceof Timestamp 
-            ? doc.data().timestamp.toDate() 
-            : new Date(doc.data().timestamp)
-        }));
+      setLoading(true);
+
+      unsubscribe = onSnapshot(q, (snapshot) => {
+        const messageList = snapshot.docs
+          .map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            timestamp: doc.data().timestamp?.toDate() || new Date(doc.data().createdAt)
+          }))
+          .sort((a, b) => a.timestamp - b.timestamp);
+
+        console.log('Fetched messages:', messageList);
         setMessages(messageList);
         setLoading(false);
-        scrollToTop();
       }, (error) => {
-        setError(error.message);
+        console.error('Error fetching messages:', error);
+        setError('Failed to load messages. Please refresh.');
         setLoading(false);
       });
 
-      return () => unsubscribe();
     } catch (err) {
+      console.error('Setup error:', err);
       setError(err.message);
       setLoading(false);
     }
-  }, [scrollToTop]);
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;

@@ -12,15 +12,14 @@ const ChatList = ({ onUserSelect, selectedUser }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const q = query(
-      collection(db, 'messages'),
-      orderBy('timestamp', 'desc'),
-      limit(100)
-    );
+    try {
+      const q = query(
+        collection(db, 'messages'),
+        orderBy('timestamp', 'desc'),
+        limit(100)
+      );
 
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
+      const unsubscribe = onSnapshot(q, (snapshot) => {
         const userMap = new Map();
         
         snapshot.docs.forEach((doc) => {
@@ -29,23 +28,25 @@ const ChatList = ({ onUserSelect, selectedUser }) => {
             userMap.set(data.user, {
               name: data.user,
               lastMessage: data.text,
-              timestamp: data.timestamp,
-              isOnline: true // You can implement real online status logic
+              timestamp: data.timestamp?.toDate() || new Date(data.createdAt),
+              isOnline: true
             });
           }
         });
 
-        setUsers(Array.from(userMap.values()));
-        setLoading(false);
-      },
-      (err) => {
-        console.error('Error fetching user list:', err);
-        setError('Could not load users');
-        setLoading(false);
-      }
-    );
+        const userList = Array.from(userMap.values())
+          .sort((a, b) => b.timestamp - a.timestamp);
 
-    return () => unsubscribe();
+        setUsers(userList);
+        setLoading(false);
+      });
+
+      return () => unsubscribe();
+    } catch (err) {
+      console.error('Setup error:', err);
+      setError(err.message);
+      setLoading(false);
+    }
   }, []);
 
   const filteredUsers = users.filter(user =>

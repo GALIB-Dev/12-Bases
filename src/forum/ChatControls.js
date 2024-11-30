@@ -7,6 +7,7 @@ import './ChatControls.css';
 const ChatControls = ({ username, onNewMessage }) => {
   const [message, setMessage] = useState('');
   const [showEmojis, setShowEmojis] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const inputRef = useRef(null);
   const emojiPickerRef = useRef(null);
 
@@ -29,22 +30,30 @@ const ChatControls = ({ username, onNewMessage }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (!message.trim() || isSending) return;
 
     try {
+      setIsSending(true);
+      const messagesRef = collection(db, 'messages');
+      
       const newMessage = {
         text: message.trim(),
-        user: username,
-        timestamp: serverTimestamp()
+        user: username || 'Anonymous',
+        timestamp: serverTimestamp(),
+        createdAt: new Date().toISOString()
       };
 
-      await addDoc(collection(db, 'messages'), newMessage);
+      await addDoc(messagesRef, newMessage);
       setMessage('');
-      setShowEmojis(false);
-      onNewMessage && onNewMessage(newMessage);
-      inputRef.current?.focus();
+      if (onNewMessage) onNewMessage();
+      
     } catch (error) {
       console.error('Error sending message:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setIsSending(false);
+      setShowEmojis(false);
+      inputRef.current?.focus();
     }
   };
 
