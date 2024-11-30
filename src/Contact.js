@@ -74,25 +74,42 @@ const Contact = () => {
         e.preventDefault();
         setStatus({ ...status, submitting: true });
 
+        // Replace with your deployed Google Apps Script URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwTmXpBBYawMIDQuip046BiUD4xb6PHWE3IF7PzTMmRQTZ_5mjneo9MVjpynyVRQfl5/exec';
+
         try {
-            const response = await fetch('https://formspree.io/f/xovqaewd', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+            // Log the data being sent
+            console.log('Sending data:', formData);
+
+            // Create URL encoded string
+            const urlEncodedData = new URLSearchParams({
+                name: formData.name,
+                email: formData.contact,
+                subject: formData.subject,
+                message: formData.message,
+                timestamp: new Date().toLocaleString()
+            }).toString();
+
+            const response = await fetch(scriptURL + '?' + urlEncodedData, {
+                method: 'GET',  // Changed to GET to avoid CORS issues
+                mode: 'no-cors', // Important for cross-origin requests
             });
 
-            if (response.ok) {
-                setStatus({ submitting: false, submitted: true, error: null });
-                setFormData({ name: '', contact: '', subject: '', message: '' });
-                setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
-            } else {
-                throw new Error('Failed to send message');
-            }
+            console.log('Response:', response);
+
+            // Since mode is 'no-cors', we can't read the response
+            // We'll assume success if we get here
+            setStatus({ submitting: false, submitted: true, error: null });
+            setFormData({ name: '', contact: '', subject: '', message: '' });
+            setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
+
         } catch (error) {
-            setStatus({ submitting: false, submitted: false, error: 'Failed to send message' });
+            console.error('Submission error:', error);
+            setStatus({
+                submitting: false,
+                submitted: false,
+                error: `Failed to send message: ${error.message}`
+            });
         }
     };
 
@@ -175,6 +192,7 @@ const Contact = () => {
                             </div>
                             <input
                                 type="text"
+                                name="_name"
                                 placeholder="Your Name"
                                 value={formData.name}
                                 onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -187,8 +205,9 @@ const Contact = () => {
                                 <FaEnvelope />
                             </div>
                             <input
-                                type="text"
-                                placeholder="Email or Phone"
+                                type="email"
+                                name="_replyto"
+                                placeholder="Your Email"
                                 value={formData.contact}
                                 onChange={(e) => setFormData({...formData, contact: e.target.value})}
                                 required
@@ -201,6 +220,7 @@ const Contact = () => {
                             </div>
                             <input
                                 type="text"
+                                name="_subject"
                                 placeholder="Subject"
                                 value={formData.subject}
                                 onChange={(e) => setFormData({...formData, subject: e.target.value})}
@@ -210,12 +230,15 @@ const Contact = () => {
 
                         <div className="form-group">
                             <textarea
+                                name="message"
                                 placeholder="Your Message"
                                 value={formData.message}
                                 onChange={(e) => setFormData({...formData, message: e.target.value})}
                                 required
                             ></textarea>
                         </div>
+
+                        <input type="text" name="_gotcha" style={{ display: 'none' }} />
 
                         <motion.button
                             type="submit"
