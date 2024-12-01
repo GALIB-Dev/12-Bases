@@ -18,6 +18,7 @@ import CloudPage from './pages/CloudPage';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './forum/firebase';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -38,40 +39,42 @@ function App() {
   }, [username]);
 
   return (
-    <div className="App">
-      <Router>
-        <ScrollToTop />
-        {loading ? (
-          <Loading />
-        ) : (
-          <>
-            <NavBar />
-            <main className="main-content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/updates" element={<Updates />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/services/blockchain" element={<BlockchainPage />} />
-                <Route path="/aipage" element={<AIPage />} />
-                <Route path="/rule" element={<Rule />} />
-                <Route
-                  path="/chatlogin"
-                  element={<ChatLogin setUsername={setUsername} />}
-                />
-                <Route
-                  path="/forum"
-                  element={<ChatFrame username={username} />}
-                />
-                <Route path="/services/cloud" element={<CloudPage />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </>
-        )}
-      </Router>
-    </div>
+    <ErrorBoundary>
+      <div className="App">
+        <Router>
+          <ScrollToTop />
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <NavBar />
+              <main className="main-content">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/updates" element={<Updates />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/services" element={<Services />} />
+                  <Route path="/services/blockchain" element={<BlockchainPage />} />
+                  <Route path="/aipage" element={<AIPage />} />
+                  <Route path="/rule" element={<Rule />} />
+                  <Route
+                    path="/chatlogin"
+                    element={<ChatLogin setUsername={setUsername} />}
+                  />
+                  <Route
+                    path="/forum"
+                    element={<ChatFrame username={username} />}
+                  />
+                  <Route path="/services/cloud" element={<CloudPage />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+            </>
+          )}
+        </Router>
+      </div>
+    </ErrorBoundary>
   );
 }
 
