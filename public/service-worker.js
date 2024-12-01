@@ -1,54 +1,69 @@
-const CACHE_NAME = '12bases-cache-v1';
-const urlsToCache = [
+const CACHE_NAME = 'v1';
+
+// Resources to cache
+const RESOURCES_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/android-chrome-192x192.png',
-  '/android-chrome-512x512.png',
-  '/apple-touch-icon.png',
-  '/favicon-16x16.png',
-  '/favicon-32x32.png',
-  '/favicon.ico'
+  '/assets/css/critical.css',
+  '/assets/js/critical.js',
+  // Add other critical assets here
 ];
 
+// Install event - cache critical resources
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+      .then(cache => cache.addAll(RESOURCES_TO_CACHE))
   );
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.url.includes('googletagmanager.com')) {
-    return;
-  }
-
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request).catch(error => {
-          console.log('Fetch failed:', error);
-        });
-      })
-  );
-});
-
+// Activate event - clean up old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
+        cacheNames
+          .filter(cacheName => cacheName !== CACHE_NAME)
+          .map(cacheName => caches.delete(cacheName))
       );
     })
+  );
+});
+
+// Fetch event - network first, fallback to cache
+self.addEventListener('fetch', event => {
+  // Skip certain requests
+  if (
+    event.request.url.includes('googletagmanager.com') || 
+    event.request.url.includes('analytics') ||
+    event.request.method !== 'GET'
+  ) {
+    return;
+  }
+
+  event.respondWith(
+    fetch(event.request)
+      .then(response => {
+        // Clone the response before using it
+        const responseClone = response.clone();
+        
+        // Cache the new response
+        caches.open(CACHE_NAME)
+          .then(cache => cache.put(event.request, responseClone));
+        
+        return response;
+      })
+      .catch(() => {
+        // If network fails, try cache
+        return caches.match(event.request)
+          .then(cachedResponse => {
+            if (cachedResponse) {
+              return cachedResponse;
+            }
+            // If no cache, return a fallback or error
+            console.log('No cache found for:', event.request.url);
+          });
+      })
   );
 }); 
