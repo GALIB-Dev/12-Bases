@@ -21,8 +21,15 @@ const Footer = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/services">Services</Link></li>
             <li><Link to="/updates">Updates</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/chatlogin">Forum</Link></li>
+            
+           
+            <li>
+              <div className="footer-links">
+                <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                <a href="/terms-of-service.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+                <a href="/contact">Contact</a>
+              </div>
+            </li>
           </ul>
         </div>
 
