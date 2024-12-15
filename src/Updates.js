@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaUsers, FaRocket, FaCode, FaBullhorn } from 'react-icons/fa';
 import './Updates.css';
-import ddImage from './dd.png';
+import ddImage from './Screenshot_2024-12-15-23-50-13-48_99c04817c0de5652397fc8b56c3b3817.jpg';
 import mdImage from './x.png';
 
 const Updates = () => {
