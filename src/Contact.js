@@ -74,34 +74,29 @@ const Contact = () => {
         e.preventDefault();
         setStatus({ ...status, submitting: true });
 
-        // Replace with your deployed Google Apps Script URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwTmXpBBYawMIDQuip046BiUD4xb6PHWE3IF7PzTMmRQTZ_5mjneo9MVjpynyVRQfl5/exec';
+        const formspreeURL = 'https://formspree.io/f/xovqaewd';
 
         try {
-            // Log the data being sent
-            console.log('Sending data:', formData);
-
-            // Create URL encoded string
-            const urlEncodedData = new URLSearchParams({
-                name: formData.name,
-                email: formData.contact,
-                subject: formData.subject,
-                message: formData.message,
-                timestamp: new Date().toLocaleString()
-            }).toString();
-
-            const response = await fetch(scriptURL + '?' + urlEncodedData, {
-                method: 'GET',  // Changed to GET to avoid CORS issues
-                mode: 'no-cors', // Important for cross-origin requests
+            const response = await fetch(formspreeURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.contact,
+                    subject: formData.subject,
+                    message: formData.message
+                })
             });
 
-            console.log('Response:', response);
-
-            // Since mode is 'no-cors', we can't read the response
-            // We'll assume success if we get here
-            setStatus({ submitting: false, submitted: true, error: null });
-            setFormData({ name: '', contact: '', subject: '', message: '' });
-            setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
+            if (response.ok) {
+                setStatus({ submitting: false, submitted: true, error: null });
+                setFormData({ name: '', contact: '', subject: '', message: '' });
+                setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
+            } else {
+                throw new Error('Network response was not ok');
+            }
 
         } catch (error) {
             console.error('Submission error:', error);

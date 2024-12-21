@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaUsers, FaRocket, FaCode, FaBullhorn } from 'react-icons/fa';
+import { FaUsers, FaRocket, FaCode, FaBullhorn, FaShieldAlt, FaChartLine } from 'react-icons/fa';
 import './Updates.css';
 import ddImage from './Screenshot_2024-12-15-23-50-13-48_99c04817c0de5652397fc8b56c3b3817.jpg';
 import mdImage from './x.png';
@@ -18,6 +18,18 @@ const Updates = () => {
       description: "Implementing advanced AI features to enhance user experience and provide smarter solutions.",
       icon: <FaRocket />,
       date: "Coming Soon"
+    },
+    {
+      title: "Enhanced Security",
+      description: "Upgraded security protocols to ensure the safety and privacy of user data.",
+      icon: <FaShieldAlt />,
+      date: "April 2024"
+    },
+    {
+      title: "Performance Analytics",
+      description: "New analytics dashboard to monitor and optimize system performance.",
+      icon: <FaChartLine />,
+      date: "May 2024"
     }
   ];
 
@@ -37,6 +49,22 @@ const Updates = () => {
       image: mdImage,
       skills: ['Marketing', 'Strategy', 'Business Development'],
       icon: <FaBullhorn />
+    },
+    {
+      name: 'Security Specialist',
+      fullName: 'Aisha Khan',
+      role: 'Cybersecurity and Data Protection',
+      image: 'path/to/aisha-image.jpg',
+      skills: ['Cybersecurity', 'Encryption', 'Network Security'],
+      icon: <FaShieldAlt />
+    },
+    {
+      name: 'Data Analyst',
+      fullName: 'Hassan Ali',
+      role: 'Data Analysis and Performance Optimization',
+      image: 'path/to/john-image.jpg',
+      skills: ['Data Analysis', 'Python', 'Machine Learning'],
+      icon: <FaChartLine />
     }
   ];
 
