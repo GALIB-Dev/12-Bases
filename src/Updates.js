@@ -61,7 +61,7 @@ const Updates = () => {
     {
       name: 'Data Analyst',
       fullName: 'Hassan Ali',
-      role: 'Data Analysis and Performance Optimization',
+      role: 'Data. Analysis and Performance Optimization',
       image: 'path/to/john-image.jpg',
       skills: ['Data Analysis', 'Python', 'Machine Learning'],
       icon: <FaChartLine />
