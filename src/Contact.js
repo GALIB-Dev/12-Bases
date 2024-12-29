@@ -13,12 +13,17 @@ import {
   FaFacebookMessenger
 } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
+import ErrorBoundary from './components/ErrorBoundary';
 import './Contact.css';
 
-// Initialize EmailJS
-emailjs.init('Utx6EQgPn2N9vF9tL');
+// Initialize EmailJS with try-catch
+try {
+    emailjs.init(process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'Utx6EQgPn2N9vF9tL');
+} catch (error) {
+    console.error('EmailJS initialization error:', error);
+}
 
-const Contact = () => {
+const ContactForm = () => {
     const form = useRef();
     const [formData, setFormData] = useState({
         name: '',
@@ -77,14 +82,23 @@ const Contact = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatus({ ...status, submitting: true });
+        setStatus({ ...status, submitting: true, error: null });
+
+        if (!navigator.onLine) {
+            setStatus({
+                submitting: false,
+                submitted: false,
+                error: 'No internet connection. Please check your network.'
+            });
+            return;
+        }
 
         try {
             const result = await emailjs.sendForm(
-                'service_wbxl9af', // Replace with your EmailJS service ID
-                'template_29wz06v', // Replace with your EmailJS template ID
+                process.env.REACT_APP_EMAILJS_SERVICE_ID || 'service_wbxl9af',
+                process.env.REACT_APP_EMAILJS_TEMPLATE_ID || 'template_29wz06v',
                 form.current,
-                'Utx6EQgPn2N9vF9tL' // Replace with your EmailJS public key
+                process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'Utx6EQgPn2N9vF9tL'
             );
 
             if (result.text === 'OK') {
@@ -92,14 +106,14 @@ const Contact = () => {
                 setFormData({ name: '', contact: '', subject: '', message: '' });
                 setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
             } else {
-                throw new Error('Failed to send message');
+                throw new Error('Server response was not OK');
             }
         } catch (error) {
             console.error('Submission error:', error);
             setStatus({
                 submitting: false,
                 submitted: false,
-                error: `Failed to send message: ${error.message}`
+                error: error.text || 'Failed to send message. Please try again later.'
             });
         }
     };
@@ -268,5 +282,12 @@ const Contact = () => {
         </motion.div>
     );
 };
+
+// Wrap the component with ErrorBoundary
+const Contact = () => (
+    <ErrorBoundary>
+        <ContactForm />
+    </ErrorBoundary>
+);
 
 export default Contact;
