@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaUsers, FaRocket, FaCode, FaBullhorn, FaShieldAlt, FaChartLine } from 'react-icons/fa';
 import './Updates.css';
-import ddImage from './Screenshot_2024-12-15-23-50-13-48_99c04817c0de5652397fc8b56c3b3817.jpg';
+import ddImage from './dd.png';
 import mdImage from './x.png';
 
 const Updates = () => {
@@ -35,7 +35,7 @@ const Updates = () => {
 
   const teamMembers = [
     {
-      name: 'Developer & Designer',
+      name: 'Founder & Senior Dev',
       fullName: 'Mohammad Al Galib',
       role: 'Full-stack development and UI/UX design',
       image: ddImage,
@@ -43,7 +43,7 @@ const Updates = () => {
       icon: <FaCode />
     },
     {
-      name: 'Head Advisor',
+      name: 'Founder & Managing Director',
       fullName: 'Yusuf Anam',
       role: 'Strategy and Marketing',
       image: mdImage,
