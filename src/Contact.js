@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaUser, 
@@ -12,9 +12,14 @@ import {
   FaTelegram,
   FaFacebookMessenger
 } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
 import './Contact.css';
 
+// Initialize EmailJS
+emailjs.init('Utx6EQgPn2N9vF9tL');
+
 const Contact = () => {
+    const form = useRef();
     const [formData, setFormData] = useState({
         name: '',
         contact: '',
@@ -74,30 +79,21 @@ const Contact = () => {
         e.preventDefault();
         setStatus({ ...status, submitting: true });
 
-        const formspreeURL = 'https://formspree.io/f/xovqaewd';
-
         try {
-            const response = await fetch(formspreeURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.contact,
-                    subject: formData.subject,
-                    message: formData.message
-                })
-            });
+            const result = await emailjs.sendForm(
+                'service_wbxl9af', // Replace with your EmailJS service ID
+                'template_29wz06v', // Replace with your EmailJS template ID
+                form.current,
+                'Utx6EQgPn2N9vF9tL' // Replace with your EmailJS public key
+            );
 
-            if (response.ok) {
+            if (result.text === 'OK') {
                 setStatus({ submitting: false, submitted: true, error: null });
                 setFormData({ name: '', contact: '', subject: '', message: '' });
                 setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
             } else {
-                throw new Error('Network response was not ok');
+                throw new Error('Failed to send message');
             }
-
         } catch (error) {
             console.error('Submission error:', error);
             setStatus({
@@ -175,6 +171,7 @@ const Contact = () => {
 
                 <div className="contact-right">
                     <motion.form 
+                        ref={form}
                         className="contact-form"
                         onSubmit={handleSubmit}
                         initial={{ x: 50, opacity: 0 }}
@@ -187,7 +184,7 @@ const Contact = () => {
                             </div>
                             <input
                                 type="text"
-                                name="_name"
+                                name="from_name"
                                 placeholder="Your Name"
                                 value={formData.name}
                                 onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -201,7 +198,7 @@ const Contact = () => {
                             </div>
                             <input
                                 type="email"
-                                name="_replyto"
+                                name="reply_to"
                                 placeholder="Your Email"
                                 value={formData.contact}
                                 onChange={(e) => setFormData({...formData, contact: e.target.value})}
@@ -215,7 +212,7 @@ const Contact = () => {
                             </div>
                             <input
                                 type="text"
-                                name="_subject"
+                                name="subject"
                                 placeholder="Subject"
                                 value={formData.subject}
                                 onChange={(e) => setFormData({...formData, subject: e.target.value})}
