@@ -11,10 +11,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "emoji-picker-react": "^4.12.0",
-    "firebase": "^9.x.x",
-    "@firebase/analytics": "^0.x.x",
-    "@firebase/app": "^0.x.x",
-    "@firebase/firestore": "^3.x.x",
+    "firebase": "^9.23.0",
+    "@firebase/analytics": "^0.10.0",
+    "@firebase/app": "^0.9.25",
+    "@firebase/firestore": "^4.4.0",
     "framer-motion": "^11.11.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -25,7 +25,8 @@
     "react-slick": "^0.30.2",
     "react-type-animation": "^3.2.0",
     "slick-carousel": "^1.8.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "react-refresh": "^0.14.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -52,7 +53,19 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "babel-loader": "^9.1.3",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.89.0",
+    "webpack-dev-server": "^4.15.1",
+    "react-refresh": "^0.14.0"
+  },
+  "resolutions": {
+    "react-refresh": "^0.14.0"
+  },
+  "overrides": {
+    "react-refresh": "^0.14.0"
   },
   "description": "website building .",
   "main": "index.js",

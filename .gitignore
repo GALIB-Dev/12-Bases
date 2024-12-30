@@ -24,3 +24,16 @@ yarn-error.log*
 
 # Environment Variables
 .env
+
+# Environment files
+.env
+.env.development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Firebase
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
