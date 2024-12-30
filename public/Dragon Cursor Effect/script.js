@@ -10,6 +10,7 @@ window.addEventListener(
 		pointer.x = e.clientX;
 		pointer.y = e.clientY;
 		rad = 0;
+		createParticle(e.clientX, e.clientY); // Add particle effect on pointer move
 	},
 	false
 );
@@ -75,3 +76,27 @@ const run = () => {
 };
 
 run();
+
+// Create particle effect with rainbow colors
+function createParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = `${x}px`;
+    particle.style.top = `${y}px`;
+    
+    // Rainbow color palette
+    const colors = [
+        '#FF6B6B', // red
+        '#4ECDC4', // cyan
+        '#A8E6CF', // mint
+        '#FFD93D', // yellow
+        '#FF9F43'  // orange
+    ];
+    
+    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    particle.style.width = `${Math.random() * 6 + 2}px`;
+    particle.style.height = particle.style.width;
+    document.body.appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 1000);
+}

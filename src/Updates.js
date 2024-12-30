@@ -39,6 +39,7 @@ const Updates = () => {
       fullName: 'Mohammad Al Galib',
       role: 'Full-stack development and UI/UX design',
       image: ddImage,
+      link: '/Dragon Cursor Effect/index.html',
       skills: ['React', 'Node.js', 'UI/UX', 'MongoDB'],
       icon: <FaCode />
     },
@@ -139,6 +140,12 @@ const Updates = () => {
               className="team-card"
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.2 }}
+              onClick={() => {
+                if (member.link) {
+                  window.location.href = member.link;
+                }
+              }}
+              style={{ cursor: member.link ? 'pointer' : 'default' }}
             >
               <div className="team-image-container">
                 <img src={member.image} alt={member.fullName} />
