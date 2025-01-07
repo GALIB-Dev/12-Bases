@@ -24,6 +24,7 @@ try {
   app = initializeApp(firebaseConfig);
   db = getFirestore(app);
   analytics = getAnalytics(app);
+  console.log('Firebase initialized successfully');
 } catch (error) {
   console.error("Firebase initialization error:", error);
 }

@@ -45,7 +45,17 @@ const ChatFrame = ({ username = "Guest" }) => {
     }
   }, []);
 
+  const checkFirebaseConnection = async () => {
+    try {
+      await db.collection('test').get();
+      console.log('Connected to Firebase');
+    } catch (error) {
+      console.error('Error connecting to Firebase:', error);
+    }
+  };
+
   useEffect(() => {
+    checkFirebaseConnection();
     let unsubscribe;
 
     try {

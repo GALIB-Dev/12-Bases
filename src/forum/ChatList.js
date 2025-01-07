@@ -11,7 +11,17 @@ const ChatList = ({ onUserSelect, selectedUser }) => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  const checkFirebaseConnection = async () => {
+    try {
+      await db.collection('test').get();
+      console.log('Connected to Firebase');
+    } catch (error) {
+      console.error('Error connecting to Firebase:', error);
+    }
+  };
+
   useEffect(() => {
+    checkFirebaseConnection();
     try {
       const q = query(
         collection(db, 'messages'),

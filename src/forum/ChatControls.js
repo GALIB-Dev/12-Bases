@@ -17,7 +17,17 @@ const ChatControls = ({ username, onNewMessage }) => {
     '🌟', '💫', '🎈', '🎨', '💻', '📱', '💡', '⭐'
   ];
 
+  const checkFirebaseConnection = async () => {
+    try {
+      await db.collection('test').get();
+      console.log('Connected to Firebase');
+    } catch (error) {
+      console.error('Error connecting to Firebase:', error);
+    }
+  };
+
   useEffect(() => {
+    checkFirebaseConnection();
     const handleClickOutside = (event) => {
       if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
         setShowEmojis(false);
@@ -25,7 +35,9 @@ const ChatControls = ({ username, onNewMessage }) => {
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const handleSubmit = async (e) => {
@@ -88,7 +100,7 @@ const ChatControls = ({ username, onNewMessage }) => {
         <button
           type="button"
           className="action-button"
-          onClick={() => setShowEmojis(!showEmojis)}
+          onClick={() => setShowEmojis(prev => !prev)}
           title="Choose emoji"
         >
           <FaRegSmile />
