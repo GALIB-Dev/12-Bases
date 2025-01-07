@@ -30,6 +30,10 @@ class ErrorBoundary extends Component {
     });
   }
 
+  resetError = () => {
+    this.setState({ hasError: false, errorMessage: '' });
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -49,7 +53,7 @@ class ErrorBoundary extends Component {
             </p>
           )}
           <button 
-            onClick={() => window.location.reload()} 
+            onClick={this.resetError} 
             style={{
               padding: '12px 24px',
               border: 'none',
