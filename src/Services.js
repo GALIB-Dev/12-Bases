@@ -66,7 +66,7 @@ const services = [
     title: 'AI Solutions',
     description: 'Custom AI solutions for business automation.',
     features: [
-      'Machine Learning',
+      'Machine Learning.',
       'Data Analysis',
       'Process Automation',
       'Predictive Models'
