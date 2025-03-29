@@ -395,7 +395,7 @@ const ChatFrame = ({ username = "Guest" }) => {
         </motion.div>
       </React.Fragment>
     );
-  }, [formatMessage, formatTime, handleReaction, messages, reactions, renderReactions, showReactionMenu, username, itemVariants]);
+  }, [formatMessage, formatTime, handleReaction, messages, reactions, renderReactions, showReactionMenu, username]);
 
   if (error) {
     return (
