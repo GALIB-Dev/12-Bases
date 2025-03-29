@@ -51,6 +51,11 @@ body {
     margin-bottom: 3rem;
 }
 
+.policy-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
 .policy-meta {
     color: var(--text-secondary);
     font-size: 0.875rem;
@@ -64,12 +69,36 @@ body {
     margin-bottom: 2rem;
 }
 
+.table-of-contents ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.table-of-contents a {
+    color: var(--primary-color);
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 0;
+    transition: color 0.2s;
+}
+
+.table-of-contents a:hover {
+    color: var(--text-primary);
+}
+
 .policy-section {
     background: var(--bg-primary);
     padding: 2rem;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     margin-bottom: 2rem;
+}
+
+.policy-section h2 {
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .definition-grid {
@@ -107,11 +136,13 @@ body {
     border-radius: var(--radius);
     border: 1px solid var(--border-color);
     text-align: center;
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
 .contact-card:hover {
     transform: translateY(-2px);
+    background-color: var(--primary-color);
+    color: white;
 }
 
 .footer {
@@ -130,6 +161,21 @@ body {
     align-items: center;
 }
 
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
@@ -143,5 +189,10 @@ body {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }
