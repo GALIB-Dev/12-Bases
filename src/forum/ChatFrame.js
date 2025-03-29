@@ -1,26 +1,69 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { db } from './firebase';
-import { collection, query, orderBy, onSnapshot, limit, getDocs } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, limit, getDocs, updateDoc, doc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaUsers, FaCog, FaBell, FaCheckDouble, FaArrowDown } from 'react-icons/fa';
+import { FaCheckDouble, FaArrowDown, FaThumbsUp, FaHeart, FaLaugh, FaAngry, FaSadTear, FaCommentDots } from 'react-icons/fa';
 import ChatControls from './ChatControls';
-import ChatList from './ChatList';
 import './ChatFrame.css';
+
+// Animation variants for smoother transitions
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      duration: 0.5,
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: { 
+    y: 0, 
+    opacity: 1,
+    transition: { type: "spring", stiffness: 100, damping: 10 }
+  }
+};
 
 const ChatFrame = ({ username = "Guest" }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [error, setError] = useState(null);
   const [isOnline, setIsOnline] = useState(true);
-  const [showSettings, setShowSettings] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [notifications] = useState([]);
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const containerRef = useRef(null);
   const messagesEndRef = useRef(null);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [showChatList, setShowChatList] = useState(false);
+  const [typingUsers, setTypingUsers] = useState([]);
+  const [showReactionMenu, setShowReactionMenu] = useState(null);
+
+  const reactions = React.useMemo(() => [
+    { icon: <FaThumbsUp />, name: 'like', label: 'Like' },
+    { icon: <FaHeart />, name: 'love', label: 'Love' },
+    { icon: <FaLaugh />, name: 'laugh', label: 'Laugh' },
+    { icon: <FaSadTear />, name: 'sad', label: 'Sad' },
+    { icon: <FaAngry />, name: 'angry', label: 'Angry' }
+  ], []);
+
+  // Progress bar animation for loading
+  useEffect(() => {
+    if (loading) {
+      const interval = setInterval(() => {
+        setLoadingProgress(prev => {
+          const newProgress = prev + Math.random() * 15;
+          return newProgress > 90 ? 90 : newProgress;
+        });
+      }, 300);
+      
+      return () => clearInterval(interval);
+    } else {
+      setLoadingProgress(100);
+    }
+  }, [loading]);
 
   const scrollToTop = useCallback(() => {
     if (containerRef.current) {
@@ -28,24 +71,19 @@ const ChatFrame = ({ username = "Guest" }) => {
     }
   }, []);
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    setUnreadCount(0);
-  }, []);
-
   const handleScroll = useCallback(() => {
     if (!containerRef.current) return;
     
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
-    setShowScrollButton(!isNearBottom);
+    const { scrollTop } = containerRef.current;
+    const isNearTop = scrollTop < 100;
+    setShowScrollButton(!isNearTop);
     
-    if (!isNearBottom) {
+    if (!isNearTop) {
       setUnreadCount(prev => prev + 1);
     }
   }, []);
 
-  const checkFirebaseConnection = async () => {
+  const checkFirebaseConnection = useCallback(async () => {
     if (!db) {
       console.log('Firebase db is not properly initialized');
       return false;
@@ -60,145 +98,218 @@ const ChatFrame = ({ username = "Guest" }) => {
       console.error('Error connecting to Firebase:', error);
       return false;
     }
-  };
+  }, []);
 
-  useEffect(() => {
-    const initializeChat = async () => {
-      const isConnected = await checkFirebaseConnection();
-      console.log('Firebase connection check result:', isConnected);
+  const handleReaction = useCallback(async (messageId, reactionName) => {
+    try {
+      const messageRef = doc(db, 'messages', messageId);
       
-      if (!isConnected) {
-        setError('Unable to connect to Firebase. Please check your internet connection and try again.');
-        setLoading(false);
-        return;
+      // Check if user already reacted with this reaction
+      const message = messages.find(msg => msg.id === messageId);
+      const existingReaction = message.reactions?.find(
+        r => r.user === username && r.name === reactionName
+      );
+      
+      if (existingReaction) {
+        // Remove reaction
+        await updateDoc(messageRef, {
+          reactions: arrayRemove({
+            user: username,
+            name: reactionName,
+            timestamp: existingReaction.timestamp
+          })
+        });
+      } else {
+        // Add reaction
+        await updateDoc(messageRef, {
+          reactions: arrayUnion({
+            user: username,
+            name: reactionName,
+            timestamp: new Date().toISOString()
+          })
+        });
       }
       
-      let unsubscribe;
+      setShowReactionMenu(null);
+    } catch (error) {
+      console.error('Error updating reaction:', error);
+    }
+  }, [messages, username]);
 
-      try {
-        console.log('Attempting to fetch messages from Firestore...');
-        const messagesRef = collection(db, 'messages');
-        const q = query(
-          messagesRef, 
-          orderBy('timestamp', 'desc'), 
-          limit(50)
-        );
+  const simulateTypingIndicator = useCallback(() => {
+    // This is a simulation. In a real app, you would use a collection to track typing status
+    const randomUserIndex = Math.floor(Math.random() * 3);
+    const typingUser = ['Alice', 'Bob', 'Charlie'][randomUserIndex];
+    
+    if (typingUser !== username && !typingUsers.includes(typingUser)) {
+      setTypingUsers(prev => [...prev, typingUser]);
+      
+      // Clear typing indicator after random time
+      setTimeout(() => {
+        setTypingUsers(prev => prev.filter(user => user !== typingUser));
+      }, 2000 + Math.random() * 3000);
+    }
+  }, [username, typingUsers]);
 
-        setLoading(true);
+  const initializeChat = useCallback(async () => {
+    const isConnected = await checkFirebaseConnection();
+    console.log('Firebase connection check result:', isConnected);
+    
+    if (!isConnected) {
+      setError('Unable to connect to Firebase. Please check your internet connection and try again.');
+      setLoading(false);
+      return;
+    }
+    
+    let unsubscribe;
 
-        unsubscribe = onSnapshot(q, (snapshot) => {
-          console.log('Snapshot received:', snapshot.size, 'documents');
-          const messageList = snapshot.docs
-            .map(doc => ({
-              id: doc.id,
-              ...doc.data(),
-              timestamp: doc.data().timestamp?.toDate() || new Date(doc.data().createdAt)
-            }))
-            .sort((a, b) => a.timestamp - b.timestamp);
+    try {
+      console.log('Attempting to fetch messages from Firestore...');
+      const messagesRef = collection(db, 'messages');
+      const q = query(
+        messagesRef, 
+        orderBy('timestamp', 'desc'), 
+        limit(50)
+      );
 
-          console.log('Fetched messages:', messageList);
+      setLoading(true);
+
+      unsubscribe = onSnapshot(q, (snapshot) => {
+        console.log('Snapshot received:', snapshot.size, 'documents');
+        const messageList = snapshot.docs
+          .map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            timestamp: doc.data().timestamp?.toDate() || new Date(doc.data().createdAt),
+            reactions: doc.data().reactions || []
+          }))
+          .sort((a, b) => b.timestamp - a.timestamp);
+
+        console.log('Fetched messages:', messageList);
+        
+        // Add a slight delay for smoother transition
+        setTimeout(() => {
           setMessages(messageList);
           setLoading(false);
-        }, (error) => {
-          console.error('Error fetching messages:', error);
-          setError('Failed to load messages. Please refresh.');
-          setLoading(false);
-        });
-
-      } catch (err) {
-        console.error('Setup error:', err);
-        setError(err.message);
-        setLoading(false);
-      }
-
-      return () => {
-        if (unsubscribe) {
-          unsubscribe();
+        }, 500);
+        
+        // Occasionally simulate typing
+        if (Math.random() > 0.7) {
+          simulateTypingIndicator();
         }
-      };
-    };
+      }, (error) => {
+        console.error('Error fetching messages:', error);
+        setError('Failed to load messages. Please refresh.');
+        setLoading(false);
+      });
 
-    initializeChat();
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
+    } catch (err) {
+      console.error('Setup error:', err);
+      setError(err.message);
+      setLoading(false);
     }
-  }, [handleScroll]);
-
-  useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      if (unsubscribe) {
+        unsubscribe();
+      }
     };
+  }, [checkFirebaseConnection, simulateTypingIndicator]);
+
+  useEffect(() => {
+    initializeChat();
+    
+    // Simulate occasional typing
+    const typingInterval = setInterval(() => {
+      if (Math.random() > 0.8) {
+        simulateTypingIndicator();
+      }
+    }, 10000);
+    
+    return () => clearInterval(typingInterval);
+  }, [initializeChat, simulateTypingIndicator]);
+
+  useEffect(() => {
+    window.addEventListener('online', () => setIsOnline(true));
+    window.addEventListener('offline', () => setIsOnline(false));
+
+    const scrollContainer = containerRef.current;
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener('online', () => setIsOnline(true));
+      window.removeEventListener('offline', () => setIsOnline(false));
+      
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [handleScroll]);
+
+  // Format message text with emojis and links
+  const formatMessage = useCallback((message) => {
+    if (!message.text) return '';
+    
+    // Link detection regex
+    const linkRegex = /(https?:\/\/[^\s]+)/g;
+    
+    // Replace links with anchor tags
+    const textWithLinks = message.text.replace(linkRegex, (url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+    
+    // Create spans with text and links
+    return <span dangerouslySetInnerHTML={{ __html: textWithLinks }} />;
   }, []);
 
-  const formatTime = (date) => {
-    if (!date) return '';
-    const now = new Date();
-    const messageDate = new Date(date);
-    
-    if (messageDate.toDateString() === now.toDateString()) {
-      return messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    } else if (now.getTime() - messageDate.getTime() < 7 * 24 * 60 * 60 * 1000) {
-      return messageDate.toLocaleDateString([], { weekday: 'short' }) + ' ' +
-             messageDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    } else {
-      return messageDate.toLocaleDateString([], { 
-        month: 'short', 
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+  // Format time for message display
+  const formatTime = useCallback((date) => {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }, []);
+
+  // Render message reactions
+  const renderReactions = useCallback((message) => {
+    if (!message.reactions || message.reactions.length === 0) {
+      return null;
     }
-  };
-
-  const formatMessage = (message) => {
-    const messageText = message.text || "";
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
     
-    const emojiRegex = /(\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu;
-
-    const parts = messageText.split(/([\u{1F300}-\u{1F9FF}]|\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu);
-    
-    return parts.map((part, index) => {
-      if (part.match(emojiRegex)) {
-        return (
-          <span key={index} className="message-emoji" role="img" aria-label="emoji">
-            {part}
-          </span>
-        );
+    // Group reactions by type
+    const reactionCounts = {};
+    message.reactions.forEach(reaction => {
+      if (!reactionCounts[reaction.name]) {
+        reactionCounts[reaction.name] = {
+          count: 0,
+          users: []
+        };
       }
-      
-      return part.split(urlRegex).map((text, i) => {
-        if (urlRegex.test(text)) {
-          return (
-            <a 
-              key={`${index}-${i}`}
-              href={text}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="message-link"
-            >
-              {text}
-            </a>
-          );
-        }
-        return <span key={`${index}-${i}`}>{text}</span>;
-      });
+      reactionCounts[reaction.name].count += 1;
+      reactionCounts[reaction.name].users.push(reaction.user);
     });
-  };
+    
+    return (
+      <div className="message-reactions">
+        {Object.entries(reactionCounts).map(([name, data]) => {
+          const reaction = reactions.find(r => r.name === name);
+          const userReacted = data.users.includes(username);
+          
+          return (
+            <div 
+              key={name} 
+              className={`reaction-badge ${userReacted ? 'user-reacted' : ''}`}
+              title={`${data.users.join(', ')}`}
+            >
+              <span className="reaction-icon">{reaction?.icon}</span>
+              <span className="reaction-count">{data.count}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }, [reactions, username]);
 
-  const renderMessage = (message, index) => {
+  const renderMessage = useCallback((message, index) => {
     const isCurrentUser = message.user === username;
     const showDate = index === 0 || 
       messages[index - 1].timestamp.toDateString() !== message.timestamp.toDateString();
@@ -224,9 +335,15 @@ const ChatFrame = ({ username = "Guest" }) => {
         )}
         <motion.div
           className={`message-item ${isCurrentUser ? 'sent' : 'received'}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+          transition={{ 
+            type: "spring", 
+            stiffness: 200, 
+            damping: 20,
+            delay: index * 0.05 // Staggered delay based on index
+          }}
         >
           <div className="message-content">
             {!isCurrentUser && (
@@ -249,12 +366,36 @@ const ChatFrame = ({ username = "Guest" }) => {
                   </span>
                 )}
               </div>
+              {renderReactions(message)}
+              <button 
+                className="message-reaction-button"
+                onClick={() => setShowReactionMenu(showReactionMenu === message.id ? null : message.id)}
+                aria-label="Add reaction to message"
+                aria-expanded={showReactionMenu === message.id}
+              >
+                <span aria-hidden="true">😊</span>
+              </button>
+              
+              {showReactionMenu === message.id && (
+                <div className="reaction-menu">
+                  {reactions.map(reaction => (
+                    <button
+                      key={reaction.name}
+                      className="reaction-button"
+                      onClick={() => handleReaction(message.id, reaction.name)}
+                      title={reaction.label}
+                    >
+                      {reaction.icon}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </motion.div>
       </React.Fragment>
     );
-  };
+  }, [formatMessage, formatTime, handleReaction, messages, reactions, renderReactions, showReactionMenu, username, itemVariants]);
 
   if (error) {
     return (
@@ -270,93 +411,104 @@ const ChatFrame = ({ username = "Guest" }) => {
       className="chat-frame"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
     >
       <div className="chat-container">
-        <AnimatePresence>
-          {showChatList && (
-            <motion.div 
-              className="chat-list-wrapper"
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-            >
-              <ChatList 
-                onUserSelect={(user) => {
-                  setSelectedUser(user);
-                  setShowChatList(false);
-                }}
-                selectedUser={selectedUser}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         <div className="chat-main">
-          <div className="chat-header">
-            <div className="chat-header-left">
-              <h2>Chat Room</h2>
-              <span className={`status-indicator ${isOnline ? 'online' : 'offline'}`}>
-                {isOnline ? 'Online' : 'Offline'}
-              </span>
-            </div>
-            <div className="chat-header-right">
-              <button 
-                className={`icon-button ${showSettings ? 'active' : ''}`} 
-                onClick={() => setShowSettings(!showSettings)}
-              >
-                <FaCog />
-              </button>
-              <button 
-                className={`icon-button ${showNotifications ? 'active' : ''}`}
-                onClick={() => setShowNotifications(!showNotifications)}
-              >
-                <FaBell />
-                {notifications.length > 0 && (
-                  <span className="notification-badge">
-                    {notifications.length}
-                  </span>
-                )}
-              </button>
-              <button 
-                className={`icon-button ${showChatList ? 'active' : ''}`}
-                onClick={() => setShowChatList(!showChatList)}
-              >
-                <FaUsers />
-              </button>
-            </div>
-          </div>
-
           <div className="chat-content">
-            <div className="chat-messages" ref={containerRef}>
-              {loading ? (
-                <div className="loading-container">
-                  <div className="loading-spinner"></div>
-                  <p>Loading messages...</p>
-                </div>
-              ) : (
-                <div className="message-list">
-                  {messages.map(renderMessage)}
-                </div>
-              )}
+            <div 
+              className="chat-messages" 
+              ref={containerRef}
+              role="log"
+              aria-live="polite"
+              aria-label="Chat messages"
+            >
+              <AnimatePresence mode="wait">
+                {loading ? (
+                  <motion.div 
+                    key="loading"
+                    className="loading-container"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <motion.div 
+                      className="loading-progress-bar" 
+                      initial={{ width: '0%' }}
+                      animate={{ width: `${loadingProgress}%` }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <div className="loading-spinner"></div>
+                    <p>Loading messages</p>
+                    <motion.div 
+                      className="loading-hint"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 2, duration: 0.5 }}
+                    >
+                      <FaCommentDots /> Connecting to chat server...
+                    </motion.div>
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="messages"
+                    className="message-list"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {messages.map(renderMessage)}
+                    {typingUsers.length > 0 && (
+                      <motion.div 
+                        className="typing-indicator" 
+                        aria-live="polite"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                      >
+                        <div className="typing-bubble">
+                          <div className="typing-dots" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
+                          <div className="typing-text">
+                            {typingUsers.length === 1 
+                              ? `${typingUsers[0]} is typing...` 
+                              : `${typingUsers.length} people are typing...`}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <div ref={messagesEndRef} />
             </div>
 
             {showScrollButton && (
-              <button 
+              <motion.button 
                 className="scroll-top-button"
                 onClick={scrollToTop}
+                aria-label={`Scroll to top. ${unreadCount > 0 ? `${unreadCount} new messages` : ''}`}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <FaArrowDown style={{ transform: 'rotate(180deg)' }} />
+                <FaArrowDown />
                 {unreadCount > 0 && (
-                  <span className="unread-count">{unreadCount}</span>
+                  <span className="unread-count" aria-hidden="true">{unreadCount}</span>
                 )}
-              </button>
+              </motion.button>
             )}
           </div>
 
           <ChatControls 
             username={username}
-            onNewMessage={scrollToBottom}
+            onNewMessage={scrollToTop}
             isOnline={isOnline}
           />
 
@@ -371,18 +523,6 @@ const ChatFrame = ({ username = "Guest" }) => {
             </motion.div>
           )}
         </div>
-
-        <AnimatePresence>
-          {showChatList && (
-            <motion.div 
-              className="chat-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowChatList(false)}
-            />
-          )}
-        </AnimatePresence>
       </div>
     </motion.div>
   );
