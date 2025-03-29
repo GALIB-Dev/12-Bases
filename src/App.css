@@ -114,6 +114,30 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
+.forum-container {
+  height: calc(100vh - var(--nav-height-desktop));
+  padding: 0;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-frame {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
@@ -206,6 +230,11 @@ h1 {
   .chat-page {
     margin: 0.5rem;
     height: calc(100vh - var(--nav-height-mobile) - 1rem);
+  }
+
+  .forum-container {
+    height: calc(100vh - var(--nav-height-mobile));
+    margin-top: var(--nav-height-mobile);
   }
 
   h1 {

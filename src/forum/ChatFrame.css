@@ -11,6 +11,12 @@
   --message-sent-light: #2563eb;
   --message-received-light: #f3f4f6;
   --date-separator-light: rgba(0, 0, 0, 0.05);
+  --primary-color: #2563eb;
+  --primary-color-dark: #1d4ed8;
+  --bg-hover-light: #e5e7eb;
+  --nav-height-desktop: 80px;
+  --nav-height-mobile: 60px;
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   
   /* Dark mode colors */
   --bg-primary-dark: #1a1b1e;
@@ -21,6 +27,7 @@
   --message-sent-dark: #3b82f6;
   --message-received-dark: #374151;
   --date-separator-dark: rgba(255, 255, 255, 0.1);
+  --bg-hover-dark: #374151;
 }
 
 /* Overall chat frame styling */

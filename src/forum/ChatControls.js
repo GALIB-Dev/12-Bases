@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { db } from './firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, getDocs } from 'firebase/firestore';
 import { FaRegSmile, FaPaperPlane } from 'react-icons/fa';
 import './ChatControls.css';
 
@@ -18,11 +18,19 @@ const ChatControls = ({ username, onNewMessage }) => {
   ];
 
   const checkFirebaseConnection = async () => {
+    if (!db) {
+      console.log('Firebase db is not properly initialized');
+      return false;
+    }
+    
     try {
-      await db.collection('test').get();
+      const testRef = collection(db, 'test');
+      await getDocs(testRef);
       console.log('Connected to Firebase');
+      return true;
     } catch (error) {
       console.error('Error connecting to Firebase:', error);
+      return false;
     }
   };
 

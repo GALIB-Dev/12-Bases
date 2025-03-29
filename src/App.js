@@ -63,7 +63,11 @@ function App() {
                   />
                   <Route
                     path="/forum"
-                    element={<ChatFrame username={username} />}
+                    element={
+                      <div className="forum-container">
+                        <ChatFrame username={username} />
+                      </div>
+                    }
                   />
                   <Route path="/services/cloud" element={<CloudPage />} />
                   <Route path="*" element={<NotFound />} />

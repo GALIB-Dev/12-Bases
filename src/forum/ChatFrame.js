@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { db } from './firebase';
-import { collection, query, orderBy, onSnapshot, limit } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, limit, getDocs } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaUsers, FaCog, FaBell, FaCheckDouble, FaArrowDown } from 'react-icons/fa';
 import ChatControls from './ChatControls';
@@ -46,57 +46,79 @@ const ChatFrame = ({ username = "Guest" }) => {
   }, []);
 
   const checkFirebaseConnection = async () => {
+    if (!db) {
+      console.log('Firebase db is not properly initialized');
+      return false;
+    }
+    
     try {
-      await db.collection('test').get();
+      const testRef = collection(db, 'test');
+      await getDocs(testRef);
       console.log('Connected to Firebase');
+      return true;
     } catch (error) {
       console.error('Error connecting to Firebase:', error);
+      return false;
     }
   };
 
   useEffect(() => {
-    checkFirebaseConnection();
-    let unsubscribe;
-
-    try {
-      const messagesRef = collection(db, 'messages');
-      const q = query(
-        messagesRef, 
-        orderBy('timestamp', 'desc'), 
-        limit(50)
-      );
-
-      setLoading(true);
-
-      unsubscribe = onSnapshot(q, (snapshot) => {
-        const messageList = snapshot.docs
-          .map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            timestamp: doc.data().timestamp?.toDate() || new Date(doc.data().createdAt)
-          }))
-          .sort((a, b) => a.timestamp - b.timestamp);
-
-        console.log('Fetched messages:', messageList);
-        setMessages(messageList);
+    const initializeChat = async () => {
+      const isConnected = await checkFirebaseConnection();
+      console.log('Firebase connection check result:', isConnected);
+      
+      if (!isConnected) {
+        setError('Unable to connect to Firebase. Please check your internet connection and try again.');
         setLoading(false);
-      }, (error) => {
-        console.error('Error fetching messages:', error);
-        setError('Failed to load messages. Please refresh.');
-        setLoading(false);
-      });
-
-    } catch (err) {
-      console.error('Setup error:', err);
-      setError(err.message);
-      setLoading(false);
-    }
-
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
+        return;
       }
+      
+      let unsubscribe;
+
+      try {
+        console.log('Attempting to fetch messages from Firestore...');
+        const messagesRef = collection(db, 'messages');
+        const q = query(
+          messagesRef, 
+          orderBy('timestamp', 'desc'), 
+          limit(50)
+        );
+
+        setLoading(true);
+
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          console.log('Snapshot received:', snapshot.size, 'documents');
+          const messageList = snapshot.docs
+            .map(doc => ({
+              id: doc.id,
+              ...doc.data(),
+              timestamp: doc.data().timestamp?.toDate() || new Date(doc.data().createdAt)
+            }))
+            .sort((a, b) => a.timestamp - b.timestamp);
+
+          console.log('Fetched messages:', messageList);
+          setMessages(messageList);
+          setLoading(false);
+        }, (error) => {
+          console.error('Error fetching messages:', error);
+          setError('Failed to load messages. Please refresh.');
+          setLoading(false);
+        });
+
+      } catch (err) {
+        console.error('Setup error:', err);
+        setError(err.message);
+        setLoading(false);
+      }
+
+      return () => {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
     };
+
+    initializeChat();
   }, []);
 
   useEffect(() => {

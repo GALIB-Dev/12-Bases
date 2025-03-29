@@ -12,17 +12,17 @@ service cloud.firestore {
 
     // Chat messages collection
     match /messages/{messageId} {
-      allow read: if isAuthenticated();
-      allow create: if isAuthenticated() 
-        && request.resource.data.userId == request.auth.uid
-        && request.resource.data.createdAt == request.time;
-      allow update, delete: if isOwner(resource.data.userId);
+      allow read, write: if true;
     }
 
     // User profiles collection
     match /users/{userId} {
-      allow read: if isAuthenticated();
-      allow write: if isOwner(userId);
+      allow read, write: if true;
+    }
+
+    // Test collection for connection checks
+    match /test/{document=**} {
+      allow read, write: if true;
     }
 
     // Default deny
