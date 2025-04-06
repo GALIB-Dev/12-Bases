@@ -7,23 +7,23 @@
 
 /* Centering the chat login container */
 .chat-login-wrapper {
+  min-height: 100vh;
+  padding: 20px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  background-color: #f2f4f7; /* Optional background */
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
 }
 
 /* Chat Login Container */
 .chat-login-container {
-  background-color: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
-  padding: 40px 30px;
   width: 100%;
   max-width: 400px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .chat-login-container:hover {
@@ -33,85 +33,83 @@
 
 /* Heading */
 .chat-login-container h2 {
-  font-size: 24px;
-  color: #333333;
-  margin-bottom: 20px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  position: relative;
-  padding-bottom: 5px;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  text-align: center;
 }
 
-.chat-login-container h2::after {
-  content: "";
-  position: absolute;
-  width: 40px;
-  height: 3px;
-  background-color: #4ea82a;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Input Field */
-.chat-login-container input[type="text"] {
+/* Input Fields */
+.chat-login-container input {
   width: 100%;
-  padding: 12px;
+  padding: 12px 16px;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
   font-size: 16px;
-  border-radius: 10px;
-  border: 2px solid #ddd;
-  margin-bottom: 20px;
-  outline: none;
-  transition: border-color 0.3s;
+  transition: all 0.3s ease;
 }
 
-.chat-login-container input[type="text"]:focus {
-  border-color: #4ea82a;
+.chat-login-container input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 /* Enter Button */
 .chat-login-container button {
   width: 100%;
   padding: 12px;
-  background-color: #000000;
-  color: #ffffff;
-  font-size: 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  background: #4a90e2;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
+  transition: transform 0.2s ease;
+  touch-action: manipulation;
 }
 
-.chat-login-container button:hover {
-  background-color: #4ea82a;
+.chat-login-container button:active {
+  transform: scale(0.98);
+}
+
+/* Error Message */
+.error-message {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff6b6b !important;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
 }
 
 /* Room Rules Section */
 .room-rules {
-  margin-top: 30px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
-  color: #333333;
-  font-size: 14px;
-  text-align: left;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .room-rules h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #4ea82a;
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .room-rules ul {
-  list-style-type: disc;
-  margin-left: 20px;
+  color: #e0e0e0;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .room-rules li {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
 }
 
 .room-rules p {
@@ -120,4 +118,19 @@
   font-style: italic;
   font-size: 13px;
   text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .chat-login-container {
+    padding: 1.5rem;
+  }
+  
+  .chat-login-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .room-rules {
+    font-size: 0.9rem;
+  }
 }

@@ -25,6 +25,16 @@
   --border-dark: rgba(255, 255, 255, 0.1);
   --bg-hover-light: rgba(0, 0, 0, 0.05);
   --bg-hover-dark: rgba(255, 255, 255, 0.05);
+
+  /* Add mobile-specific variables */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+  
+  /* Modern mobile touch feedback colors */
+  --tap-highlight-color: rgba(114, 218, 55, 0.2);
+  --active-state-color: rgba(2, 100, 64, 0.1);
 }
 
 /* Modern CSS Reset */
@@ -126,6 +136,15 @@ body {
   position: relative;
 }
 
+@supports (padding: max(0px)) {
+  .chat-container {
+    padding-top: max(var(--safe-area-inset-top), 0px);
+    padding-bottom: max(var(--safe-area-inset-bottom), 0px);
+    padding-left: max(var(--safe-area-inset-left), 0px);
+    padding-right: max(var(--safe-area-inset-right), 0px);
+  }
+}
+
 /* Back Button */
 .back-button-container {
   height: var(--nav-height-desktop);
@@ -162,6 +181,11 @@ body {
   background-color: var(--bg-primary);
   overflow: hidden;
   height: calc(100vh - var(--nav-height-desktop));
+  overflow-y: overlay;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y pinch-zoom;
 }
 
 /* Animations */
@@ -292,6 +316,21 @@ body {
   }
 }
 
+@media (hover: none) {
+  .home-button,
+  .back-button,
+  .chat-controls button {
+    -webkit-tap-highlight-color: var(--tap-highlight-color);
+  }
+
+  .home-button:active,
+  .back-button:active,
+  .chat-controls button:active {
+    background-color: var(--active-state-color);
+    transform: scale(0.98);
+  }
+}
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -369,4 +408,43 @@ textarea,
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* PWA display improvements */
+@media all and (display-mode: standalone) {
+  .App {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+}
+
+/* Modern mobile text selection */
+::selection {
+  background: var(--primary-color);
+  color: white;
+  text-shadow: none;
+}
+
+/* Mobile gesture handling */
+.chat-messages {
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Mobile text size adjustments */
+@media screen and (max-width: 390px) {
+  html {
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+  }
+}
+
+/* Notch and dynamic island awareness */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .chat-header {
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
 }
