@@ -159,6 +159,44 @@
   opacity: 0.8;
 }
 
+.pgp-section {
+  background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%);
+}
+
+.pgp-key-plain {
+  font-family: 'Fira Code', 'Source Code Pro', monospace;
+  font-size: 10px;
+  line-height: 1.4;
+  color: #90ffb1;
+  text-shadow: 0 0 8px rgba(144, 255, 177, 0.3);
+  margin: 0;
+  padding: 1rem 0;
+  overflow-x: auto;
+  position: relative;
+  background: none;
+  border: none;
+}
+
+.pgp-key-plain::-webkit-scrollbar {
+  height: 4px;
+}
+
+.pgp-key-plain::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pgp-key-plain::-webkit-scrollbar-thumb {
+  background: rgba(144, 255, 177, 0.2);
+  border-radius: 2px;
+}
+
+/* Remove the old PGP key styles */
+.pgp-key-container,
+.pgp-key-header,
+.pgp-key {
+  display: none;
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
   .footer-content {
@@ -209,4 +247,4 @@ html {
 
 .footer {
   animation: fadeIn 1s ease-out;
-} 
+}
