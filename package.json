@@ -32,7 +32,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pull:footer": "chmod +x ./scripts/pull-footer.sh && ./scripts/pull-footer.sh",
+    "pull:footer-css": "chmod +x ./scripts/pull-footer.sh && ./scripts/pull-footer.sh"
   },
   "eslintConfig": {
     "extends": [
