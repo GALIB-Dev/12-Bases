@@ -1,7 +1,109 @@
-import React from 'react';
+import React, { memo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import './Footer.css';
+
+const socialLinks = [
+  { icon: FaFacebook, url: 'https://www.facebook.com/mohammad.al.galib.2024', label: 'Facebook' },
+  { icon: FaTwitter, url: 'https://twitter.com/12bases', label: 'Twitter' },
+  { icon: FaLinkedin, url: 'https://linkedin.com/company/12bases', label: 'LinkedIn' },
+  { icon: FaGithub, url: 'https://github.com/GALIB-Dev/12-Bases', label: 'GitHub' },
+  { icon: FaInstagram, url: 'https://www.instagram.com/root_user__4/', label: 'Instagram' }
+];
+
+const CompanyInfo = memo(() => (
+  <div className="footer-section company-info">
+    <h3>12 Bases Technology Ltd.</h3>
+    <address>
+      <p>Joypurhat, Rajshahi, Bangladesh</p>
+      <p>Phone: <a href="tel:+8801785904899">+880 178 590 4899</a></p>
+      <p>Email: <a href="mailto:mohammadalgalib71@gmail.com">mohammadalgalib71@gmail.com</a></p>
+    </address>
+  </div>
+));
+
+const QuickLinks = memo(() => (
+  <div className="footer-section quick-links">
+    <h3>Quick Links</h3>
+    <ul className="footer-links">
+      <li><Link to="/">Home</Link></li>
+      <li><Link to="/services">Services</Link></li>
+      <li><Link to="/updates">Updates</Link></li>
+      <li><Link to="/contact">Contact</Link></li>
+    </ul>
+    <div className="legal-links">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms-of-service.html">Terms of Service</a>
+    </div>
+  </div>
+));
+
+const SocialLinks = memo(() => (
+  <div className="footer-section social-section">
+    <h3>Connect With Us</h3>
+    <div className="social-links">
+      {socialLinks.map(({ icon: Icon, url, label }) => (
+        <a
+          key={label}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+        >
+          <Icon />
+        </a>
+      ))}
+    </div>
+  </div>
+));
+
+const PGPSection = memo(({ pgpKey }) => {
+  const [copyStatus, setCopyStatus] = useState('Copy Key');
+
+  const copyToClipboard = (text) => {
+    // Create temporary textarea
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed'; // Avoid scrolling to bottom
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      // Try the modern clipboard API first
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          setCopyStatus('Copied!');
+          setTimeout(() => setCopyStatus('Copy Key'), 2000);
+        });
+      } else {
+        // Fallback to execCommand
+        document.execCommand('copy');
+        setCopyStatus('Copied!');
+        setTimeout(() => setCopyStatus('Copy Key'), 2000);
+      }
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      setCopyStatus('Failed to copy');
+      setTimeout(() => setCopyStatus('Copy Key'), 2000);
+    } finally {
+      document.body.removeChild(textarea);
+    }
+  };
+
+  return (
+    <div className="footer-section pgp-section">
+      <h3>PGP Public Key</h3>
+      <button 
+        className="copy-button"
+        onClick={() => copyToClipboard(pgpKey)}
+        aria-label="Copy PGP key to clipboard"
+      >
+        {copyStatus}
+      </button>
+      <pre className="pgp-key-plain">{pgpKey}</pre>
+    </div>
+  );
+});
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -56,60 +158,16 @@ uA+NgEkv+jVZVy4Joi7oerbbsxjYUZ50OzJsWI+k3BIy/OQFivaAEKHYy+0IG0ru
 VANS1Eqw0OhcQzPdmvsyWmhS+cSMyc90nklt74DusLLN2Wst3rcQCK0UTxirc5iK
 CjNnddPe7Jg69CV51Q+5BemEuLaG0utNu1MuV7n1loZONYTaQItY
 =w0hz
------END PGP PUBLIC KEY BLOCK-----
-`;
+-----END PGP PUBLIC KEY BLOCK-----`;
 
   return (
-    <footer className="footer">
+    <footer className="footer" role="contentinfo">
       <div className="footer-content">
-        <div className="footer-section">
-          <h3>12 Bases Technology Ltd.</h3>
-          <p>Joypurhat, Rajshahi, Bangladesh</p>
-          <p>Phone: <a href="tel:+8801785904899">+880 178 590 4899</a></p>
-          <p>Email: <a href="mailto:mohammadalgalib71@gmail.com">mohammadalgalib71@gmail.com</a></p>
-        </div>
-
-        <div className="footer-section">
-          <ul className="footer-links">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/services">Services</Link></li>
-            <li><Link to="/updates">Updates</Link></li>
-            <li>
-              <div className="footer-links">
-                <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-                <a href="/terms-of-service.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-                <a href="/contact">Contact</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div className="footer-section">
-          <div className="social-links">
-            <a href="https://facebook.com/12bases" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-              <FaFacebook />
-            </a>
-            <a href="https://twitter.com/12bases" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-              <FaTwitter />
-            </a>
-            <a href="https://linkedin.com/company/12bases" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <FaLinkedin />
-            </a>
-            <a href="https://github.com/12bases" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-              <FaGithub />
-            </a>
-            <a href="https://instagram.com/12bases" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <FaInstagram />
-            </a>
-          </div>
-        </div>
-
-        <div className="footer-section pgp-section">
-          <h3>PGP Public Key</h3>
-          <pre className="pgp-key-plain">{pgpKey}</pre>
-        </div>
+        <CompanyInfo />
+        <QuickLinks />
+        <SocialLinks />
+        <PGPSection pgpKey={pgpKey} />
       </div>
-
       <div className="footer-bottom">
         <p>&copy; {currentYear} 12 Bases Technology Ltd. All rights reserved.</p>
       </div>
@@ -117,4 +175,4 @@ CjNnddPe7Jg69CV51Q+5BemEuLaG0utNu1MuV7n1loZONYTaQItY
   );
 };
 
-export default Footer;
+export default memo(Footer);

@@ -9,20 +9,16 @@ import Services from './Services';
 import Home from './Home';
 import Loading from './Loading';
 import NotFound from './NotFound';
-import ChatLogin from './ChatLogin';
-import Rule from './forum/Rule';
-import ChatFrame from './forum/ChatFrame';
 import AIPage from './pages/AIPage';
 import BlockchainPage from './pages/BlockchainPage';
 import CloudPage from './pages/CloudPage';
 import './App.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import './forum/firebase';
 import ErrorBoundary from './components/ErrorBoundary';
+
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState(localStorage.getItem('username') || '');
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,12 +27,6 @@ function App() {
 
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    if (username) {
-      localStorage.setItem('username', username);
-    }
-  }, [username]);
 
   return (
     <ErrorBoundary>
@@ -56,19 +46,6 @@ function App() {
                   <Route path="/services" element={<Services />} />
                   <Route path="/services/blockchain" element={<BlockchainPage />} />
                   <Route path="/aipage" element={<AIPage />} />
-                  <Route path="/rule" element={<Rule />} />
-                  <Route
-                    path="/chatlogin"
-                    element={<ChatLogin setUsername={setUsername} />}
-                  />
-                  <Route
-                    path="/forum"
-                    element={
-                      <div className="forum-container">
-                        <ChatFrame username={username} />
-                      </div>
-                    }
-                  />
                   <Route path="/services/cloud" element={<CloudPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>

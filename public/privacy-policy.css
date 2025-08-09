@@ -40,6 +40,16 @@ body {
     align-items: center;
 }
 
+.nav-back {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.nav-back:hover {
+    color: var(--primary-color);
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -84,6 +94,7 @@ body {
 
 .table-of-contents a:hover {
     color: var(--text-primary);
+    background-color: var(--bg-secondary); /* Added subtle hover effect */
 }
 
 .policy-section {
@@ -99,6 +110,10 @@ body {
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--border-color);
+}
+
+.section-content {
+    margin-bottom: 1.5rem; /* Added margin to the section content */
 }
 
 .definition-grid {
@@ -194,5 +209,9 @@ body {
     .footer-links {
         flex-direction: column;
         gap: 0.5rem;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr; /* Stack contact cards on smaller screens */
     }
 }

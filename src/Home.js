@@ -82,7 +82,7 @@ const Home = () => {
 
   useEffect(() => {
     // Animate stats
-    const targetStats = { projects: 500, clients: 200, countries: 50 };
+    const targetStats = { projects: 21, clients: 7, countries: 1 };
     const duration = 2000;
     const steps = 50;
     let currentStep = 0;

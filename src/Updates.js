@@ -35,7 +35,7 @@ const Updates = () => {
 
   const teamMembers = [
     {
-      name: 'Founder & Senior Dev',
+      name: 'Founder & Dev',
       fullName: 'Mohammad Al Galib',
       role: 'Full-stack development and UI/UX design',
       image: ddImage,
@@ -44,7 +44,7 @@ const Updates = () => {
       icon: <FaCode />
     },
     {
-      name: 'Founder & Managing Director',
+      name: 'Founder & Manager',
       fullName: 'Yusuf Anam',
       role: 'Strategy and Marketing',
       image: mdImage,

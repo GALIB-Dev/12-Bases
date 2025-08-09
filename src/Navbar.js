@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaHome, 
   FaBullhorn, 
-  FaComments, 
+  
   FaEnvelope, 
   FaBolt
 } from 'react-icons/fa';
@@ -35,7 +35,7 @@ const Navbar = () => {
   const navItems = [
     { path: '/', label: 'Home', icon: <FaHome /> },
     { path: '/updates', label: 'Updates', icon: <FaBullhorn /> },
-    { path: '/ChatLogin', label: 'Forum', icon: <FaComments /> },
+    
     { path: '/contact', label: 'Contact', icon: <FaEnvelope /> },
     { path: '/services', label: 'Services', icon: <FaBolt /> }
   ];
