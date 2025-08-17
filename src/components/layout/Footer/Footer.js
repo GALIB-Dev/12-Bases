@@ -1,7 +1,8 @@
 import React, { memo, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaInstagram, FaRocket, FaEnvelope, FaPhone, FaMapMarkerAlt, FaShieldAlt, FaCode, FaCloud } from 'react-icons/fa';
 import './Footer.css';
+import SpinLogo from '../../../Spin.png';
+import FrontLogo from '../../../Logo.png';
 
 const socialLinks = [
   { icon: FaFacebook, url: 'https://www.facebook.com/mohammad.al.galib.2024', label: 'Facebook' },
@@ -13,12 +14,28 @@ const socialLinks = [
 
 const CompanyInfo = memo(() => (
   <div className="footer-section company-info">
-    <h3>12 Bases Technology Ltd.</h3>
-    <address>
-      <p>Joypurhat, Rajshahi, Bangladesh</p>
-      <p>Phone: <a href="tel:+8801785904899">+880 178 590 4899</a></p>
-      <p>Email: <a href="mailto:mohammadalgalib71@gmail.com">mohammadalgalib71@gmail.com</a></p>
-    </address>
+    <div className="company-header">
+      <div className="logo-wrapper">
+        <img src={SpinLogo} alt="12 Bases Logo" className="footer-spin-logo" />
+        <img src={FrontLogo} alt="12 Bases Front Logo" className="footer-logo" />
+      </div>
+      <div className="company-name">12 Bases Technology Ltd.</div>
+      <div className="company-tagline">Building the Future with Technology</div>
+    </div>
+    <div className="company-details">
+      <div className="contact-item">
+        <FaMapMarkerAlt className="contact-icon" />
+        <span>Joypurhat, Rajshahi, Bangladesh</span>
+      </div>
+      <div className="contact-item">
+        <FaPhone className="contact-icon" />
+        <span>+880 178 590 4899</span>
+      </div>
+      <div className="contact-item">
+        <FaEnvelope className="contact-icon" />
+        <span>mohammadalgalib71@gmail.com</span>
+      </div>
+    </div>
   </div>
 ));
 
@@ -26,14 +43,28 @@ const QuickLinks = memo(() => (
   <div className="footer-section quick-links">
     <h3>Quick Links</h3>
     <ul className="footer-links">
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/services">Services</Link></li>
-      <li><Link to="/updates">Updates</Link></li>
-      <li><Link to="/contact">Contact</Link></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/updates">Updates</a></li>
+      <li><a href="/contact">Contact</a></li>
     </ul>
     <div className="legal-links">
       <a href="/privacy-policy.html">Privacy Policy</a>
       <a href="/terms-of-service.html">Terms of Service</a>
+    </div>
+    <div className="services-grid">
+      <div className="service-item">
+        <FaCode className="service-icon" />
+        <span>Web Development</span>
+      </div>
+      <div className="service-item">
+        <FaCloud className="service-icon" />
+        <span>Cloud Solutions</span>
+      </div>
+      <div className="service-item">
+        <FaShieldAlt className="service-icon" />
+        <span>Cybersecurity</span>
+      </div>
     </div>
   </div>
 ));
@@ -41,6 +72,7 @@ const QuickLinks = memo(() => (
 const SocialLinks = memo(() => (
   <div className="footer-section social-section">
     <h3>Connect With Us</h3>
+    <p className="social-description">Follow us for the latest updates and insights</p>
     <div className="social-links">
       {socialLinks.map(({ icon: Icon, url, label }) => (
         <a
@@ -49,6 +81,7 @@ const SocialLinks = memo(() => (
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
+          style={{ color: 'var(--social-color)' }}
         >
           <Icon />
         </a>
@@ -169,7 +202,14 @@ CjNnddPe7Jg69CV51Q+5BemEuLaG0utNu1MuV7n1loZONYTaQItY
         <PGPSection pgpKey={pgpKey} />
       </div>
       <div className="footer-bottom">
-        <p>&copy; {currentYear} 12 Bases Technology Ltd. All rights reserved.</p>
+        <div className="footer-bottom-content">
+          <p>&copy; {currentYear} 12 Bases Technology Ltd. All rights reserved.</p>
+          <div className="footer-bottom-links">
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <span className="separator">|</span>
+            <a href="/terms-of-service.html">Terms of Service</a>
+          </div>
+        </div>
       </div>
     </footer>
   );

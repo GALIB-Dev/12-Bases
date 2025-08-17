@@ -1,293 +1,345 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  FaUser, 
   FaEnvelope, 
-  FaPaperPlane,
-  FaCheckCircle,
-  FaMapMarkerAlt,
-  FaClock,
-  FaGlobe,
-  FaWhatsapp,
-  FaTelegram,
-  FaFacebookMessenger
+  FaPhone, 
+  FaMapMarkerAlt, 
+  FaWhatsapp, 
+  FaTelegram, 
+  FaFacebookMessenger,
+  FaDownload,
+  FaCopy,
+  FaCheck
 } from 'react-icons/fa';
-import emailjs from '@emailjs/browser';
-import ErrorBoundary from './components/ErrorBoundary';
 import './Contact.css';
 
-// Initialize EmailJS with try-catch
-try {
-    emailjs.init(process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'Utx6EQgPn2N9vF9tL');
-} catch (error) {
-    console.error('EmailJS initialization error:', error);
-}
+const Contact = () => {
+  const [activeTab, setActiveTab] = useState('contact');
+  const [copied, setCopied] = useState(false);
 
-const ContactForm = () => {
-    const form = useRef();
-    const [formData, setFormData] = useState({
-        name: '',
-        contact: '',
-        subject: '',
-        message: ''
-    });
+  const contactInfo = [
+    {
+      icon: <FaEnvelope />,
+      title: 'Email',
+      text: 'mohammadalgalib71@gmail.com',
+      action: 'mailto:mohammadalgalib71@gmail.com',
+      actionText: 'Send Email'
+    },
+    {
+      icon: <FaPhone />,
+      title: 'Phone',
+      text: '+880 178 590 4899',
+      action: 'tel:+8801785904899',
+      actionText: 'Call Now'
+    },
+    {
+      icon: <FaWhatsapp />,
+      title: 'WhatsApp',
+      text: '+880 178 590 4899',
+      action: 'https://wa.me/8801785904899',
+      actionText: 'Chat on WhatsApp'
+    },
+    {
+      icon: <FaTelegram />,
+      title: 'Telegram',
+      text: '@galib_dev',
+      action: 'https://t.me/galib_dev',
+      actionText: 'Message on Telegram'
+    },
+    {
+      icon: <FaFacebookMessenger />,
+      title: 'Messenger',
+      text: '12 Bases Technology',
+      action: 'https://m.me/12bases',
+      actionText: 'Send Message'
+    },
+    {
+      icon: <FaMapMarkerAlt />,
+      title: 'Location',
+      text: 'Joypurhat, Rajshahi, Bangladesh',
+      action: '#map',
+      actionText: 'View on Map'
+    }
+  ];
 
-    const [status, setStatus] = useState({
-        submitting: false,
-        submitted: false,
-        error: null
-    });
+  const socialLinks = [
+    { name: 'Facebook', icon: '📘', url: 'https://www.facebook.com/mohammad.al.galib.2024' },
+    { name: 'Twitter', icon: '🐦', url: 'https://twitter.com/12bases' },
+    { name: 'LinkedIn', icon: '💼', url: 'https://linkedin.com/company/12bases' },
+    { name: 'GitHub', icon: '💻', url: 'https://github.com/GALIB-Dev/12-Bases' },
+    { name: 'Instagram', icon: '📷', url: 'https://www.instagram.com/root_user__4/' }
+  ];
 
-    const contactInfo = [
-        {
-            icon: <FaMapMarkerAlt />,
-            title: 'Location',
-            details: 'Joypurhat-5900, Bangladesh',
-            color: '#72da37'
-        },
-        {
-            icon: <FaClock />,
-            title: 'Business Hours',
-            details: '9:00 AM - 6:00 PM',
-            color: '#4ca819'
-        },
-        {
-            icon: <FaGlobe />,
-            title: 'Online Support',
-            details: '24/7 Available',
-            color: '#72da37'
-        }
-    ];
+  const quickActions = [
+    {
+      icon: <FaDownload />,
+      title: 'Download Resume',
+      description: 'Get my latest resume and portfolio',
+      action: '/resume.pdf'
+    },
+    {
+      icon: <FaCopy />,
+      title: 'Copy Contact Info',
+      description: 'Copy all contact details to clipboard',
+      action: 'copy'
+    },
+    {
+      icon: <FaMapMarkerAlt />,
+      title: 'View Location',
+      description: 'See our office location on Google Maps',
+      action: '#map'
+    }
+  ];
 
-    const socialContacts = [
-        {
-            icon: <FaWhatsapp />,
-            platform: 'WhatsApp',
-            link: 'https://wa.me/+8801785904899',
-            color: '#25D366'
-        },
-        {
-            icon: <FaTelegram />,
-            platform: 'Telegram',
-            link: 'https://t.me/twelvebases',
-            color: '#0088cc'
-        },
-        {
-            icon: <FaFacebookMessenger />,
-            platform: 'Messenger',
-            link: 'https://m.me/12bases',
-            color: '#006AFF'
-        }
-    ];
+  const copyToClipboard = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setStatus({ ...status, submitting: true, error: null });
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
-        if (!navigator.onLine) {
-            setStatus({
-                submitting: false,
-                submitted: false,
-                error: 'No internet connection. Please check your network.'
-            });
-            return;
-        }
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
 
-        try {
-            const result = await emailjs.sendForm(
-                process.env.REACT_APP_EMAILJS_SERVICE_ID || 'service_wbxl9af',
-                process.env.REACT_APP_EMAILJS_TEMPLATE_ID || 'template_29wz06v',
-                form.current,
-                process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'Utx6EQgPn2N9vF9tL'
-            );
+  const tabVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 }
+  };
 
-            if (result.text === 'OK') {
-                setStatus({ submitting: false, submitted: true, error: null });
-                setFormData({ name: '', contact: '', subject: '', message: '' });
-                setTimeout(() => setStatus(prev => ({ ...prev, submitted: false })), 3000);
-            } else {
-                throw new Error('Server response was not OK');
-            }
-        } catch (error) {
-            console.error('Submission error:', error);
-            setStatus({
-                submitting: false,
-                submitted: false,
-                error: error.text || 'Failed to send message. Please try again later.'
-            });
-        }
-    };
+  return (
+    <div className="contact-container">
+      {/* Hero Section */}
+      <motion.section 
+        className="contact-hero"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="hero-content">
+          <h1 className="hero-title">Get in Touch</h1>
+          <p className="hero-subtitle">
+            Ready to start your next project? Let's discuss how we can help bring your ideas to life.
+          </p>
+        </div>
+      </motion.section>
 
-    return (
+      {/* Tab Navigation */}
+      <motion.div 
+        className="tab-navigation"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        <div className="tab-container">
+          <button
+            className={`tab-btn ${activeTab === 'contact' ? 'active' : ''}`}
+            onClick={() => setActiveTab('contact')}
+          >
+            Contact Info
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'social' ? 'active' : ''}`}
+            onClick={() => setActiveTab('social')}
+          >
+            Social Links
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'actions' ? 'active' : ''}`}
+            onClick={() => setActiveTab('actions')}
+          >
+            Quick Actions
+          </button>
+        </div>
+      </motion.div>
+
+      {/* Tab Content */}
+      <motion.div 
+        className="tab-content"
+        key={activeTab}
+        variants={tabVariants}
+        initial="hidden"
+        animate="visible"
+        transition={{ duration: 0.3 }}
+      >
+        <AnimatePresence mode="wait">
+          {activeTab === 'contact' && (
+            <motion.div 
+              className="contact-tab"
+              key="contact"
+              variants={tabVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              <div className="contact-grid">
+                {contactInfo.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="contact-card"
+                    variants={itemVariants}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="contact-icon">{item.icon}</div>
+                    <div className="contact-text">
+                      <h3>{item.title}</h3>
+                      <p>{item.text}</p>
+                    </div>
+                    <a 
+                      href={item.action} 
+                      className="contact-action"
+                      target={item.action.startsWith('http') ? '_blank' : '_self'}
+                      rel={item.action.startsWith('http') ? 'noopener noreferrer' : ''}
+                    >
+                      {item.actionText}
+                    </a>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'social' && (
+            <motion.div 
+              className="social-tab"
+              key="social"
+              variants={tabVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              <div className="social-grid">
+                {socialLinks.map((social, index) => (
+                  <motion.a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-card"
+                    variants={itemVariants}
+                    whileHover={{ y: -5, scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="social-icon">{social.icon}</div>
+                    <div className="social-name">{social.name}</div>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'actions' && (
+            <motion.div 
+              className="actions-tab"
+              key="actions"
+              variants={tabVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              <div className="actions-grid">
+                {quickActions.map((action, index) => (
+                  <motion.div
+                    key={index}
+                    className="action-card"
+                    variants={itemVariants}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={() => {
+                      if (action.action === 'copy') {
+                        copyToClipboard('Contact: +880 178 590 4899\nEmail: mohammadalgalib71@gmail.com\nLocation: Joypurhat, Rajshahi, Bangladesh');
+                      }
+                    }}
+                  >
+                    <div className="action-icon">{action.icon}</div>
+                    <div className="action-content">
+                      <h3>{action.title}</h3>
+                      <p>{action.description}</p>
+                    </div>
+                    <div className="action-arrow">→</div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Download Section */}
+      <motion.section 
+        className="download-section"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+      >
+        <div className="download-content">
+          <h2>Need More Information?</h2>
+          <p>Download our company profile and service catalog to learn more about what we offer.</p>
+          <motion.button 
+            className="download-btn"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FaDownload />
+            Download Company Profile
+          </motion.button>
+        </div>
+      </motion.section>
+
+      {/* Map Section */}
+      <motion.section 
+        className="map-section"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+      >
+        <div className="map-content">
+          <h2>Our Location</h2>
+          <p>Visit us at our office in Joypurhat, Rajshahi, Bangladesh</p>
+          <div className="map-container">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d193.78561597292233!2d88.97987640873224!3d25.087955315826072!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sbd!4v1755455327945!5m2!1sen!2sbd" 
+              width="100%" 
+              height="450" 
+              style={{ border: 0 }} 
+              allowFullScreen="" 
+              loading="lazy" 
+              referrerPolicy="no-referrer-when-downgrade"
+              title="12 Bases Technology Office Location"
+            />
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Copy Status */}
+      {copied && (
         <motion.div 
-            className="contact-container"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+          className="copy-status"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
         >
-            <div className="contact-header">
-                <motion.h1
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                >
-                    Get in Touch
-                </motion.h1>
-                <motion.p
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                >
-                    We're here to help and answer any question you might have
-                </motion.p>
-            </div>
-
-            <div className="contact-content">
-                <div className="contact-left">
-                    {/* Contact Information Cards */}
-                    <div className="info-cards">
-                        {contactInfo.map((info, index) => (
-                            <motion.div 
-                                key={index}
-                                className="info-card"
-                                initial={{ x: -50, opacity: 0 }}
-                                animate={{ x: 0, opacity: 1 }}
-                                transition={{ delay: 0.2 * index }}
-                            >
-                                <div className="info-icon" style={{ color: info.color }}>
-                                    {info.icon}
-                                </div>
-                                <h3>{info.title}</h3>
-                                <p>{info.details}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Social Contact Options */}
-                    <div className="social-contacts">
-                        {socialContacts.map((social, index) => (
-                            <motion.a
-                                key={index}
-                                href={social.link}
-                                className="social-contact-btn"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{ '--hover-color': social.color }}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                {social.icon}
-                                <span>{social.platform}</span>
-                            </motion.a>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="contact-right">
-                    <motion.form 
-                        ref={form}
-                        className="contact-form"
-                        onSubmit={handleSubmit}
-                        initial={{ x: 50, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.4 }}
-                    >
-                        <div className="form-group">
-                            <div className="input-icon">
-                                <FaUser />
-                            </div>
-                            <input
-                                type="text"
-                                name="from_name"
-                                placeholder="Your Name"
-                                value={formData.name}
-                                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <div className="input-icon">
-                                <FaEnvelope />
-                            </div>
-                            <input
-                                type="email"
-                                name="reply_to"
-                                placeholder="Your Email"
-                                value={formData.contact}
-                                onChange={(e) => setFormData({...formData, contact: e.target.value})}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <div className="input-icon">
-                                <FaPaperPlane />
-                            </div>
-                            <input
-                                type="text"
-                                name="subject"
-                                placeholder="Subject"
-                                value={formData.subject}
-                                onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <textarea
-                                name="message"
-                                placeholder="Your Message"
-                                value={formData.message}
-                                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                                required
-                            ></textarea>
-                        </div>
-
-                        <input type="text" name="_gotcha" style={{ display: 'none' }} />
-
-                        <motion.button
-                            type="submit"
-                            className="submit-btn"
-                            disabled={status.submitting}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                        >
-                            {status.submitting ? 'Sending...' : (
-                                <>
-                                    <FaPaperPlane /> Send Message
-                                </>
-                            )}
-                        </motion.button>
-                    </motion.form>
-                </div>
-            </div>
-
-            <AnimatePresence>
-                {(status.submitted || status.error) && (
-                    <motion.div
-                        className={`alert ${status.error ? 'error' : 'success'}`}
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -50 }}
-                    >
-                        {status.error ? (
-                            <>❌ {status.error}</>
-                        ) : (
-                            <><FaCheckCircle /> Message sent successfully!</>
-                        )}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+          <FaCheck />
+          Contact info copied to clipboard!
         </motion.div>
-    );
+      )}
+    </div>
+  );
 };
-
-// Wrap the component with ErrorBoundary
-const Contact = () => (
-    <ErrorBoundary>
-        <ContactForm />
-    </ErrorBoundary>
-);
 
 export default Contact;

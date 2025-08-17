@@ -4,9 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaHome, 
   FaBullhorn, 
-  
+  FaSearch, 
   FaEnvelope, 
-  FaBolt
+  FaBolt,
+  FaArrowRight,
+  FaMobileAlt
 } from 'react-icons/fa';
 import './Navbar.css';
 import SpinLogo from './Spin.png';
@@ -15,6 +17,8 @@ import FrontLogo from './Logo.png';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -31,6 +35,37 @@ const Navbar = () => {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  // PWA Installation Logic
+  useEffect(() => {
+    const handler = (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setShowInstallButton(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handler);
+
+    window.addEventListener('appinstalled', () => {
+      setShowInstallButton(false);
+      setDeferredPrompt(null);
+    });
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handler);
+    };
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
+        setShowInstallButton(false);
+      }
+    }
+  };
 
   const navItems = [
     { path: '/', label: 'Home', icon: <FaHome /> },
@@ -93,6 +128,26 @@ const Navbar = () => {
         </div>
       </Link>
 
+      {/* Desktop Actions */}
+      {!isMobile && (
+        <div className="nav-actions">
+          {showInstallButton && (
+            <motion.button
+              className="action-button install-app"
+              onClick={handleInstallApp}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Install as App"
+            >
+              <FaMobileAlt />
+              <span>Install App</span>
+            </motion.button>
+          )}
+        </div>
+      )}
+
       {isMobile && (
         <motion.button 
           className={`menu-button ${isOpen ? 'open' : ''}`}
@@ -145,6 +200,25 @@ const Navbar = () => {
                 </Link>
               </motion.li>
             ))}
+            
+            {/* Install App Button */}
+            {showInstallButton && (
+              <motion.li
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: navItems.length * 0.05 }}
+              >
+                <button
+                  className="install-app-btn"
+                  onClick={handleInstallApp}
+                >
+                  <span className="nav-icon">
+                    <FaMobileAlt />
+                  </span>
+                  <span>Install App</span>
+                </button>
+              </motion.li>
+            )}
           </motion.ul>
         )}
       </AnimatePresence>
