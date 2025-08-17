@@ -70,6 +70,31 @@ const services = [
   }
 ];
 
+// Typewriter Effect Component
+const TypewriterText = ({ text, speed = 100, delay = 0 }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, speed]);
+
+  useEffect(() => {
+    const initialDelay = setTimeout(() => {
+      setCurrentIndex(0);
+    }, delay);
+    return () => clearTimeout(initialDelay);
+  }, [delay]);
+
+  return <span>{displayText}</span>;
+};
+
 const Home = () => {
   const [stats, setStats] = useState({ projects: 0, clients: 0, countries: 0 });
   const navigate = useNavigate();
@@ -123,46 +148,17 @@ const Home = () => {
             transition={{ duration: 0.8 }}
           >
             <h1 className="hero-title">
-              <motion.span 
-                className="hero-text-building"
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                Building
-              </motion.span>{' '}
-              <motion.span 
-                className="hero-text-the"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                the
-              </motion.span>{' '}
-              <motion.span 
-                className="hero-text-future"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                Future
-              </motion.span>{' '}
-              <motion.span 
-                className="hero-text-with"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                with
-              </motion.span>{' '}
-              <motion.span 
-                className="hero-text-technology"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
-                Technology 
-              </motion.span>
+                <TypewriterText 
+                  text="Building the Future with Technology" 
+                  speed={80} 
+                  delay={500}
+                />
+              </motion.div>
             </h1>
 
             <motion.p 
@@ -171,8 +167,11 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1 }}
             >
-              <span className="subtitle-highlight">Innovating</span> Today for{' '}
-              <span className="subtitle-highlight">Tomorrow's</span> World
+              <TypewriterText 
+                text="Innovating Today for Tomorrow's World" 
+                speed={60} 
+                delay={2000}
+              />
             </motion.p>
             <div className="hero-cta">
               <motion.button
