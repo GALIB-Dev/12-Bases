@@ -4,10 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FaHome, 
   FaBullhorn, 
-  FaSearch, 
   FaEnvelope, 
   FaBolt,
-  FaArrowRight,
   FaMobileAlt
 } from 'react-icons/fa';
 import './Navbar.css';

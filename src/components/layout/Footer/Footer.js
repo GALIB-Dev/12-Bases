@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaInstagram, FaRocket, FaEnvelope, FaPhone, FaMapMarkerAlt, FaShieldAlt, FaCode, FaCloud } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaInstagram, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
 import './Footer.css';
 import SpinLogo from '../../../Spin.png';
 import FrontLogo from '../../../Logo.png';
