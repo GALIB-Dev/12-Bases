@@ -52,20 +52,6 @@ const QuickLinks = memo(() => (
       <a href="/privacy-policy.html">Privacy Policy</a>
       <a href="/terms-of-service.html">Terms of Service</a>
     </div>
-    <div className="services-grid">
-      <div className="service-item">
-        <FaCode className="service-icon" />
-        <span>Web Development</span>
-      </div>
-      <div className="service-item">
-        <FaCloud className="service-icon" />
-        <span>Cloud Solutions</span>
-      </div>
-      <div className="service-item">
-        <FaShieldAlt className="service-icon" />
-        <span>Cybersecurity</span>
-      </div>
-    </div>
   </div>
 ));
 
